@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kathmandu Street Kit 3D Inspector</title>
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #080D1A; }
+    canvas { width: 100%; height: 100%; display: block; }
+    #overlay {
+      position: absolute; top: 20px; left: 20px; color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: rgba(15, 23, 42, 0.88); padding: 14px 22px; border-radius: 12px;
+      border: 1px solid #334155; pointer-events: none; max-width: 480px;
+    }
+    #overlay h1 { margin: 0 0 6px 0; font-size: 18px; color: #F59E0B; }
+    #overlay p { margin: 0; font-size: 13px; color: #94A3B8; line-height: 1.4; }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <h1 id="view-title">Kathmandu Street Module Kit (T008)</h1>
+    <p id="view-desc">Modular 3D Environment: Road Tile, Newar Facades A & B, Festival Obstacles</p>
+  </div>
+  <canvas id="canvas"></canvas>
+
+  <script type="module">
+    import * as pc from 'playcanvas';
+
+    const canvas = document.getElementById('canvas');
+    const app = new pc.Application(canvas);
+    window.app = app;
+    window.pc = pc;
+    app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
+    app.setCanvasResolution(pc.RESOLUTION_AUTO);
+
+    // Camera
+    const camera = new pc.Entity('Camera');
+    camera.addComponent('camera', {
+      clearColor: new pc.Color(0.06, 0.08, 0.14),
+      fov: 48,
+      nearClip: 0.1,
+      farClip: 200
+    });
+    app.root.addChild(camera);
+
+    // Kathmandu Twilight Festival Lighting
+    const sunLight = new pc.Entity('FestivalSun');
+    sunLight.addComponent('light', { type: 'directional', color: new pc.Color(1.0, 0.88, 0.72), intensity: 1.6 });
+    sunLight.setEulerAngles(40, 35, 0);
+    app.root.addChild(sunLight);
+
+    const ambientLight = new pc.Entity('AmbientTwilight');
+    ambientLight.addComponent('light', { type: 'directional', color: new pc.Color(0.3, 0.45, 0.7), intensity: 0.75 });
+    ambientLight.setEulerAngles(25, -145, 0);
+    app.root.addChild(ambientLight);
+
+    let assetsLoaded = 0;
+    const totalAssets = 5;
+    function checkAllLoaded() {
+      assetsLoaded++;
+      if (assetsLoaded >= totalAssets) {
+        window.__KIT_LOADED__ = true;
+        console.log('All Kathmandu Kit assets loaded successfully in scene');
+      }
+    }
+
+    // 1. Road Tile
+    app.assets.loadFromUrl('/models/kathmandu_road_tile.glb', 'container', (err, asset) => {
+      if (!err && asset) {
+        const road = asset.resource.instantiateRenderEntity();
+        road.setPosition(0, 0, 0);
+        app.root.addChild(road);
+      }
+      checkAllLoaded();
+    });
+
+    // 2. Facade Variant A (Left Flank)
+    app.assets.loadFromUrl('/models/kathmandu_facade_variant_a.glb', 'container', (err, asset) => {
+      if (!err && asset) {
+        const facadeA = asset.resource.instantiateRenderEntity();
+        facadeA.setPosition(-5.5, 0, -15);
+        app.root.addChild(facadeA);
+      }
+      checkAllLoaded();
+    });
+
+    // 3. Facade Variant B (Right Flank)
+    app.assets.loadFromUrl('/models/kathmandu_facade_variant_b.glb', 'container', (err, asset) => {
+      if (!err && asset) {
+        const facadeB = asset.resource.instantiateRenderEntity();
+        // Flip to face street on right side (rotate 180 degrees)
+        facadeB.setPosition(5.5, 0, -15);
+        facadeB.setEulerAngles(0, 180, 0);
+        app.root.addChild(facadeB);
+      }
+      checkAllLoaded();
+    });
+
+    // 4. Hurdle Obstacle (Center Lane, Z = -10)
+    app.assets.loadFromUrl('/models/kathmandu_obstacle_hurdle.glb', 'container', (err, asset) => {
+      if (!err && asset) {
+        const hurdle = asset.resource.instantiateRenderEntity();
+        hurdle.setPosition(0, 0, -10);
+        app.root.addChild(hurdle);
+      }
+      checkAllLoaded();
+    });
+
+    // 5. Barrel Obstacle (Right Lane, Z = -18)
+    app.assets.loadFromUrl('/models/kathmandu_obstacle_barrel.glb', 'container', (err, asset) => {
+      if (!err && asset) {
+        const barrel = asset.resource.instantiateRenderEntity();
+        barrel.setPosition(2.0, 0, -18);
+        app.root.addChild(barrel);
+      }
+      checkAllLoaded();
+    });
+
+    window.setView = function(preset) {
+      const title = document.getElementById('view-title');
+      const desc = document.getElementById('view-desc');
+
+      if (preset === 'street_view') {
+        // Third-person perspective looking down the street
+        camera.setPosition(0, 3.2, 5.0);
+        camera.lookAt(new pc.Vec3(0, 1.2, -15.0));
+        title.textContent = '1. THIRD-PERSON STREET VIEW (GAMEPLAY PERSPECTIVE)';
+        desc.textContent = 'Straight 3-lane road flanked by Newar brick facades, San Jhyā windows, and fair hazards.';
+      } else if (preset === 'facades_overview') {
+        // Elevated side perspective showing modular facades and rooflines
+        camera.setPosition(12.0, 8.5, -6.0);
+        camera.lookAt(new pc.Vec3(0, 4.0, -15.0));
+        title.textContent = '2. MODULAR FACADES OVERVIEW (ARCHITECTURAL ACCURACY)';
+        desc.textContent = 'Multi-tiered timber bands, projecting clay eaves (Chhajja), wooden brackets, and festival bunting.';
+      } else if (preset === 'hazards_close') {
+        // Low closeup of Hurdle and Barrel obstacles
+        camera.setPosition(-1.2, 1.4, -6.5);
+        camera.lookAt(new pc.Vec3(0.5, 0.6, -12.0));
+        title.textContent = '3. FAIR HAZARDS INSPECTION (HURDLE & BARREL)';
+        desc.textContent = 'Jumpable festival barrier hurdle (0.65m) and brass-banded oil barrel (1.25m dodge hazard).';
+      }
+    };
+
+    window.setView('street_view');
+    app.start();
+  </script>
+</body>
+</html>

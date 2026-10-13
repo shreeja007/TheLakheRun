@@ -1,0 +1,96 @@
+{
+  "status": "passed",
+  "archive": "pulu_kisi_handoff_v01.zip",
+  "bytes": 5211272,
+  "sha256": "49e834e0c54c5979fd9cd045a5375418d19e1873e7d1a780b193b28e113de3b4",
+  "entries": [
+    {
+      "entry": "pulu_kisi_blockout_v01.blend",
+      "sha256": "75f867bc52b2cfd07937739d259fd96525a318f64d2f811946b93636b629ffa3"
+    },
+    {
+      "entry": "pulu_kisi_blockout_v01.glb",
+      "sha256": "66b1c86b9e20c7a159077c45f9bf61590eed45f91928325fa6efb40ce4d22ac1"
+    },
+    {
+      "entry": "playcanvas_desktop.png",
+      "sha256": "61fea737b6f7ab80c3654f83354e335a9b9e6e1816d34d529fbe9500f1a697f2"
+    },
+    {
+      "entry": "playcanvas_mobile_viewport.png",
+      "sha256": "ecb69e8d06b147333bb2cf6ee8c302ffa4c2e97a8ffb8fc418fc20d3fa88b2d3"
+    },
+    {
+      "entry": "preview_back.png",
+      "sha256": "1a20182b9a9f59d5560ae8ada6c8283a6c8fe4e47b0db00ba3b3c34b7186931f"
+    },
+    {
+      "entry": "preview_front.png",
+      "sha256": "39157e945251f8b8ee9484bfb31b210a2dfeb9455ffb41022452491796fccad9"
+    },
+    {
+      "entry": "preview_left.png",
+      "sha256": "72133567a6d7273810369dbe1ad0d1cfa201f670b8117673f38e234c76aee61a"
+    },
+    {
+      "entry": "preview_perspective.png",
+      "sha256": "368c576e6cad856f5b3336a8b2a4c7555dfaaa717aec31a654c5ce8f657c0c0f"
+    },
+    {
+      "entry": "preview_right.png",
+      "sha256": "9ea63d4b502c698b40300d943e9e42ba3886341d2b4dcba6786e992e606cc41f"
+    },
+    {
+      "entry": "generate_pulu.py",
+      "sha256": "823195265f5605f5938a5fd34ed8279782f901dd757c2ca009e1d1e546214c2e"
+    },
+    {
+      "entry": "verify_export.py",
+      "sha256": "5b75ab66c43804b2fde4d06d35c3742c98e4c495bb3ac73a06b47fd610108c08"
+    },
+    {
+      "entry": "check_playcanvas.mjs",
+      "sha256": "818f56d3cb69ed86c6f50db1b2db49d951cc69c5e0e88882c484dada8fac4eb2"
+    },
+    {
+      "entry": "prepare_handoff.py",
+      "sha256": "f29ae0a135fe6c01d6ae964220f873cfd976fff77f55ad40d473ad14df0f5c17"
+    },
+    {
+      "entry": "HANDOFF.md",
+      "sha256": "d2bad5d8417c4709587b1912b3b9a2a20e0685bb2fb99d089d8a49b6acd53edf"
+    },
+    {
+      "entry": "REFERENCE_NOTES.md",
+      "sha256": "59977be307d032c4a34d2ccfa5717bf798b3136595dcc693fba519bc49717c93"
+    },
+    {
+      "entry": "asset_metrics.json",
+      "sha256": "e9cbbea89ac6313f28e7f20465dd221c2c9d8ab5494b4509716376b236189f5b"
+    },
+    {
+      "entry": "export_verification.json",
+      "sha256": "7f8d8fb98a1eb30d2baf7054ff397e122a7daf6330fe33fa16c2e29b925eb683"
+    },
+    {
+      "entry": "playcanvas_verification.json",
+      "sha256": "eeb9ba94d8ac7477b29827ef5d7d8430259918cce7e4bf1390c2b949d7d01d1c"
+    },
+    {
+      "entry": "provenance.json",
+      "sha256": "cf6456d001e16be6ce5278b3050c6d88d76e6fc48d87e81f18c918a7abdf9a5f"
+    },
+    {
+      "entry": "preview_verification.json",
+      "sha256": "bc57b826eafd42ef070191b0e8a0a6b0362f0ffbc8c53fe50593f93f75f56d8f"
+    },
+    {
+      "entry": "previous_asset_preservation.json",
+      "sha256": "54aba64b30828426b3d8efa76ab204addb5ca8356865004f2a75697a75ee4c0d"
+    },
+    {
+      "entry": "package_manifest.json",
+      "sha256": "13d3e0b42c63e4bcf4107676ca000d08eb2885915f7ad6df1b1303454d39c59e"
+    }
+  ]
+}

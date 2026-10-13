@@ -1,0 +1,82 @@
+{
+  "ticket": "T021",
+  "asset_id": "bhairab_rath_blockout_v01",
+  "files": {
+    "bhairab/bhairab_rath_blockout_v01.blend": {
+      "bytes": 201599,
+      "sha256": "6d99acc1fc2561aab4d202255ff36bb89a69eda3352e3e1ead640fa04369deee"
+    },
+    "bhairab/bhairab_rath_blockout_v01.glb": {
+      "bytes": 663724,
+      "sha256": "cf870076805b5bcc990cfff3254879c48120b27dee4e2176eba44e1a31160548"
+    },
+    "bhairab/playcanvas_desktop.png": {
+      "bytes": 44881,
+      "sha256": "d9a4bb9a4a0a81b09cd2cfd070ff1b6ec9253ff2edd0483ae41613eb83d71cc2"
+    },
+    "bhairab/playcanvas_mobile_viewport.png": {
+      "bytes": 24161,
+      "sha256": "98ef18653d9b43d71165dae7d043693869d6480574cf165c52ede0cad9ee30d2"
+    },
+    "bhairab/preview_back.png": {
+      "bytes": 922872,
+      "sha256": "37e4596f5e05a57f82bd525b4b35b26ff30ea192f8a3fbbc46503b3652345f83"
+    },
+    "bhairab/preview_front.png": {
+      "bytes": 926938,
+      "sha256": "45d32e24314b1f2fd6ae0773bf2ed95c38091c99dff3121efbce989597db4908"
+    },
+    "bhairab/preview_left.png": {
+      "bytes": 935996,
+      "sha256": "97d41d49ed9dca49a0ac0bebac328b31f3929253df072a79b6f0cb7bd3f460bd"
+    },
+    "bhairab/preview_perspective.png": {
+      "bytes": 1018411,
+      "sha256": "ebc38e8f4197435d82ed0bace962d1c0c15ef9f8ca26256fa3ea44d20e3a2902"
+    },
+    "bhairab/HANDOFF.md": {
+      "bytes": 7338,
+      "sha256": "4810dedb1ca88d43886e88e808c7420b10a1946b059d0f6e172b6bc9a0814c34"
+    },
+    "bhairab/asset_metrics.json": {
+      "bytes": 2397,
+      "sha256": "c1979ce9ec86bf8aa27537d0aeb0b701ce7ea0248c30da286fa81c053e498082"
+    },
+    "bhairab/export_verification.json": {
+      "bytes": 1838,
+      "sha256": "ccad2ae911fda77fec89d8b790e3bb4b7e2e8658556e17f86a465fb74ad12231"
+    },
+    "bhairab/playcanvas_verification.json": {
+      "bytes": 3316,
+      "sha256": "2622ad8535cd33d1ab5c4d1e62494e0e9457a22b110c1ecda4d5aec6e0935906"
+    },
+    "bhairab/preview_verification.json": {
+      "bytes": 1292,
+      "sha256": "b1271cafcbf412e001db99e2bf1d2041b66aa4aa866743c549624a10729315de"
+    },
+    "bhairab/provenance.json": {
+      "bytes": 1616,
+      "sha256": "38dff46c957cf1059b40f70df0415bc898a9039cee48f55afc292b26ee19358a"
+    },
+    "generate_rath.py": {
+      "bytes": 19526,
+      "sha256": "56c385d24bc5925d2bd23bcbdc66cc4e04bc2064e9b612504499a24441454dcc"
+    },
+    "verify_export.py": {
+      "bytes": 5734,
+      "sha256": "cceb678d3d7c30e2526a7e1b46d42f1bd15c768545052faa9fd7cc7a523c945d"
+    },
+    "check_playcanvas.mjs": {
+      "bytes": 7932,
+      "sha256": "5f93c8749408ba70dd408b3825ca029492d33aa33e5c6746c5f82f59cc273057"
+    },
+    "prepare_handoffs.py": {
+      "bytes": 14090,
+      "sha256": "cac457cdf5918ee2eea28b9d84cfbb909f054697eee827b8310d7ef36a216fa0"
+    },
+    "README.md": {
+      "bytes": 3415,
+      "sha256": "4ad319f65661dae640ca5ea0af04a763471a84ab544719901dbf3997848e02b4"
+    }
+  }
+}

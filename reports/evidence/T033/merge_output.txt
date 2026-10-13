@@ -1,0 +1,140 @@
+Updating 058d14b..649c896
+Fast-forward
+ README.md                                          |  28 ++
+ docs/MIGRATION_WORKSPACE.md                        |  31 ++
+ index.html                                         | 107 ++++-
+ package.json                                       |   4 +-
+ reports/T028_RESULT.md                             |  71 +++
+ reports/T031_RESULT.md                             |  61 +++
+ reports/T032_RESULT.md                             |  81 ++++
+ .../evidence/T028/INCOME_AND_GROWTH_PROPOSAL.md    | 141 ++++++
+ reports/evidence/T028/revenue_scenarios.json       |  64 +++
+ reports/evidence/T028/revenue_scenarios.mjs        |  43 ++
+ reports/evidence/T028/source_register.json         | 199 +++++++++
+ reports/evidence/T031/migrate_research.mjs         |  41 ++
+ reports/evidence/T031/verification.json            | 489 +++++++++++++++++++++
+ reports/evidence/T031/verification_output.txt      |   9 +
+ reports/evidence/T032/build_output.txt             |  27 ++
+ reports/evidence/T032/completion_checks.txt        |  11 +
+ reports/evidence/T032/desktop-debug.png            | Bin 0 -> 503402 bytes
+ reports/evidence/T032/desktop-paused.png           | Bin 0 -> 57461 bytes
+ reports/evidence/T032/desktop-ready.png            | Bin 0 -> 485416 bytes
+ reports/evidence/T032/desktop-results.png          | Bin 0 -> 770876 bytes
+ reports/evidence/T032/desktop-tutorial.png         | Bin 0 -> 233696 bytes
+ .../T032/ios-install-guidance-emulated.png         | Bin 0 -> 71357 bytes
+ reports/evidence/T032/layout-320x568.png           | Bin 0 -> 118719 bytes
+ reports/evidence/T032/layout-390x844.png           | Bin 0 -> 201619 bytes
+ reports/evidence/T032/layout-667x375.png           | Bin 0 -> 184633 bytes
+ reports/evidence/T032/layout-844x390.png           | Bin 0 -> 215875 bytes
+ reports/evidence/T032/mobile-home-screen.png       | Bin 0 -> 83663 bytes
+ reports/evidence/T032/mobile-offline-running.png   | Bin 0 -> 195001 bytes
+ reports/evidence/T032/mobile-ready.png             | Bin 0 -> 195947 bytes
+ reports/evidence/T032/mobile-running.png           | Bin 0 -> 58541 bytes
+ reports/evidence/T032/mobile-tutorial.png          | Bin 0 -> 70630 bytes
+ reports/evidence/T032/port_option_c.mjs            |  18 +
+ reports/evidence/T032/preservation.json            |  33 ++
+ reports/evidence/T032/preservation_output.txt      |  33 ++
+ reports/evidence/T032/test_output.txt              |  22 +
+ reports/evidence/T032/update-waiting.png           | Bin 0 -> 46964 bytes
+ reports/evidence/T032/verification.json            |  75 ++++
+ reports/evidence/T032/verify_preservation.mjs      |  34 ++
+ reports/evidence/T032/webgl-unavailable.png        | Bin 0 -> 11478 bytes
+ reports/evidence/T033/build_output.txt             |  27 ++
+ reports/evidence/T033/desktop-debug.png            | Bin 0 -> 500159 bytes
+ .../evidence/T033/desktop-focused-shortcuts.png    | Bin 0 -> 45921 bytes
+ reports/evidence/T033/desktop-paused.png           | Bin 0 -> 53721 bytes
+ reports/evidence/T033/desktop-ready.png            | Bin 0 -> 521362 bytes
+ reports/evidence/T033/desktop-results.png          | Bin 0 -> 774818 bytes
+ reports/evidence/T033/desktop-tutorial.png         | Bin 0 -> 233827 bytes
+ .../T033/ios-install-guidance-emulated.png         | Bin 0 -> 71394 bytes
+ reports/evidence/T033/layout-320x568.png           | Bin 0 -> 118432 bytes
+ reports/evidence/T033/layout-390x844.png           | Bin 0 -> 202551 bytes
+ reports/evidence/T033/layout-667x375.png           | Bin 0 -> 180530 bytes
+ reports/evidence/T033/layout-844x390.png           | Bin 0 -> 225262 bytes
+ reports/evidence/T033/mobile-home-screen.png       | Bin 0 -> 83775 bytes
+ reports/evidence/T033/mobile-offline-running.png   | Bin 0 -> 223118 bytes
+ reports/evidence/T033/mobile-ready.png             | Bin 0 -> 192431 bytes
+ reports/evidence/T033/mobile-running.png           | Bin 0 -> 22381 bytes
+ reports/evidence/T033/mobile-tutorial.png          | Bin 0 -> 70863 bytes
+ reports/evidence/T033/preservation.json            |  31 ++
+ reports/evidence/T033/preservation_output.txt      |  31 ++
+ reports/evidence/T033/test_output.txt              |  23 +
+ reports/evidence/T033/update-waiting.png           | Bin 0 -> 46964 bytes
+ reports/evidence/T033/verification.json            |  79 ++++
+ reports/evidence/T033/verify_merge_scope.mjs       |  40 ++
+ reports/evidence/T033/webgl-unavailable.png        | Bin 0 -> 11478 bytes
+ scripts/pwa-build.mjs                              |   3 +-
+ scripts/test-ui-mobile.mjs                         |  79 +++-
+ src/game/GameManager.ts                            |   7 +
+ src/input/InputManager.ts                          |  19 +-
+ src/main.ts                                        |  58 ++-
+ tasks/00_TASK_INDEX.md                             |   5 +
+ tasks/T028_INCOME_AND_GROWTH_RESEARCH.md           |   4 +-
+ tasks/T031_RESEARCH_HANDOFF_MIGRATION.md           |  24 +
+ tasks/T032_OPTION_C_INTEGRATION.md                 |  28 ++
+ tasks/T033_FOCUSED_SHORTCUTS_AND_MERGE.md          |  26 ++
+ vite.config.ts                                     |   2 +
+ 74 files changed, 2066 insertions(+), 42 deletions(-)
+ create mode 100644 docs/MIGRATION_WORKSPACE.md
+ create mode 100644 reports/T028_RESULT.md
+ create mode 100644 reports/T031_RESULT.md
+ create mode 100644 reports/T032_RESULT.md
+ create mode 100644 reports/evidence/T028/INCOME_AND_GROWTH_PROPOSAL.md
+ create mode 100644 reports/evidence/T028/revenue_scenarios.json
+ create mode 100644 reports/evidence/T028/revenue_scenarios.mjs
+ create mode 100644 reports/evidence/T028/source_register.json
+ create mode 100644 reports/evidence/T031/migrate_research.mjs
+ create mode 100644 reports/evidence/T031/verification.json
+ create mode 100644 reports/evidence/T031/verification_output.txt
+ create mode 100644 reports/evidence/T032/build_output.txt
+ create mode 100644 reports/evidence/T032/completion_checks.txt
+ create mode 100644 reports/evidence/T032/desktop-debug.png
+ create mode 100644 reports/evidence/T032/desktop-paused.png
+ create mode 100644 reports/evidence/T032/desktop-ready.png
+ create mode 100644 reports/evidence/T032/desktop-results.png
+ create mode 100644 reports/evidence/T032/desktop-tutorial.png
+ create mode 100644 reports/evidence/T032/ios-install-guidance-emulated.png
+ create mode 100644 reports/evidence/T032/layout-320x568.png
+ create mode 100644 reports/evidence/T032/layout-390x844.png
+ create mode 100644 reports/evidence/T032/layout-667x375.png
+ create mode 100644 reports/evidence/T032/layout-844x390.png
+ create mode 100644 reports/evidence/T032/mobile-home-screen.png
+ create mode 100644 reports/evidence/T032/mobile-offline-running.png
+ create mode 100644 reports/evidence/T032/mobile-ready.png
+ create mode 100644 reports/evidence/T032/mobile-running.png
+ create mode 100644 reports/evidence/T032/mobile-tutorial.png
+ create mode 100644 reports/evidence/T032/port_option_c.mjs
+ create mode 100644 reports/evidence/T032/preservation.json
+ create mode 100644 reports/evidence/T032/preservation_output.txt
+ create mode 100644 reports/evidence/T032/test_output.txt
+ create mode 100644 reports/evidence/T032/update-waiting.png
+ create mode 100644 reports/evidence/T032/verification.json
+ create mode 100644 reports/evidence/T032/verify_preservation.mjs
+ create mode 100644 reports/evidence/T032/webgl-unavailable.png
+ create mode 100644 reports/evidence/T033/build_output.txt
+ create mode 100644 reports/evidence/T033/desktop-debug.png
+ create mode 100644 reports/evidence/T033/desktop-focused-shortcuts.png
+ create mode 100644 reports/evidence/T033/desktop-paused.png
+ create mode 100644 reports/evidence/T033/desktop-ready.png
+ create mode 100644 reports/evidence/T033/desktop-results.png
+ create mode 100644 reports/evidence/T033/desktop-tutorial.png
+ create mode 100644 reports/evidence/T033/ios-install-guidance-emulated.png
+ create mode 100644 reports/evidence/T033/layout-320x568.png
+ create mode 100644 reports/evidence/T033/layout-390x844.png
+ create mode 100644 reports/evidence/T033/layout-667x375.png
+ create mode 100644 reports/evidence/T033/layout-844x390.png
+ create mode 100644 reports/evidence/T033/mobile-home-screen.png
+ create mode 100644 reports/evidence/T033/mobile-offline-running.png
+ create mode 100644 reports/evidence/T033/mobile-ready.png
+ create mode 100644 reports/evidence/T033/mobile-running.png
+ create mode 100644 reports/evidence/T033/mobile-tutorial.png
+ create mode 100644 reports/evidence/T033/preservation.json
+ create mode 100644 reports/evidence/T033/preservation_output.txt
+ create mode 100644 reports/evidence/T033/test_output.txt
+ create mode 100644 reports/evidence/T033/update-waiting.png
+ create mode 100644 reports/evidence/T033/verification.json
+ create mode 100644 reports/evidence/T033/verify_merge_scope.mjs
+ create mode 100644 reports/evidence/T033/webgl-unavailable.png
+ create mode 100644 tasks/T031_RESEARCH_HANDOFF_MIGRATION.md
+ create mode 100644 tasks/T032_OPTION_C_INTEGRATION.md
+ create mode 100644 tasks/T033_FOCUSED_SHORTCUTS_AND_MERGE.md

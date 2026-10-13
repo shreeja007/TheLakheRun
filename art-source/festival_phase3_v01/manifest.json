@@ -1,0 +1,80 @@
+{
+  "ticket": "T024",
+  "files": [
+    {
+      "file": "building_01_prompt.txt",
+      "bytes": 3077,
+      "sha256": "9734cbf9da277b2089e646cd718e49dbfe18f547c43ed597f6547a008a493082"
+    },
+    {
+      "file": "building_01_residence_concept_v01.png",
+      "bytes": 1957005,
+      "sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4"
+    },
+    {
+      "file": "building_02_prompt.txt",
+      "bytes": 3054,
+      "sha256": "fc22affced287ab8fcde33155e81e9d2fd591e3fcf731abae4aeab71c807c30d"
+    },
+    {
+      "file": "building_02_shopfront_concept_v01.png",
+      "bytes": 2039460,
+      "sha256": "88ff1a33d94299430a128de083f35830fca72351b3b01e7f18e441c413b4c96b"
+    },
+    {
+      "file": "everyday_gateway_concept_v01.png",
+      "bytes": 1661986,
+      "sha256": "564af4590cb0edfb34d2bfd9223c1bb14912aa9f5360a802020827ca7c51bad4"
+    },
+    {
+      "file": "gateway_prompt.txt",
+      "bytes": 2860,
+      "sha256": "f35b674e62d4afaff2f2690abff19f0b4f7aaa3e0a16e308830a235ef08ccef6"
+    },
+    {
+      "file": "HANDOFF.md",
+      "bytes": 6436,
+      "sha256": "3dbee9099af0540121926db521cd90b58417e3e7c7010e8ae8aa37162aefd198"
+    },
+    {
+      "file": "hanging_lights_concept_v01.png",
+      "bytes": 1462105,
+      "sha256": "145a434c92d85c138e71e52162f0beaefdbee14873b17c8afbc1c1ac97c36abe"
+    },
+    {
+      "file": "hanging_lights_prompt.txt",
+      "bytes": 3021,
+      "sha256": "37e3bbeec71f663cfb5fc2e8f588150427ea64e185dce9b230531b7bad79bdcf"
+    },
+    {
+      "file": "image_verification.json",
+      "bytes": 1490,
+      "sha256": "556a1431a8c0cd84050cf45ce11b11199ff023e3f342af3fff54f89dff66250a"
+    },
+    {
+      "file": "provenance.json",
+      "bytes": 4027,
+      "sha256": "ff3d553905ca76025b0ab60fd2c259ac6002aa96e2541cb352fc20d54da6a560"
+    },
+    {
+      "file": "REFERENCE_NOTES.md",
+      "bytes": 2573,
+      "sha256": "56bebf3f81cde22feef58d5d9e90c0d24305ecf2fa1d039a354934934324d184"
+    },
+    {
+      "file": "references/cart_style_reference.png",
+      "bytes": 1847296,
+      "sha256": "1fb3f7666e5d5a5d0e7f20ef8c7defa5c30373b3dd20cc31cc4b21760319207b"
+    },
+    {
+      "file": "verify_and_package.ps1",
+      "bytes": 5597,
+      "sha256": "f4fd3eed253f9961838b70e801b3a82a1e913206197a41fb3362fb050a4fde14"
+    }
+  ],
+  "excludes": [
+    "festival_phase3_handoff_v01.zip",
+    "package_verification.json",
+    "manifest.json"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "ticket": "T026",
+  "asset_id": "building02_shopfront_v01",
+  "files": {
+    "building02_shopfront_v01.blend": {
+      "bytes": 509314,
+      "sha256": "fe1fcbc2e98e642fadee5f4621c8a1afdc61e79b5d56dbe0903f524341c75334"
+    },
+    "building02_shopfront_v01.glb": {
+      "bytes": 580348,
+      "sha256": "b85c2642ada586f3f852edf02c3578ffddd372c8566d72e278b5fa37beb3ea68"
+    },
+    "generate_building.py": {
+      "bytes": 17207,
+      "sha256": "b80f1e4988e966962ffe95a9c3a54ed8b26fc5be1923074690852e660b4547dd"
+    },
+    "verify_export.py": {
+      "bytes": 8412,
+      "sha256": "2952c6f81615ad5a401fd21016e98073058ae4002426d2d84acb5ad67512b5a5"
+    },
+    "check_playcanvas.mjs": {
+      "bytes": 7338,
+      "sha256": "da802596f46aed474434143c764b64bc0e18fdb0c2e0967264bd753709333a61"
+    },
+    "prepare_handoff.py": {
+      "bytes": 6608,
+      "sha256": "1f3f8bad55778cd777742abdc18d621bb47a78e7a450f624d250d6a35c4225ac"
+    },
+    "HANDOFF.md": {
+      "bytes": 6100,
+      "sha256": "c00156a9946fabf8f0c35b33cea112e86298b4879920ecf283278ea7e4b0acd2"
+    },
+    "REFERENCE_NOTES.md": {
+      "bytes": 1278,
+      "sha256": "059c4263dbb43ee765bdb8de9c6af885c07ac59f28e7f5dc584125b0783a2969"
+    },
+    "MODEL_FACTS.md": {
+      "bytes": 1365,
+      "sha256": "53c46631291e8c47b9faf9187b676e4e478cf2c897e84673f879c4b4c3541cb4"
+    },
+    "asset_metrics.json": {
+      "bytes": 5558,
+      "sha256": "d86e68d29dc473c69675b8972f08c06aa1582678ede889b847841f77942f8349"
+    },
+    "export_verification.json": {
+      "bytes": 1639,
+      "sha256": "8c175dc652ed3726bcf7a548c91085f76a77dd9b244ba3690bf168a066538f59"
+    },
+    "playcanvas_verification.json": {
+      "bytes": 2698,
+      "sha256": "26b6212630c5daa418162d3b28132ff5de5cfdc1dc2be3217f96dc094930ab77"
+    },
+    "provenance.json": {
+      "bytes": 1857,
+      "sha256": "141a8bccf580d7ab4662683ea32df17c9e64c705b5ed3933bbcee087e450a894"
+    },
+    "preview_verification.json": {
+      "bytes": 2391,
+      "sha256": "94229ff30b0bff2c862a3e08a7f8d4ae9d3459309ca50f1bdb1b9b4608c29c4d"
+    },
+    "previous_asset_preservation.json": {
+      "bytes": 3439,
+      "sha256": "e1a8c4d9aa4bff7a810e741493e0c0b05eca5cd52082f99f6d9b1bfc4ee1494c"
+    },
+    "playcanvas_desktop.png": {
+      "bytes": 176356,
+      "sha256": "cfb87a4c72d3ae5c0825867b36a20fd7baf7d67008e3e58025a2ba2812d94b37"
+    },
+    "playcanvas_mobile_viewport.png": {
+      "bytes": 51415,
+      "sha256": "093c4ad411475e30966622708076c938a7eae7a5bb45caf7f8a698d57d858a9f"
+    },
+    "preview_back.png": {
+      "bytes": 947831,
+      "sha256": "7f04cd4eed74f4d0f35c4d055e75a52bdaa6c47ccf73a2ded1d0bef61950e3b1"
+    },
+    "preview_front.png": {
+      "bytes": 945606,
+      "sha256": "ecd101c46e8571a093e107609603e379517a192664bb2752172ab753281b48ba"
+    },
+    "preview_left.png": {
+      "bytes": 813773,
+      "sha256": "b758525e93ac2e2d1406110b4231ac8f17e8c46188ff6e433c93a3a71c5d5c8a"
+    },
+    "preview_perspective.png": {
+      "bytes": 1300778,
+      "sha256": "a0b7a54892896aeddaa5b372427c8ee1f2b05ac3b9d6283e8c6aa15dd55d221a"
+    },
+    "preview_right.png": {
+      "bytes": 804358,
+      "sha256": "a53cb13991925bed9fbb636b70351b80f35951ce640fef2051d6dc8f722c0b93"
+    },
+    "references/accepted_building02_concept.png": {
+      "bytes": 2039460,
+      "sha256": "88ff1a33d94299430a128de083f35830fca72351b3b01e7f18e441c413b4c96b"
+    },
+    "textures/brick_color_512.png": {
+      "bytes": 144651,
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    },
+    "textures/roof_color_512.png": {
+      "bytes": 232323,
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770"
+    }
+  }
+}

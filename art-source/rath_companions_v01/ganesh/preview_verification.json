@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "check": "PNG signatures/dimensions/hashes",
+  "files": [
+    {
+      "file": "playcanvas_desktop.png",
+      "dimensions": [
+        1000,
+        900
+      ],
+      "sha256": "f8e32fdc320d8beedf3e0f745d8a32f177170b828cb806e761ad1861e9447b72"
+    },
+    {
+      "file": "playcanvas_mobile_viewport.png",
+      "dimensions": [
+        390,
+        844
+      ],
+      "sha256": "53067ded4bbfb1a2da41a7b6c7eddecf70171167bc21766eb571456f54869cd3"
+    },
+    {
+      "file": "preview_back.png",
+      "dimensions": [
+        1000,
+        900
+      ],
+      "sha256": "f1507937444dcfba4ecf98dd699851ff1655a36bbed7bf322f80e4b15095a763"
+    },
+    {
+      "file": "preview_front.png",
+      "dimensions": [
+        1000,
+        900
+      ],
+      "sha256": "accfa600880de183ebfe21672032c65cc47555f5c864efbe56e5663b162baa91"
+    },
+    {
+      "file": "preview_left.png",
+      "dimensions": [
+        1000,
+        900
+      ],
+      "sha256": "6027381feac3222076c1dd424ac1d0c4d63019a7fe107a362998af4a75fa5293"
+    },
+    {
+      "file": "preview_perspective.png",
+      "dimensions": [
+        1000,
+        900
+      ],
+      "sha256": "602f4c2c91a065cb7c101894d85a9f9c974adff240edb111706761764b06ca17"
+    }
+  ]
+}

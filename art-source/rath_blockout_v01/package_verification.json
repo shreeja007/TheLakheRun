@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "archive": "kumari_rath_handoff_v01.zip",
+  "bytes": 4206828,
+  "sha256": "F9706C70A8820D85B6401DB2D135C6E32799EE043C3CABB44B3FBAB8BDD51753",
+  "entries": [
+    {
+      "file": "asset_metrics.json",
+      "bytes": 2080,
+      "sha256": "C31A00E599F5180499115D5926BA4F2A77E442B803AD915740350D5534BB4BED",
+      "matchesOriginal": true
+    },
+    {
+      "file": "check_playcanvas.mjs",
+      "bytes": 7761,
+      "sha256": "9DB0AC3741924D140035A5D764A2D21576C5A5391A15884C6EB6F75533FB4B2B",
+      "matchesOriginal": true
+    },
+    {
+      "file": "export_verification.json",
+      "bytes": 1389,
+      "sha256": "714F08E17576A8C5653F9B9BA506145F96C3BE52BB23D79009B7D7C523EADD88",
+      "matchesOriginal": true
+    },
+    {
+      "file": "generate_rath.py",
+      "bytes": 16967,
+      "sha256": "7C88A17F1340E03A58134FA3EC8231C411609E6909EEC9042C3641EFB7B3F0A7",
+      "matchesOriginal": true
+    },
+    {
+      "file": "HANDOFF.md",
+      "bytes": 6797,
+      "sha256": "F99B917BA4564DEA5DF4DCBDB4EED7F4755FCC0F882AB307F712AA5E3AA16C71",
+      "matchesOriginal": true
+    },
+    {
+      "file": "kumari_rath_blockout_v01.blend",
+      "bytes": 202170,
+      "sha256": "97DC00913A032606584D99B1CAADB54F230BC47249F6B05DFFE3A170A8D7D8E8",
+      "matchesOriginal": true
+    },
+    {
+      "file": "kumari_rath_blockout_v01.glb",
+      "bytes": 663320,
+      "sha256": "7D51F2BA243FF5889076967A8A5ADF8066D273206EC5FDDD0373763C754F13FC",
+      "matchesOriginal": true
+    },
+    {
+      "file": "playcanvas_desktop.png",
+      "bytes": 52086,
+      "sha256": "6B7B2345493AF9651FE9FDADB885B9B6B1596BE15C517D3ACA904BE6D72C7481",
+      "matchesOriginal": true
+    },
+    {
+      "file": "playcanvas_mobile_viewport.png",
+      "bytes": 28359,
+      "sha256": "412A7BA7D2219D38F6D32CE0D73BD5723BAAC8DAAB0502E5E4FCCEBE7FE8D166",
+      "matchesOriginal": true
+    },
+    {
+      "file": "playcanvas_verification.json",
+      "bytes": 3196,
+      "sha256": "F04D2729CB27B0CE3790757BC9E437AE830289FC8F10069B549DB03F1A679404",
+      "matchesOriginal": true
+    },
+    {
+      "file": "preview_back.png",
+      "bytes": 926988,
+      "sha256": "C83C89D7D7DE08AB91BEA03BCA0DF281708E07A5F6C44916F74364B85A4423F4",
+      "matchesOriginal": true
+    },
+    {
+      "file": "preview_front.png",
+      "bytes": 929005,
+      "sha256": "E2B053F8975E4281493EE5B2ED0394B9F984D1D8944223BCAE392B52E434A5BE",
+      "matchesOriginal": true
+    },
+    {
+      "file": "preview_left.png",
+      "bytes": 939944,
+      "sha256": "6F1A60EF26D1CEEFB1798D10CCA3FD9A2D110B6D7DBBE4FECF46FA59A2E09946",
+      "matchesOriginal": true
+    },
+    {
+      "file": "preview_perspective.png",
+      "bytes": 1028744,
+      "sha256": "AA18E55016FDE4D8488D66D4C0922491A38ED48AD40518FE2A49B6F56DA33E2A",
+      "matchesOriginal": true
+    },
+    {
+      "file": "preview_verification.json",
+      "bytes": 1159,
+      "sha256": "147C47B413D0A4E7117FADD0F812712719A6B65270A0D6B156D76CDF79E3C54C",
+      "matchesOriginal": true
+    },
+    {
+      "file": "provenance.json",
+      "bytes": 1232,
+      "sha256": "55A074756AEF4D32692A35D078F85DB08C5EB61B528C8AB92CE0A807EF80D854",
+      "matchesOriginal": true
+    },
+    {
+      "file": "verify_export.py",
+      "bytes": 4742,
+      "sha256": "186E5BB27923AB42C1FD1E736EDCE1F84A0A685B1AA312633C3BB24974A1FB9E",
+      "matchesOriginal": true
+    }
+  ],
+  "excluded": "Blender backups and ignored generation logs; package verification is outside the archive"
+}

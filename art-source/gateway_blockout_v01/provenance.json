@@ -1,0 +1,32 @@
+{
+  "ticket": "T027",
+  "date": "2026-10-12",
+  "asset_id": "everyday_gateway_v01",
+  "concept_acceptance": "Owner requested everyday gateway model following visual acceptance; treated as source acceptance/model authorization. Other T024 concepts not automatically accepted.",
+  "model_state": "Static model; director acceptance pending",
+  "authoring": "Original gateway geometry, local T025 authoring helpers/brick tile and explicit UVs; previous packets unchanged",
+  "generator": "generate_gateway.py",
+  "generator_sha256": "60c1c2cafa023eeba1d698f4c67c4d0793abc084fc0b203d64a5257613a0a4da",
+  "blender_version": "5.2.2 LTS",
+  "concept_file": "references/accepted_gateway_concept.png",
+  "concept_sha256": "564af4590cb0edfb34d2bfd9223c1bb14912aa9f5360a802020827ca7c51bad4",
+  "upstream_provenance": "art-source/festival_phase3_v01/provenance.json",
+  "reference_notes": "REFERENCE_NOTES.md",
+  "new_online_research": false,
+  "external_media_copied": false,
+  "textures": [
+    {
+      "file": "textures/brick_color_512.png",
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e",
+      "creator": "T027 generator"
+    }
+  ],
+  "glb_sha256": "781dc42c131c9d9caf1922cf001bbbc104e8c2a8fd343bf11243b1bf49109fab",
+  "blend_sha256": "8dcfe0aa001b65fcc1bc138c4fecad534bcb9e58d8bb6292e6efb144a73b2e80",
+  "limitations": [
+    "Working dimensions and passage sizes only",
+    "Plain stone/timber and simple bolt heads",
+    "No collision, animation or placement",
+    "No authenticity/engineering certification; upstream project rights not independently certified"
+  ]
+}

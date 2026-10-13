@@ -1,0 +1,34 @@
+{
+  "ticket": "T021",
+  "date": "2026-10-11",
+  "asset_id": "ganesh_rath_blockout_v01",
+  "state": "simplified static draft; director/cultural review pending",
+  "authoring": "Original procedural Blender geometry; versioned extension of T020 generator",
+  "source_generator": "art-source/rath_companions_v01/generate_rath.py",
+  "generator_sha256": "56c385d24bc5925d2bd23bcbdc66cc4e04bc2064e9b612504499a24441454dcc",
+  "source_preset": {
+    "scale": 0.8,
+    "width": 0.88,
+    "pavilion_height": 0.94,
+    "post_width": 0.115,
+    "brace_width": 0.12,
+    "garland_loops": 2,
+    "garland_beads": 7,
+    "inset_panels": false
+  },
+  "blender": "5.2.2 LTS",
+  "concept_source": "art-source/festival_phase1_v01/ganesh_rath_concept_v01.png",
+  "concept_sha256": "828e6c77204ae95888f6c0599de8675abf974434bf7fd124c0705baa62a92f12",
+  "research_register": "art-source/festival_phase1_v01/RESEARCH_AND_HANDOFF.md",
+  "external_media_copied": false,
+  "texture_dependencies": [],
+  "glb_sha256": "2ae69948bb927ab04b985cfcd0d9f55d6333eaf5d21aa9833b222ea443384d52",
+  "blend_sha256": "76a60da148c3fcef39e5ae9ba71b9993ffc3543054df91d7be2c38b461b4c027",
+  "known_limitations": [
+    "Not an authentic ceremonial replica",
+    "No individually verified traditional variant ornament",
+    "Proposed dimensions; no gameplay or phone performance acceptance",
+    "No rig/clips/colliders"
+  ],
+  "rights": "No outside mesh/photo/texture imported. Prior project-generated concept is design input; underlying project ownership not independently established. No new repository license is imposed."
+}

@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3200 2000" width="3200" height="2000">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 800; fill: #F8FAFC; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: #94A3B8; }
+      .header-box { fill: #1E293B; stroke: #334155; stroke-width: 2; }
+      .card { fill: #1E293B; stroke: #334155; stroke-width: 2; rx: 16; }
+      .panel-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; font-size: 24px; fill: #F59E0B; letter-spacing: 2px; }
+      .guide-line { stroke: #334155; stroke-dasharray: 6 6; stroke-width: 1.5; }
+      .guide-text { font-family: ui-monospace, monospace; font-size: 16px; fill: #64748B; font-weight: 600; }
+      .note-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 16px; fill: #CBD5E1; line-height: 1.5; }
+      .swatch-label { font-family: ui-monospace, monospace; font-size: 15px; fill: #E2E8F0; font-weight: 700; }
+      .swatch-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #94A3B8; }
+    </style>
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="3200" height="2000" fill="#0B0F19"/>
+
+  <!-- Top Title Header Banner -->
+  <rect x="60" y="40" width="3080" height="130" rx="16" class="header-box" filter="url(#card-shadow)"/>
+  <text x="100" y="96" class="title" font-size="38">LAKHEY RUN — GUARDIAN CONCEPT &amp; PROPORTION SHEET (T009 PROPOSAL)</text>
+  <text x="100" y="138" class="subtitle" font-size="20">ROLE: Commanding, Energetic Festival Spirit Guardian | Nonviolent Challenge Framing | Height: 2.35m vs Tuku 1.68m</text>
+
+  <!-- Status Pill -->
+  <rect x="2700" y="75" width="400" height="48" rx="24" fill="#B45309"/>
+  <text x="2900" y="106" font-family="-apple-system, sans-serif" font-weight="800" font-size="18" fill="#FFFFFF" text-anchor="middle">CULTURAL PROPOSAL v0.1</text>
+
+  <!-- Height Guidelines Grid -->
+  <g id="guidelines">
+    <!-- Lakhey Crown: Y = 280 (Height = 1470px = 2.35m) -->
+    <line x1="80" y1="280" x2="2520" y2="280" stroke="#F59E0B" stroke-dasharray="6 6" stroke-width="2"/>
+    <text x="70" y="285" class="guide-text" fill="#F59E0B" text-anchor="end">2.35m (LAKHEY CROWN)</text>
+
+    <!-- Tuku Crown: Y = 700 (Height = 1050px = 1.68m) -->
+    <line x1="80" y1="700" x2="2520" y2="700" stroke="#38BDF8" stroke-dasharray="6 6" stroke-width="2"/>
+    <text x="70" y="705" class="guide-text" fill="#38BDF8" text-anchor="end">1.68m (TUKU CROWN)</text>
+
+    <!-- Lakhey Shoulder: Y = 620 -->
+    <line x1="80" y1="620" x2="2520" y2="620" class="guide-line"/>
+    <text x="70" y="625" class="guide-text" text-anchor="end">1.81m (LAKHEY SHOULDER)</text>
+
+    <!-- Lakhey Waist / Belt: Y = 1040 -->
+    <line x1="80" y1="1040" x2="2520" y2="1040" class="guide-line"/>
+    <text x="70" y="1045" class="guide-text" text-anchor="end">1.14m (WAIST / BELT)</text>
+
+    <!-- Lakhey Skirt Hem: Y = 1380 -->
+    <line x1="80" y1="1380" x2="2520" y2="1380" class="guide-line"/>
+    <text x="70" y="1385" class="guide-text" text-anchor="end">0.59m (SKIRT HEM)</text>
+
+    <!-- Ground Line: Y = 1750 -->
+    <line x1="80" y1="1750" x2="2520" y2="1750" stroke="#E2E8F0" stroke-width="3"/>
+    <text x="70" y="1755" class="guide-text" fill="#E2E8F0" text-anchor="end">0.00m (GROUND)</text>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- PANEL 1: SCALE & SILHOUETTE COMPARISON (X: 120 to 680)   -->
+  <!-- ======================================================= -->
+  <g id="panel-scale-comparison">
+    <rect x="120" y="210" width="560" height="1540" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="400" y="255" class="panel-label" text-anchor="middle">1. SCALE &amp; CONTRAST</text>
+    <text x="400" y="285" class="subtitle" font-size="15" text-anchor="middle">Agile Trickster (1.68m) vs Imposing Guardian (2.35m)</text>
+
+    <!-- Tuku Silhouette (Teal + Cream + Charcoal) at X = 250 -->
+    <g transform="translate(180, 0)">
+      <!-- Shoes -->
+      <rect x="50" y="1710" width="55" height="35" rx="4" fill="#25292B"/>
+      <rect x="48" y="1738" width="59" height="10" rx="2" fill="#D7CDBE"/>
+      <!-- Pants -->
+      <path d="M 40 1200 L 115 1200 L 95 1715 L 60 1715 Z" fill="#2D3438"/>
+      <!-- Cream shirt hem -->
+      <rect x="42" y="1120" width="70" height="80" rx="6" fill="#E8DDCA"/>
+      <!-- Teal Jacket -->
+      <rect x="35" y="870" width="85" height="255" rx="12" fill="#2F7875"/>
+      <!-- Arms -->
+      <path d="M 35 880 L 10 1150 L 25 1160 L 45 920 Z" fill="#2F7875"/>
+      <path d="M 120 880 L 145 1150 L 130 1160 L 110 920 Z" fill="#2F7875"/>
+      <!-- Scarf -->
+      <rect x="62" y="835" width="30" height="40" rx="8" fill="#8C414B"/>
+      <!-- Head -->
+      <ellipse cx="77" cy="780" rx="28" ry="36" fill="#C89568"/>
+      <ellipse cx="77" cy="760" rx="30" ry="25" fill="#25292B"/>
+      <text x="77" y="1690" class="guide-text" fill="#38BDF8" text-anchor="middle">TUKU (1.68m)</text>
+    </g>
+
+    <!-- Lakhey Silhouette (Massive Crimson + Gold Brocade) at X = 430 -->
+    <g transform="translate(380, 0)">
+      <!-- Heavy Feet & Brass Ankle Cuffs -->
+      <rect x="40" y="1690" width="75" height="55" rx="8" fill="#1E242B"/>
+      <rect x="135" y="1690" width="75" height="55" rx="8" fill="#1E242B"/>
+      <rect x="35" y="1670" width="85" height="25" rx="6" fill="#E5A93C"/>
+      <rect x="130" y="1670" width="85" height="25" rx="6" fill="#E5A93C"/>
+
+      <!-- Flared Pleated Ceremonial Skirt (Jama inspired) -->
+      <polygon points="125,1040 230,1400 20,1400" fill="#A31D1D"/>
+      <!-- Gold Brocade Border Trim -->
+      <polygon points="20,1360 230,1360 235,1400 15,1400" fill="#E5A93C"/>
+
+      <!-- Powerful Broad Torso / Vestment -->
+      <rect x="35" y="620" width="180" height="425" rx="20" fill="#A31D1D"/>
+      <!-- Gold Embroidered Yoke & Belt -->
+      <polygon points="125,620 185,690 125,780 65,690" fill="#E5A93C"/>
+      <rect x="30" y="1020" width="190" height="40" rx="8" fill="#E5A93C"/>
+
+      <!-- Broad Arms with Brass Wrist Cuffs -->
+      <path d="M 35 640 L -25 1060 L 5 1080 L 55 700 Z" fill="#A31D1D"/>
+      <path d="M 215 640 L 275 1060 L 245 1080 L 195 700 Z" fill="#A31D1D"/>
+      <rect x="-30" y="1030" width="40" height="45" rx="6" fill="#E5A93C"/>
+      <rect x="240" y="1030" width="40" height="45" rx="6" fill="#E5A93C"/>
+
+      <!-- Voluminous Cascading Mane -->
+      <path d="M 125 310 C -10 380, -30 650, 10 900 C 45 740, 50 640, 125 600 C 200 640, 205 740, 240 900 C 280 650, 260 380, 125 310 Z" fill="#1A1412"/>
+
+      <!-- Mask Framing (Theatrical Stylized Brow & Crown) -->
+      <ellipse cx="125" cy="490" rx="55" ry="65" fill="#C2410C"/>
+      <polygon points="125,360 170,430 80,430" fill="#E5A93C"/>
+      <!-- Watchful Protective Eyes -->
+      <ellipse cx="100" cy="480" rx="14" ry="10" fill="#FEF3C7"/>
+      <circle cx="100" cy="480" r="6" fill="#1E293B"/>
+      <ellipse cx="150" cy="480" rx="14" ry="10" fill="#FEF3C7"/>
+      <circle cx="150" cy="480" r="6" fill="#1E293B"/>
+
+      <!-- Theatrical Guardian Smile & Fangs -->
+      <path d="M 95 525 Q 125 550 155 525" stroke="#FFFFFF" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <polygon points="98,525 106,525 102,545" fill="#FFFFFF"/>
+      <polygon points="152,525 144,525 148,545" fill="#FFFFFF"/>
+
+      <text x="125" y="1650" class="guide-text" fill="#F59E0B" text-anchor="middle">LAKHEY (2.35m)</text>
+    </g>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- PANEL 2: FRONT FULL-BODY VIEW (X: 720 to 1340)          -->
+  <!-- ======================================================= -->
+  <g id="panel-front-view">
+    <rect x="720" y="210" width="620" height="1540" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="1030" y="255" class="panel-label" text-anchor="middle">2. FRONT ORTHOGRAPHIC VIEW</text>
+    <text x="1030" y="285" class="subtitle" font-size="15" text-anchor="middle">Symmetrical A-Pose / Powerful Ceremonial Vestments</text>
+
+    <g transform="translate(850, 0)">
+      <!-- Boots & Cuffs -->
+      <rect x="60" y="1680" width="90" height="65" rx="8" fill="#1E242B"/>
+      <rect x="210" y="1680" width="90" height="65" rx="8" fill="#1E242B"/>
+      <rect x="50" y="1655" width="110" height="30" rx="8" fill="#E5A93C"/>
+      <rect x="200" y="1655" width="110" height="30" rx="8" fill="#E5A93C"/>
+
+      <!-- Legs under skirt -->
+      <rect x="80" y="1380" width="50" height="280" fill="#7F1D1D"/>
+      <rect x="230" y="1380" width="50" height="280" fill="#7F1D1D"/>
+
+      <!-- Flared Skirt -->
+      <polygon points="180,1040 330,1390 30,1390" fill="#A31D1D"/>
+      <!-- Gold Pleats & Border -->
+      <line x1="180" y1="1040" x2="105" y2="1390" stroke="#E5A93C" stroke-width="4"/>
+      <line x1="180" y1="1040" x2="180" y2="1390" stroke="#E5A93C" stroke-width="4"/>
+      <line x1="180" y1="1040" x2="255" y2="1390" stroke="#E5A93C" stroke-width="4"/>
+      <rect x="25" y="1360" width="310" height="35" rx="6" fill="#E5A93C"/>
+
+      <!-- Tunic Body -->
+      <rect x="75" y="620" width="210" height="425" rx="24" fill="#A31D1D"/>
+      <!-- Broad Gold Sash & Belt -->
+      <polygon points="180,620 250,710 180,800 110,710" fill="#E5A93C"/>
+      <circle cx="180" cy="710" r="18" fill="#A31D1D"/>
+      <rect x="65" y="1015" width="230" height="50" rx="10" fill="#E5A93C"/>
+      <!-- Hanging central sash pendant -->
+      <rect x="155" y="1060" width="50" height="150" rx="6" fill="#E5A93C"/>
+      <rect x="165" y="1070" width="30" height="130" rx="4" fill="#A31D1D"/>
+
+      <!-- Arms in A-Pose (~25°) -->
+      <path d="M 75 640 L -15 1060 L 25 1080 L 105 700 Z" fill="#A31D1D"/>
+      <path d="M 285 640 L 375 1060 L 335 1080 L 255 700 Z" fill="#A31D1D"/>
+      <rect x="-20" y="1030" width="50" height="50" rx="8" fill="#E5A93C"/>
+      <rect x="330" y="1030" width="50" height="50" rx="8" fill="#E5A93C"/>
+      <ellipse cx="-5" cy="1110" rx="20" ry="28" fill="#C89568"/>
+      <ellipse cx="365" cy="1110" rx="20" ry="28" fill="#C89568"/>
+
+      <!-- Cascading Hair Mane -->
+      <path d="M 180 300 C 10 380, -20 660, 40 920 C 85 760, 95 650, 180 600 C 265 650, 275 760, 320 920 C 380 660, 350 380, 180 300 Z" fill="#1A1412"/>
+
+      <!-- Theatrical Face / Mask Framing -->
+      <ellipse cx="180" cy="490" rx="65" ry="78" fill="#C2410C"/>
+      <!-- Ornate Head Crest (Original Stylized, non-sacred) -->
+      <polygon points="180,340 230,420 130,420" fill="#E5A93C"/>
+      <circle cx="180" cy="400" r="14" fill="#B91C1C"/>
+
+      <!-- Eyes & Brow -->
+      <path d="M 125 450 Q 145 435 165 455" stroke="#1E293B" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <path d="M 235 450 Q 215 435 195 455" stroke="#1E293B" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="148" cy="478" rx="16" ry="12" fill="#FEF3C7"/>
+      <circle cx="148" cy="478" r="7" fill="#1E293B"/>
+      <ellipse cx="212" cy="478" rx="16" ry="12" fill="#FEF3C7"/>
+      <circle cx="212" cy="478" r="7" fill="#1E293B"/>
+
+      <!-- Mouth & Fangs -->
+      <path d="M 140 528 Q 180 558 220 528" stroke="#FFFFFF" stroke-width="10" fill="none" stroke-linecap="round"/>
+      <polygon points="144,528 154,528 149,555" fill="#FFFFFF"/>
+      <polygon points="216,528 206,528 211,555" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- PANEL 3: SIDE PROFILE & CHASE DYNAMICS (X: 1380 to 2000) -->
+  <!-- ======================================================= -->
+  <g id="panel-side-view">
+    <rect x="1380" y="210" width="620" height="1540" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="1690" y="255" class="panel-label" text-anchor="middle">3. PROFILE &amp; CHASE DYNAMICS</text>
+    <text x="1690" y="285" class="subtitle" font-size="15" text-anchor="middle">Forward Momentum / Flaring Skirt / Stomp Mechanics</text>
+
+    <g transform="translate(1530, 0)">
+      <!-- Boots -->
+      <rect x="70" y="1680" width="120" height="65" rx="8" fill="#1E242B"/>
+      <rect x="65" y="1655" width="130" height="30" rx="8" fill="#E5A93C"/>
+
+      <!-- Leg -->
+      <rect x="100" y="1380" width="60" height="280" fill="#7F1D1D"/>
+
+      <!-- Skirt side profile with forward flare -->
+      <polygon points="130,1040 230,1390 40,1390" fill="#A31D1D"/>
+      <rect x="35" y="1360" width="200" height="35" rx="6" fill="#E5A93C"/>
+
+      <!-- Torso Profile (slight commanding forward posture) -->
+      <rect x="70" y="620" width="130" height="425" rx="20" fill="#A31D1D"/>
+      <rect x="65" y="1015" width="140" height="50" rx="10" fill="#E5A93C"/>
+
+      <!-- Arm Swing Clearance -->
+      <path d="M 120 640 L 70 1060 L 105 1080 L 155 700 Z" fill="#A31D1D"/>
+      <rect x="65" y="1030" width="45" height="50" rx="8" fill="#E5A93C"/>
+      <ellipse cx="85" cy="1110" rx="18" ry="26" fill="#C89568"/>
+
+      <!-- Huge Mane Volume (Back Profile) -->
+      <path d="M 120 300 C 40 380, 0 660, 10 980 C 40 860, 60 750, 70 650 L 140 600 Z" fill="#1A1412"/>
+
+      <!-- Face Profile (Forward projecting brow & muzzle) -->
+      <path d="M 130 420 L 195 440 L 210 490 L 175 560 L 130 550 Z" fill="#C2410C"/>
+      <polygon points="120,340 160,420 100,420" fill="#E5A93C"/>
+      <circle cx="185" cy="475" r="8" fill="#1E293B"/>
+      <!-- Fang protruding -->
+      <polygon points="190,520 200,520 195,548" fill="#FFFFFF"/>
+    </g>
+  </g>
+
+  <!-- ======================================================= -->
+  <!-- RIGHT SIDEBAR: CULTURAL PACK & GATES (X: 2040 to 3120)  -->
+  <!-- ======================================================= -->
+  <g id="sidebar" transform="translate(2040, 210)">
+    <!-- 1. Palette Card -->
+    <rect x="0" y="0" width="1080" height="380" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="30" y="45" class="panel-label" font-size="20">COLOR PALETTE &amp; MATERIALS</text>
+
+    <!-- Swatches Grid -->
+    <g transform="translate(30, 70)">
+      <!-- Swatch 1: Crimson -->
+      <rect x="0" y="0" width="55" height="55" rx="10" fill="#A31D1D"/>
+      <text x="70" y="24" class="swatch-label">#A31D1D — CEREMONIAL CRIMSON</text>
+      <text x="70" y="46" class="swatch-sub">Dominant Robe / Tunic &amp; Pleated Skirt (Majestic contrast vs Tuku Teal)</text>
+
+      <!-- Swatch 2: Gold -->
+      <rect x="0" y="70" width="55" height="55" rx="10" fill="#E5A93C"/>
+      <text x="70" y="94" class="swatch-label">#E5A93C — BROCADE GOLD</text>
+      <text x="70" y="116" class="swatch-sub">Embroidered Yoke, Belt, Skirt Hem, Wrist/Ankle Cuffs</text>
+
+      <!-- Swatch 3: Dark Mane -->
+      <rect x="0" y="140" width="55" height="55" rx="10" fill="#1A1412"/>
+      <text x="70" y="164" class="swatch-label">#1A1412 — FLOWING MANE</text>
+      <text x="70" y="186" class="swatch-sub">Voluminous cascading mane framing head and shoulders</text>
+
+      <!-- Swatch 4: Mask Terracotta -->
+      <rect x="0" y="210" width="55" height="55" rx="10" fill="#C2410C"/>
+      <text x="70" y="234" class="swatch-label">#C2410C / #FEF3C7 — GUARDIAN FACE</text>
+      <text x="70" y="256" class="swatch-sub">Theatrical Terracotta &amp; Golden Ochre (Protective, high-energy visage)</text>
+    </g>
+
+    <!-- 2. Cultural Boundaries Card -->
+    <rect x="0" y="410" width="1080" height="660" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="30" y="455" class="panel-label" font-size="20">CULTURAL SAFETY &amp; DESIGN BOUNDARIES</text>
+
+    <text x="30" y="500" class="note-text" font-weight="700" fill="#38BDF8">1. APPROVED GUARDIAN FRAMING (docs/03, docs/05):</text>
+    <text x="30" y="530" class="note-text">• Lakhey is a protective spirit guardian participating in a friendly festival chase.</text>
+    <text x="30" y="555" class="note-text">• Strictly NONVIOLENT: catching Tuku triggers a playful tag flourish, NOT horror/harm.</text>
+    <text x="30" y="580" class="note-text">• Movement embodies commanding weight and athletic rhythm (Dhime beat).</text>
+
+    <text x="30" y="630" class="note-text" font-weight="700" fill="#EF4444">2. STRICT PROHIBITIONS &amp; GATES:</text>
+    <text x="30" y="660" class="note-text">• DO NOT copy consecrated ritual masks, sacred temple relics, or tantric marks.</text>
+    <text x="30" y="685" class="note-text">• DO NOT treat Lakhey as a generic horror demon, undead monster, or enemy to slay.</text>
+    <text x="30" y="710" class="note-text">• DO NOT claim procedural game animations represent sacred ritual choreography.</text>
+    <text x="30" y="735" class="note-text">• Tuku is an original fictional trickster, NOT a ritual Jhyalincha reenactment.</text>
+
+    <text x="30" y="785" class="note-text" font-weight="700" fill="#F59E0B">3. PRACTITIONER CONSULTATION REGISTER:</text>
+    <text x="30" y="815" class="note-text">• Formal consultation package prepared for local Newar cultural custodians.</text>
+    <text x="30" y="840" class="note-text">• Verified references documented in docs/12_RESEARCH_SOURCES.md.</text>
+    <text x="30" y="865" class="note-text">• All design choices flagged as PROPOSALS pending Game Director explicit approval.</text>
+
+    <text x="30" y="915" class="note-text" font-weight="700" fill="#A855F7">4. 3D TARGET ASSET SPECS (FOR T010):</text>
+    <text x="30" y="945" class="note-text">• Scale: 2.35m height, broad 0.85m chest span (1.4× Tuku scale).</text>
+    <text x="30" y="970" class="note-text">• Target Polycount: 3,500–5,500 triangles for mobile efficiency.</text>
+    <text x="30" y="995" class="note-text">• Materials: 2 shared PBR materials (Crimson/Gold Cloth + Mane/Mask).</text>
+
+    <!-- 3. Director Approval Sign-off Box -->
+    <rect x="0" y="1100" width="1080" height="240" rx="16" fill="#131D31" stroke="#F59E0B" stroke-width="2"/>
+    <text x="30" y="1145" class="panel-label" font-size="18" fill="#F59E0B">DIRECTOR APPROVAL CRITERIA (T009):</text>
+    <text x="30" y="1185" class="note-text" font-size="15" fill="#E2E8F0">1. "Imposing, energetic festival guardian contrasting sharply with Tuku in color and mass."</text>
+    <text x="30" y="1215" class="note-text" font-size="15" fill="#E2E8F0">2. "Completely free of sacred relic imitation or horror tropes."</text>
+    <text x="30" y="1245" class="note-text" font-size="15" fill="#E2E8F0">3. "Ready to proceed to T010 3D blockout upon explicit Game Director sign-off."</text>
+  </g>
+</svg>

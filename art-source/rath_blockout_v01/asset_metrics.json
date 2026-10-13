@@ -1,0 +1,99 @@
+{
+  "blender_version": "5.2.2 LTS",
+  "units": "meters",
+  "blender_forward": "-Y",
+  "gltf_forward": "+Z",
+  "gltf_up": "+Y",
+  "root_origin": [
+    0,
+    0,
+    0
+  ],
+  "bounds_blender_min": [
+    -1.4900001287460327,
+    -3.240000009536743,
+    0.0
+  ],
+  "bounds_blender_max": [
+    1.4900001287460327,
+    1.559999942779541,
+    4.244999885559082
+  ],
+  "bounds_gltf_min": [
+    -1.4900001287460327,
+    0.0,
+    -1.559999942779541
+  ],
+  "bounds_gltf_max": [
+    1.4900001287460327,
+    4.244999885559082,
+    3.240000009536743
+  ],
+  "dimensions_gltf_xyz_m": [
+    2.9800002574920654,
+    4.244999885559082,
+    4.799999952316284
+  ],
+  "triangles": 8434,
+  "mesh_objects": 10,
+  "materials": [
+    "Chassis_RedOxide",
+    "Garland_Marigold",
+    "Roof_DarkTimber",
+    "Rope_Hemp",
+    "Seat_CrimsonCloth",
+    "Timber_Dark",
+    "Timber_Wheel",
+    "Trim_AgedBrass"
+  ],
+  "texture_images": 0,
+  "animation_clips": 0,
+  "node_names": [
+    "RathRoot",
+    "ChassisRoot",
+    "ChassisRoot_Mesh",
+    "DrawbeamRoot",
+    "DrawbeamRoot_Mesh",
+    "GarlandRoot",
+    "GarlandRoot_Mesh",
+    "PavilionRoot",
+    "PavilionRoot_Mesh",
+    "PlatformRoot",
+    "PlatformRoot_Mesh",
+    "RoofRoot",
+    "RoofRoot_Mesh",
+    "Wheel_FL",
+    "Wheel_FL_Mesh",
+    "Wheel_FR",
+    "Wheel_FR_Mesh",
+    "Wheel_RL",
+    "Wheel_RL_Mesh",
+    "Wheel_RR",
+    "Wheel_RR_Mesh"
+  ],
+  "wheel_pivots_blender": {
+    "FL": [
+      -1.190000057220459,
+      -0.9200000166893005,
+      0.6399999856948853
+    ],
+    "FR": [
+      1.190000057220459,
+      -0.9200000166893005,
+      0.6399999856948853
+    ],
+    "RL": [
+      -1.190000057220459,
+      0.9200000166893005,
+      0.6399999856948853
+    ],
+    "RR": [
+      1.190000057220459,
+      0.9200000166893005,
+      0.6399999856948853
+    ]
+  },
+  "dimensions_status": "proposed blockout dimensions, not historical measurements",
+  "glb_bytes": 663320,
+  "glb_sha256": "7d51f2ba243ff5889076967a8a5adf8066d273206ec5fddd0373763c754f13fc"
+}

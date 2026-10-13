@@ -1,0 +1,284 @@
+{
+  "asset_id": "building01_residence_v01",
+  "blender_version": "5.2.2 LTS",
+  "units": "working meters",
+  "root_origin": [
+    0,
+    0,
+    0
+  ],
+  "front_blender": "-Y",
+  "front_gltf": "+Z",
+  "gltf_up": "+Y",
+  "bounds_blender_min": [
+    -3.109999895095825,
+    -2.109999895095825,
+    0.0
+  ],
+  "bounds_blender_max": [
+    3.109999895095825,
+    2.005000114440918,
+    7.09499979019165
+  ],
+  "bounds_gltf_min": [
+    -3.109999895095825,
+    0.0,
+    -2.005000114440918
+  ],
+  "bounds_gltf_max": [
+    3.109999895095825,
+    7.09499979019165,
+    2.109999895095825
+  ],
+  "dimensions_gltf_xyz_m": [
+    6.21999979019165,
+    7.09499979019165,
+    4.115000009536743
+  ],
+  "triangles": 4588,
+  "mesh_objects": 23,
+  "unique_mesh_data": 13,
+  "materials": [
+    "Brick_OriginalTile",
+    "Door_Iron",
+    "Opaque_Window_Recess",
+    "Plain_Dark_Timber",
+    "Roof_OriginalTile",
+    "Stone_Plith"
+  ],
+  "texture_images": [
+    {
+      "name": "brick_color_512",
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "roof_color_512",
+      "size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "animation_clips": 0,
+  "windows": [
+    {
+      "node": "Window_Front_01",
+      "local_center": [
+        -1.85,
+        1.64
+      ],
+      "aperture": [
+        0.94,
+        1.02
+      ]
+    },
+    {
+      "node": "Window_Front_02",
+      "local_center": [
+        1.85,
+        1.64
+      ],
+      "aperture": [
+        0.94,
+        1.02
+      ]
+    },
+    {
+      "node": "Window_Front_03",
+      "local_center": [
+        -1.7,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    },
+    {
+      "node": "Window_Front_04",
+      "local_center": [
+        0,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    },
+    {
+      "node": "Window_Front_05",
+      "local_center": [
+        1.7,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    },
+    {
+      "node": "Window_Back_01",
+      "local_center": [
+        -1.35,
+        1.64
+      ],
+      "aperture": [
+        1.04,
+        1.02
+      ]
+    },
+    {
+      "node": "Window_Back_02",
+      "local_center": [
+        1.35,
+        1.64
+      ],
+      "aperture": [
+        1.04,
+        1.02
+      ]
+    },
+    {
+      "node": "Window_Back_03",
+      "local_center": [
+        -1.35,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    },
+    {
+      "node": "Window_Back_04",
+      "local_center": [
+        1.35,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    },
+    {
+      "node": "Window_Left_01",
+      "local_center": [
+        0,
+        1.64
+      ],
+      "aperture": [
+        1.04,
+        1.02
+      ]
+    },
+    {
+      "node": "Window_Left_02",
+      "local_center": [
+        0,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    },
+    {
+      "node": "Window_Right_01",
+      "local_center": [
+        0,
+        1.64
+      ],
+      "aperture": [
+        1.04,
+        1.02
+      ]
+    },
+    {
+      "node": "Window_Right_02",
+      "local_center": [
+        0,
+        4.45
+      ],
+      "aperture": [
+        1.04,
+        1.36
+      ]
+    }
+  ],
+  "window_counts": {
+    "Front": 5,
+    "Back": 4,
+    "Left": 2,
+    "Right": 2
+  },
+  "node_names": [
+    "Building01Root",
+    "DoorRoot",
+    "Closed_Double_Door",
+    "PlinthRoot",
+    "Stone_Plinth_And_Step",
+    "RoofRoot",
+    "Tiled_Roof_And_Ridge",
+    "TimberRoot",
+    "Plain_Timber_Bands_And_Corners",
+    "WallsRoot",
+    "Gable_Left",
+    "Gable_Right",
+    "Wall_Back",
+    "Wall_Front",
+    "Wall_Left",
+    "Wall_Right",
+    "WindowsRoot",
+    "Window_Back_01",
+    "Window_Back_02",
+    "Window_Back_03",
+    "Window_Back_04",
+    "Window_Front_01",
+    "Window_Front_02",
+    "Window_Front_03",
+    "Window_Front_04",
+    "Window_Front_05",
+    "Window_Left_01",
+    "Window_Left_02",
+    "Window_Right_01",
+    "Window_Right_02"
+  ],
+  "parents": {
+    "Building01Root": null,
+    "DoorRoot": "Building01Root",
+    "Closed_Double_Door": "DoorRoot",
+    "PlinthRoot": "Building01Root",
+    "Stone_Plinth_And_Step": "PlinthRoot",
+    "RoofRoot": "Building01Root",
+    "Tiled_Roof_And_Ridge": "RoofRoot",
+    "TimberRoot": "Building01Root",
+    "Plain_Timber_Bands_And_Corners": "TimberRoot",
+    "WallsRoot": "Building01Root",
+    "Gable_Left": "WallsRoot",
+    "Gable_Right": "WallsRoot",
+    "Wall_Back": "WallsRoot",
+    "Wall_Front": "WallsRoot",
+    "Wall_Left": "WallsRoot",
+    "Wall_Right": "WallsRoot",
+    "WindowsRoot": "Building01Root",
+    "Window_Back_01": "WindowsRoot",
+    "Window_Back_02": "WindowsRoot",
+    "Window_Back_03": "WindowsRoot",
+    "Window_Back_04": "WindowsRoot",
+    "Window_Front_01": "WindowsRoot",
+    "Window_Front_02": "WindowsRoot",
+    "Window_Front_03": "WindowsRoot",
+    "Window_Front_04": "WindowsRoot",
+    "Window_Front_05": "WindowsRoot",
+    "Window_Left_01": "WindowsRoot",
+    "Window_Left_02": "WindowsRoot",
+    "Window_Right_01": "WindowsRoot",
+    "Window_Right_02": "WindowsRoot"
+  },
+  "glb_bytes": 569056,
+  "glb_sha256": "f2837a955bc4cb399482b875122032f3e14bf5715b8955c3eaacbb7f92082d40",
+  "scale_status": "Adjustable authoring scale; no street placement or historical measurements approved"
+}

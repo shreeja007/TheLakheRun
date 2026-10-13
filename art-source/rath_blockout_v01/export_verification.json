@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "glb_sha256": "7d51f2ba243ff5889076967a8a5adf8066d273206ec5fddd0373763c754f13fc",
+  "editable_blend_reopened": true,
+  "blend_asset_triangles": 8434,
+  "binary_length_bytes": 663320,
+  "nodes": 21,
+  "meshes": 10,
+  "primitives": 23,
+  "triangles": 8434,
+  "materials": 8,
+  "no_external_resources": true,
+  "no_preview_scene": true,
+  "reimport_bounds_blender_min": [
+    -1.4900001287460327,
+    -3.240000009536743,
+    0.0
+  ],
+  "reimport_bounds_blender_max": [
+    1.4900001287460327,
+    1.559999942779541,
+    4.244999885559082
+  ],
+  "wheel_checks": [
+    {
+      "node": "Wheel_FL",
+      "pivot": [
+        -1.190000057220459,
+        -0.9200000166893005,
+        0.6399999856948853
+      ],
+      "rotation_keeps_center": true
+    },
+    {
+      "node": "Wheel_FR",
+      "pivot": [
+        1.190000057220459,
+        -0.9200000166893005,
+        0.6399999856948853
+      ],
+      "rotation_keeps_center": true
+    },
+    {
+      "node": "Wheel_RL",
+      "pivot": [
+        -1.190000057220459,
+        0.9200000166893005,
+        0.6399999856948853
+      ],
+      "rotation_keeps_center": true
+    },
+    {
+      "node": "Wheel_RR",
+      "pivot": [
+        1.190000057220459,
+        0.9200000166893005,
+        0.6399999856948853
+      ],
+      "rotation_keeps_center": true
+    }
+  ]
+}

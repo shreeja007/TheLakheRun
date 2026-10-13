@@ -1,0 +1,99 @@
+{
+  "asset_id": "everyday_gateway_v01",
+  "blender_version": "5.2.2 LTS",
+  "units": "working meters",
+  "root_origin": [
+    0,
+    0,
+    0
+  ],
+  "front_blender": "-Y",
+  "front_gltf": "+Z",
+  "gltf_up": "+Y",
+  "bounds_blender_min": [
+    -3.049999952316284,
+    -0.5,
+    0.0
+  ],
+  "bounds_blender_max": [
+    3.049999952316284,
+    0.5,
+    3.9600000381469727
+  ],
+  "bounds_gltf_min": [
+    -3.049999952316284,
+    0.0,
+    -0.5
+  ],
+  "bounds_gltf_max": [
+    3.049999952316284,
+    3.9600000381469727,
+    0.5
+  ],
+  "dimensions_gltf_xyz_m": [
+    6.099999904632568,
+    3.9600000381469727,
+    1.0
+  ],
+  "triangles": 436,
+  "mesh_objects": 8,
+  "unique_mesh_data": 8,
+  "materials": [
+    "Brick_OriginalTile",
+    "Door_Iron",
+    "Plain_Dark_Timber",
+    "Stone_Plith"
+  ],
+  "texture_images": [
+    {
+      "name": "brick_color_512",
+      "size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "animation_clips": 0,
+  "clear_passage_width_m": 4.1,
+  "clear_passage_height_m": 3.18,
+  "pier_clear_width_above_footings_m": 4.3,
+  "pier_nodes": [
+    "Pier_Left",
+    "Pier_Right"
+  ],
+  "lintel_nodes": [
+    "Timber_Lintel"
+  ],
+  "fastener_heads": 8,
+  "node_names": [
+    "GatewayRoot",
+    "LintelRoot",
+    "Plain_Fasteners",
+    "Timber_Lintel",
+    "PiersRoot",
+    "Pier_Left",
+    "Pier_Right",
+    "StoneRoot",
+    "Stone_Cap_Left",
+    "Stone_Cap_Right",
+    "Stone_Footing_Left",
+    "Stone_Footing_Right"
+  ],
+  "parents": {
+    "GatewayRoot": null,
+    "LintelRoot": "GatewayRoot",
+    "Plain_Fasteners": "LintelRoot",
+    "Timber_Lintel": "LintelRoot",
+    "PiersRoot": "GatewayRoot",
+    "Pier_Left": "PiersRoot",
+    "Pier_Right": "PiersRoot",
+    "StoneRoot": "GatewayRoot",
+    "Stone_Cap_Left": "StoneRoot",
+    "Stone_Cap_Right": "StoneRoot",
+    "Stone_Footing_Left": "StoneRoot",
+    "Stone_Footing_Right": "StoneRoot"
+  },
+  "glb_bytes": 177856,
+  "glb_sha256": "781dc42c131c9d9caf1922cf001bbbc104e8c2a8fd343bf11243b1bf49109fab",
+  "scale_status": "Adjustable working dimensions; no approved lane clearance, historical or engineering measurements"
+}

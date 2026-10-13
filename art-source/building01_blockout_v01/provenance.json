@@ -1,0 +1,37 @@
+{
+  "ticket": "T025",
+  "date": "2026-10-12",
+  "asset_id": "building01_residence_v01",
+  "concept_acceptance": "Owner accepted Building 01 and authorized Blender/GLB model in chat; other T024 concepts not automatically accepted",
+  "model_state": "Static model; director acceptance pending",
+  "authoring": "Original procedural geometry, UVs, materials and two analytic repeating color tiles",
+  "generator": "generate_building.py",
+  "generator_sha256": "ee504ffbbe284321cdba4680f3b20868974b3b26b628af68f90322e77cfa06be",
+  "blender_version": "5.2.2 LTS",
+  "concept_file": "references/accepted_building01_concept.png",
+  "concept_sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4",
+  "upstream_provenance": "art-source/festival_phase3_v01/provenance.json",
+  "reference_notes": "REFERENCE_NOTES.md",
+  "new_online_research": false,
+  "external_media_copied": false,
+  "textures": [
+    {
+      "file": "textures/brick_color_512.png",
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e",
+      "creator": "T025 generator"
+    },
+    {
+      "file": "textures/roof_color_512.png",
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770",
+      "creator": "T025 generator"
+    }
+  ],
+  "glb_sha256": "f2837a955bc4cb399482b875122032f3e14bf5715b8955c3eaacbb7f92082d40",
+  "blend_sha256": "4c2cca6b4ba7c308ee12218b544860d55e1604dc9c21e9e43410ba74ef61470c",
+  "limitations": [
+    "Working dimensions only",
+    "Simplified roof/stone/timber finish",
+    "No interior, collision, door behavior, animation or placement",
+    "No authenticity/engineering certification; upstream project rights not independently certified"
+  ]
+}

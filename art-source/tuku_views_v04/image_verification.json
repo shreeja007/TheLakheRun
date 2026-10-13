@@ -1,0 +1,37 @@
+[
+  {
+    "file": "tuku_back_v04.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1747394,
+    "sha256": "BB56BA8818917C053E94EF9665758B4E0BD369E54FC80D9D17C838F59CC2C88B"
+  },
+  {
+    "file": "tuku_front_v04.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1777046,
+    "sha256": "5CC696A83B402C162A39EDBC6FC0E8C88C3492860BBF1D05EC650D53743C92E5"
+  },
+  {
+    "file": "tuku_left_side_v04.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1638982,
+    "sha256": "C1CF70AEC94FA14FB57C31C602776C8A86EA06B3617EEA55B15BB976C6F3C2A0"
+  },
+  {
+    "file": "tuku_right_side_v04.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1709308,
+    "sha256": "3BCCC07B5C51AE98B2BDE2D9986AFA08C0C48B85ECED6C9FBA30346C68EE3877"
+  },
+  {
+    "file": "tuku_top_inferred_v04.png",
+    "width": 1254,
+    "height": 1254,
+    "bytes": 1711853,
+    "sha256": "2C93F505139D5F4B12F0A617267E7B2C9A5D406187481A39C97B31AB30B2FB92"
+  }
+]

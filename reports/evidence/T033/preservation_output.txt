@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-13",
+  "backup": "058d14b2a0f7ecfc3494481dde14f0daeb289f04",
+  "protectedFiles": 429,
+  "unchangedProtectedGitFiles": 421,
+  "authorizedRuntimeChanges": [
+    "index.html",
+    "package.json",
+    "scripts/pwa-build.mjs",
+    "scripts/test-ui-mobile.mjs",
+    "src/game/GameManager.ts",
+    "src/input/InputManager.ts",
+    "src/main.ts",
+    "vite.config.ts"
+  ],
+  "activeModelUrls": [
+    "/models/bhairab_rath.glb",
+    "/models/ganesh_rath.glb",
+    "/models/kumari_rath.glb",
+    "/models/lakhey_blockout_v01.glb",
+    "/models/lakhey_blockout_v02.glb",
+    "/models/pulu_kisi.glb",
+    "/models/tuku_blockout_v02.glb"
+  ],
+  "offlineFiles": 33,
+  "offlineBytes": 11389014,
+  "historicalT032VerificationSha256": "9f45be992b9af9f17aa2385f4cd445545ca55aa5200b9575713ffa419696bf82",
+  "limitations": [
+    "Source/asset preservation and cache coverage do not certify all behaviors or physical devices."
+  ]
+}

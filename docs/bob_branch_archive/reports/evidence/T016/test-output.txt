@@ -1,0 +1,21 @@
+
+> lakhey-run@0.1.0 test:ui
+> node scripts/test-ui-mobile.mjs
+
+PASS Default HUD, keyboard tutorial, no tutorial movement, pause/resume, replay, mute: passed
+PASS Persistent tutorial completion, natural collision/results and retry: passed
+PASS Explicit debug HUD and live FPS: passed
+PASS Emulated touch swipes in tutorial and gameplay (left/right/jump/slide): passed
+PASS Secondary touches and cancelled gestures do not start a run: passed
+PASS 320px portrait through 844px landscape menu/dialog bounds: passed
+PASS Production service-worker snapshot, controlled reload, offline launch and play: passed
+PASS Manifest, icon dimensions, all precache URLs: 29 files, 9275205 bytes
+PASS Blocked storage: tutorial skip and session fallback: passed
+PASS Synthetic install event: one-use prompt, dismissal, modal input isolation: passed
+PASS iPhone UA emulation: manual installation guidance (not Safari verification): passed
+PASS Emulated standalone mode hides redundant installation menu: passed
+PASS Service-worker registration failure leaves online play usable: passed
+PASS Unavailable WebGL displays an actionable startup failure (intentional boot error): passed
+PASS Real worker update waits without reloading a paused run; tab close activates it and removes old game cache: passed
+PASS No uncaught page errors in desktop, touch and denied-storage checks: passed
+16 checks passed on chrome 155.0.8059.39.

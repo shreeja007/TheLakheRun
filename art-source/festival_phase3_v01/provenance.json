@@ -1,0 +1,72 @@
+{
+  "ticket": "T024",
+  "date": "2026-10-12",
+  "status": "Original AI concept drafts; director visual acceptance pending",
+  "tool": "built-in image_gen.imagegen; one generation per distinct asset, four calls, no correction or CLI fallback",
+  "source_record": "REFERENCE_NOTES.md",
+  "research": [
+    {
+      "title": "UNESCO World Heritage Centre — Kathmandu Valley",
+      "url": "https://whc.unesco.org/en/list/121/",
+      "accessed": "2026-10-12",
+      "use": "Broad brick/stone/timber material context only; source descriptions primarily concern heritage monuments. No photograph or page media copied, downloaded or supplied to generation.",
+      "media_reuse_license": "Not verified; no media reused"
+    }
+  ],
+  "inputs": [
+    {
+      "file": "references/cart_style_reference.png",
+      "role": "Rendering style only; unchanged copy of art-source/festival_phase2_v01/market_cart_concept_v01.png",
+      "upstream_record": "art-source/festival_phase2_v01/provenance.json; earlier T017 source chain",
+      "sha256": "1fb3f7666e5d5a5d0e7f20ef8c7defa5c30373b3dd20cc31cc4b21760319207b"
+    }
+  ],
+  "workflow": [
+    {
+      "prompt": "building_01_prompt.txt",
+      "generated_file": "exec-95deca4b-8eaf-45ae-ae31-69ed90b4b993.png",
+      "saved_file": "building_01_residence_concept_v01.png",
+      "input": "references/cart_style_reference.png",
+      "result": "Selected original draft; visually inspected, no correction required",
+      "sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4"
+    },
+    {
+      "prompt": "building_02_prompt.txt",
+      "generated_file": "exec-78387e1e-16ae-48c5-b5ff-390df429babe.png",
+      "saved_file": "building_02_shopfront_concept_v01.png",
+      "input": "references/cart_style_reference.png",
+      "result": "Selected original draft; visually inspected, no correction required",
+      "sha256": "88ff1a33d94299430a128de083f35830fca72351b3b01e7f18e441c413b4c96b"
+    },
+    {
+      "prompt": "gateway_prompt.txt",
+      "generated_file": "exec-b515d445-0c6a-40fe-8029-3cb4765582db.png",
+      "saved_file": "everyday_gateway_concept_v01.png",
+      "input": "references/cart_style_reference.png",
+      "result": "Selected original draft; visually inspected, no correction required",
+      "sha256": "564af4590cb0edfb34d2bfd9223c1bb14912aa9f5360a802020827ca7c51bad4"
+    },
+    {
+      "prompt": "hanging_lights_prompt.txt",
+      "generated_file": "exec-789aac12-3550-4ca2-b03b-e14fda7f8aa6.png",
+      "saved_file": "hanging_lights_concept_v01.png",
+      "input": "references/cart_style_reference.png",
+      "result": "Selected original draft; visually inspected, no correction required",
+      "sha256": "145a434c92d85c138e71e52162f0beaefdbee14873b17c8afbc1c1ac97c36abe"
+    }
+  ],
+  "rights_and_claims": "Original fictional everyday architecture and generic contemporary bulb-string designs, not heritage replicas or certified Newar architecture. No new outside photographs/models/textures/logos/fonts imported. Upstream rights to the pre-existing owner-supplied Tuku reference are not independently certified.",
+  "preserved_user_file": {
+    "file": "art-source/tuku_concept_art_turnaround.png",
+    "expected_sha256": "3cb9852f33a00bc1651253b6d7caab68cc59a8ca18e4e6e9dffe0ad8a9d9ab3f",
+    "modified": false,
+    "tracked_by_this_ticket": false
+  },
+  "limitations": [
+    "Raster concepts are approximate views, not calibrated mesh projections or deterministic layered artwork",
+    "Joint depths, tile/brick counts, proportions and bulb-mount attachment need 3D reconciliation; light cable-end loop is not clearly represented",
+    "No scale, gameplay placement, lane dimensions, collision, texture/material budget or lighting strategy locked",
+    "No Blender/GLB models, browser/device/Meshy conversion or performance tests"
+  ],
+  "verification": "image_verification.json and package_verification.json; portable Windows PowerShell 7 verify_and_package.ps1"
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "file": "art-source/tuku_refinement_v03/tuku_turnaround_detailed_v03.png",
+    "width": 1672,
+    "height": 941,
+    "bytes": 1826977,
+    "sha256": "3B175A1C91A19C9907C599B9044C8C01B6293178D2FCB1BF38EB187F3A040C10"
+  },
+  {
+    "file": "art-source/tuku_refinement_v03/tuku_front_meshy_v03.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1847959,
+    "sha256": "10250801B516FAEEF832F39E1D104188F242D9F23A5A07F6BC759F3A916510B8"
+  }
+]

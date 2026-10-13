@@ -1,0 +1,28 @@
+{
+  "ticket": "T017",
+  "date": "2026-10-11",
+  "status": "AI-assisted concept proposal; director acceptance pending",
+  "tool": "built-in image_gen.imagegen; referenced-image edits; opaque backgrounds",
+  "source": {
+    "file": "art-source/tuku_concept_art_turnaround.jpg",
+    "role": "Existing repository reference specifically named and supplied by the user",
+    "sha256": "8C05B5366BD9BF2A19AD61C63B9765D33846D2C703E81DD89F0AA7EDEA48324C",
+    "modified": false
+  },
+  "preserved_user_file": {
+    "file": "art-source/tuku_concept_art_turnaround.png",
+    "sha256": "3CB9852F33A00BC1651253B6D7CAAB68CC59A8CA18E4E6E9DFFE0AD8A9D9AB3F",
+    "tracked_by_this_ticket": false,
+    "modified": false
+  },
+  "workflow": [
+    { "prompt": "01_turnaround_prompt.txt", "result": "Initial refinement retained wrong front strap and duplicated profile; not selected as final", "generated_file": "exec-aece91de-79d1-405c-b931-23bf6cb0c6e3.png" },
+    { "prompt": "02_turnaround_consistency_edit.txt", "result": "Selected corrected sheet", "generated_file": "exec-8b2a497b-6987-44af-8880-e811e3077203.png", "saved_file": "tuku_turnaround_detailed_v03.png" },
+    { "prompt": "03_single_front_prompt.txt", "result": "Selected clean single front derived from corrected sheet", "generated_file": "exec-ee17ba4f-6268-45ed-a7cf-9474004797be.png", "saved_file": "tuku_front_meshy_v03.png" }
+  ],
+  "generation_directory": "C:/Users/ShreejaManandhar/.codex/generated_images/01a12946-e210-7110-87ad-2be0f38393e7",
+  "verification": "image_verification.json contains measured PNG dimensions, bytes and SHA-256 hashes",
+  "sources_read": ["docs/04_CHARACTER_TUKU.md", "docs/03_STORY_AND_CULTURE.md", "archive/TUKU_TURNAROUND_SPEC_V02.md (historical detail only)"],
+  "rights_and_claims": "No external photos, art, fonts or exact textile patterns were downloaded/copied. Inputs were the user-directed repository image and generated refinements. This record does not independently certify upstream rights to the pre-existing reference or assert traditional/cultural authenticity.",
+  "limitations": ["Generated concept images are not calibrated projections of one 3D mesh", "Not deterministic or layered editable artwork; editable prompt sources are supplied", "Small material, garment, hand and pose details need art/model review", "Meshy conversion, skeleton compatibility and animation deformation are untested", "Actual delivered dimensions are recorded; no claim of 4K output"]
+}

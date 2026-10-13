@@ -1,0 +1,51 @@
+{
+  "ticket": "T024",
+  "decoded_pngs": 5,
+  "images": [
+    {
+      "file": "building_01_residence_concept_v01.png",
+      "width": 2054,
+      "height": 766,
+      "bytes": 1957005,
+      "sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4",
+      "role": "selected concept draft",
+      "decoded": true
+    },
+    {
+      "file": "building_02_shopfront_concept_v01.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 2039460,
+      "sha256": "88ff1a33d94299430a128de083f35830fca72351b3b01e7f18e441c413b4c96b",
+      "role": "selected concept draft",
+      "decoded": true
+    },
+    {
+      "file": "everyday_gateway_concept_v01.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1661986,
+      "sha256": "564af4590cb0edfb34d2bfd9223c1bb14912aa9f5360a802020827ca7c51bad4",
+      "role": "selected concept draft",
+      "decoded": true
+    },
+    {
+      "file": "hanging_lights_concept_v01.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1462105,
+      "sha256": "145a434c92d85c138e71e52162f0beaefdbee14873b17c8afbc1c1ac97c36abe",
+      "role": "selected concept draft",
+      "decoded": true
+    },
+    {
+      "file": "references/cart_style_reference.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1847296,
+      "sha256": "1fb3f7666e5d5a5d0e7f20ef8c7defa5c30373b3dd20cc31cc4b21760319207b",
+      "role": "reference only",
+      "decoded": true
+    }
+  ]
+}

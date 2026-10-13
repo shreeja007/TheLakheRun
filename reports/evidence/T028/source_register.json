@@ -1,0 +1,199 @@
+{
+  "ticket": "T028",
+  "date": "2026-10-12",
+  "audience_preference": "Compare both before choosing",
+  "sources": [
+    {
+      "id": "CG01",
+      "title": "CrazyGames requirements",
+      "url": "https://docs.crazygames.com/requirements/intro/",
+      "supports": "Basic Launch has no monetization; Full Launch requires SDK.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CG02",
+      "title": "CrazyGames FAQ",
+      "url": "https://docs.crazygames.com/faq/",
+      "supports": "Prior publication is permitted when distribution rights are held; admission not guaranteed.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CG03",
+      "title": "CrazyGames Basic Launch metrics",
+      "url": "https://docs.crazygames.com/resources/basic-launch-metrics/",
+      "supports": "Evaluation process and indicative engagement examples; not adopted guarantees/thresholds.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CG04",
+      "title": "CrazyGames advertisement requirements",
+      "url": "https://docs.crazygames.com/requirements/ads/",
+      "supports": "Own SDK ads, non-disruption and appropriate error/pause/mute handling.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CG05",
+      "title": "CrazyGames technical requirements",
+      "url": "https://docs.crazygames.com/requirements/technical/",
+      "supports": "Relative paths and initial download/mobile-homepage limits.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CG06",
+      "title": "CrazyGames gameplay requirements",
+      "url": "https://docs.crazygames.com/requirements/gameplay/",
+      "supports": "English, quality checks and full-launch entry constraints.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CG07",
+      "title": "CrazyGames payouts",
+      "url": "https://docs.crazygames.com/payouts/",
+      "supports": "Tipalti, €100 minimum and country-dependent methods; actual Nepal onboarding not verified.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "PK01",
+      "title": "Poki monetization",
+      "url": "https://developers.poki.com/guide/how-monetization-works",
+      "supports": "SDK ads and optional rewards; no IAP or third-party ads in described model.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "PK02",
+      "title": "Poki deal types",
+      "url": "https://developers.poki.com/guide/revenue-deal-types",
+      "supports": "Indicative exclusive term and non-exclusive license option; signed agreement controls.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "PK03",
+      "title": "Poki partner overview",
+      "url": "https://developers.poki.com/guide/working-with-poki",
+      "supports": "Published traffic-dependent share descriptions; no negotiated Lakhey Run offer exists.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "PK04",
+      "title": "Poki payouts",
+      "url": "https://developers.poki.com/guide/payouts-billing",
+      "supports": "Wire/PayPal documentation; specific creator/country eligibility remains unverified.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "GG01",
+      "title": "Google H5 Games Ads",
+      "url": "https://support.google.com/adsense/answer/9959170?hl=en",
+      "supports": "Interstitial/rewarded formats and non-disruptive placement guidance.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "GG02",
+      "title": "Google Ad Placement API",
+      "url": "https://developers.google.com/ad-placement",
+      "supports": "Ad requests and actual delivery are different; API documentation only, no account approval.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "GG03",
+      "title": "Google AdSense availability",
+      "url": "https://support.google.com/adsense/answer/13402307?hl=en",
+      "supports": "Nepal appears in sign-up availability; not approval for this game/site.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "GG04",
+      "title": "Google AdSense payment methods",
+      "url": "https://support.google.com/adsense/answer/1714397?hl=en",
+      "supports": "Nepal row lists wire transfers; bank/account approval remains unverified.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "ST01",
+      "title": "Stripe global availability",
+      "url": "https://stripe.com/global",
+      "supports": "Inspected standard supported-business list; Nepal not listed. Does not address every Stripe product/company arrangement.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CF01",
+      "title": "Cloudflare static asset billing",
+      "url": "https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/",
+      "supports": "Static requests versus dynamic execution distinction; no deployment/adopted host.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    },
+    {
+      "id": "CF02",
+      "title": "Cloudflare Workers limits",
+      "url": "https://developers.cloudflare.com/workers/platform/limits/",
+      "supports": "Static asset individual-file size limit; actual project deployment not tested.",
+      "accessed_date": "2026-10-12",
+      "source_type": "primary official documentation",
+      "verification": "web tool search/open excerpts inspected",
+      "caveat": "Published facts can change; no signup, submission, offer, account or payout tested."
+    }
+  ],
+  "excluded_from_support": [
+    "Community/Reddit anecdotes",
+    "Generic eCPM/retention forecasts",
+    "Search-index contract PDFs not inspected"
+  ],
+  "research_limits": [
+    "Google ad-placement guessed get-started URL returned Internal Error; official index link led to html5-game-structure instead; failed URL not used.",
+    "Stripe canonical page redirected to its en-dk global page; support list inspected, Nepal search had no match.",
+    "No verified Nepali bank/portal approval, contract, taxation or actual audience/earnings data."
+  ],
+  "claims_policy": "Facts cited inline; inference/proposals/scenario assumptions labeled. No verbatim copyrighted passages reproduced.",
+  "scope_preserved": "No game/model edits, ads, SDK, tracking, sponsor messages, contracts, external uploads or deployment."
+}

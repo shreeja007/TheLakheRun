@@ -1,0 +1,77 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+
+# Build and production outputs
+dist/
+dist-ssr/
+.vite/
+
+# Playwright & test reports / caches
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+[Tt]humbs.db
+[Tt]humbs.db:encryptable
+
+# IDEs and Editors
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Python caches (for art-source generator scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Blender backup / autosave files
+*.blend1
+*.blend2
+*.blend3
+*.blend@*
+*.blend-backup*
+
+# Temporary files and dumps
+*.tmp
+*.temp
+core
+*.pid
+

@@ -1,0 +1,33 @@
+TUKU V03 — PROPOSED MODELING REFERENCE, PENDING DIRECTOR ACCEPTANCE
+
+START WITH: tuku_front_meshy_v03.png
+This is one full-body front figure with a plain background, no labels and a neutral A-pose.
+
+DESIGN REVIEW REFERENCE: tuku_turnaround_detailed_v03.png
+Four views for inspecting front/side/back construction. Do not treat the labeled collage as four separate subjects for single-image generation.
+
+Before spending generation credits, approve the identity, proportions, outfit and accessory placement. Existing game models/rigs have not been replaced.
+
+Meshy guidance checked 2026-10-11:
+- Image to 3D: https://help.meshy.ai/en/articles/9996860-how-to-use-meshy-image-to-3d
+- Multi-View: https://help.meshy.ai/en/articles/12634481-how-to-use-multi-view
+- Pose controls: https://help.meshy.ai/en/articles/10255659-how-to-generate-3d-models-with-a-pose-t-pose-or-custom-poses
+
+Use the standalone front image as the primary input. If your workspace exposes Pose Control, use its A-pose option for predictable rest-pose intent. Pose Control availability depends on the plan; image generation here does not guarantee rigging-ready topology.
+
+If using Meshy Multi-View, its official help currently describes one primary image plus up to three additional images, with each angle cropped into its own centered image, consistent scale/background and margins. This package provides a review sheet and a standalone front, not a validated four-file Multi-View upload set. Review/correct and crop the matching sheet views before a separate Multi-View attempt; do not mix old incorrect strap views with new ones. Prefer the matching front crop from that same sheet for an exact-scale set rather than mixing independently generated images.
+
+Anatomical anchors for inspection of any resulting mesh:
+- Single strap starts at wearer's LEFT shoulder and ends at RIGHT-REAR hip.
+- FRONT image: strap goes from image-right shoulder to image-left hip.
+- BACK image: strap goes from image-left shoulder to image-right hip.
+- Bag mostly hidden from wearer-left profile; visible from wearer-right profile.
+- Teal open cropped jacket with down hood; cream shirt extends about 8–10cm below hem.
+- Short close-fitting maroon wrap, charcoal tapered trousers, dark low sneakers with cream sole edge and tiny muted gold accent.
+- Keep arms/hands clear of torso/bag. Check fingers, strap separation, jacket/shirt boundaries, sole thickness and right-hip clearance.
+
+Fine seams/weave can be texture detail rather than extra mesh. Maintain simple rear silhouette for mobile play. Generated views are conceptual, not exact orthographic renders of a shared mesh; seam/pocket/hood details may need reconciliation in Blender. Color hex values are design targets, not pixel-accurate generated color guarantees.
+
+If a new model is created later, your friend's animations may require retargeting. Keep the approved existing skeleton/bone names, scale, axes and rest pose where possible; do not replace runtime assets from this art ticket.
+
+No Meshy upload, paid generation, model, rig, cultural authenticity claim or final costume approval was performed here.

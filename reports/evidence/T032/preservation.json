@@ -1,0 +1,33 @@
+{
+  "ticket": "T032",
+  "date": "2026-10-13",
+  "baselineFiles": 429,
+  "preservedFiles": 421,
+  "authorizedChanged": [
+    "index.html",
+    "package.json",
+    "scripts/pwa-build.mjs",
+    "scripts/test-ui-mobile.mjs",
+    "src/game/GameManager.ts",
+    "src/input/InputManager.ts",
+    "src/main.ts",
+    "vite.config.ts"
+  ],
+  "friendTeaseAndFestivalHooksPreserved": true,
+  "allModelArtRunnerAudioWorldFilesUnchanged": true,
+  "activeRuntimeModelUrls": [
+    "/models/bhairab_rath.glb",
+    "/models/ganesh_rath.glb",
+    "/models/kumari_rath.glb",
+    "/models/lakhey_blockout_v01.glb",
+    "/models/lakhey_blockout_v02.glb",
+    "/models/pulu_kisi.glb",
+    "/models/tuku_blockout_v02.glb"
+  ],
+  "allActiveModelUrlsPrecached": true,
+  "offlineFiles": 33,
+  "offlineBytes": 11389029,
+  "limits": [
+    "This checks hashes/source wiring/build snapshot, not physical devices or all game behaviors."
+  ]
+}

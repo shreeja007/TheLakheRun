@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "asset_id": "building02_shopfront_v01",
+  "glb_sha256": "b85c2642ada586f3f852edf02c3578ffddd372c8566d72e278b5fa37beb3ea68",
+  "triangles_instanced": 3748,
+  "unique_gltf_meshes": 18,
+  "mesh_nodes": 23,
+  "node_count": 31,
+  "primitives_instanced": 36,
+  "materials": 6,
+  "images": [
+    {
+      "name": "roof_color_512",
+      "bytes": 232323,
+      "embedded": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "brick_color_512",
+      "bytes": 144651,
+      "embedded": true,
+      "size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "source_min_triangle_area": 0.00033599921242417105,
+  "window_apertures_checked": [
+    "Window_Front_01",
+    "Window_Front_02",
+    "Window_Back_01",
+    "Window_Back_02",
+    "Window_Left_01",
+    "Window_Left_02",
+    "Window_Right_01",
+    "Window_Right_02"
+  ],
+  "additional_wall_apertures_checked": [
+    "Front",
+    "Back"
+  ],
+  "separate_shutter_panels": 4,
+  "shutter_x_spans": [
+    [
+      -2.2874999046325684,
+      -1.162500023841858
+    ],
+    [
+      -1.1375000476837158,
+      -0.012500000186264515
+    ],
+    [
+      0.012500000186264515,
+      1.1375000476837158
+    ],
+    [
+      1.162500023841858,
+      2.2874999046325684
+    ]
+  ],
+  "front_paired_panes_verified": true,
+  "roundtrip_bounds_blender_min": [
+    -3.509999990463257,
+    -2.1500000953674316,
+    0.0
+  ],
+  "roundtrip_bounds_blender_max": [
+    3.509999990463257,
+    2.1500000953674316,
+    7.045000076293945
+  ],
+  "grounded": true,
+  "source_packed_textures": true
+}

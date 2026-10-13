@@ -1,0 +1,105 @@
+{
+  "ticket": "T023",
+  "result": "PASS",
+  "entries_checked": 16,
+  "zip_bytes": 10164314,
+  "zip_sha256": "05e8698b65e14649d86bc12d4e26d1e00adb158a4ddb75f15c3d4552d7755088",
+  "members": [
+    {
+      "file": "HANDOFF.md",
+      "bytes": 6068,
+      "sha256": "d696b2ca2ef6fb012bc561caf74e0250595d865838fd705777421c0a2be4d80d",
+      "pass": true
+    },
+    {
+      "file": "image_verification.json",
+      "bytes": 1762,
+      "sha256": "cf1822861ecee605f6870b9e67e7627dcba1067f8a1c719e9aca597343680254",
+      "pass": true
+    },
+    {
+      "file": "market_cart_concept_v01.png",
+      "bytes": 1847296,
+      "sha256": "1fb3f7666e5d5a5d0e7f20ef8c7defa5c30373b3dd20cc31cc4b21760319207b",
+      "pass": true
+    },
+    {
+      "file": "market_cart_correction_prompt.txt",
+      "bytes": 1313,
+      "sha256": "d4e4f803ac9cee0c8d53c4d9a0390d50879a24ee70fcc47d4031fe42ab5b2713",
+      "pass": true
+    },
+    {
+      "file": "market_cart_prompt.txt",
+      "bytes": 2662,
+      "sha256": "16c3394f51d185e6d1424074e25e6b55115701073ec7f82a8c7887b9ae0aa13f",
+      "pass": true
+    },
+    {
+      "file": "provenance.json",
+      "bytes": 4241,
+      "sha256": "1281e204c137e293e362e659ac81298e3fc4e10bd6059caf6da1d6ba0d50396f",
+      "pass": true
+    },
+    {
+      "file": "references/market_cart_before_correction.png",
+      "bytes": 1898595,
+      "sha256": "c1ddeb2d1edd0d2ee84dad6dba2145e3f539a83c8fe501a9ed7317750eb56463",
+      "pass": true
+    },
+    {
+      "file": "references/tuku_style_reference.png",
+      "bytes": 1826977,
+      "sha256": "3b175a1c91a19c9907c599b9044c8c01b6293178d2fcb1bf38eb187f3a040c10",
+      "pass": true
+    },
+    {
+      "file": "spectator_01_prompt.txt",
+      "bytes": 2239,
+      "sha256": "2aacb02df9e871a8e44b8e6c8374058cb5281878b10a0bcab95debabc4135889",
+      "pass": true
+    },
+    {
+      "file": "spectator_01_turnaround_v01.png",
+      "bytes": 1785172,
+      "sha256": "311ce3ae871fe3c714ba47e6c5a2118d8a9255c32513482dac476c958e730417",
+      "pass": true
+    },
+    {
+      "file": "spectator_02_prompt.txt",
+      "bytes": 2248,
+      "sha256": "7a98ced22d8d6226b9f12f8c16a28ee85811cda8f3c6898b51465f96c60ecfc9",
+      "pass": true
+    },
+    {
+      "file": "spectator_02_turnaround_v01.png",
+      "bytes": 1838233,
+      "sha256": "3d7bcbb92f70abfa3d2284670bc4d04429fcbc706a7bcb04e7511223d5447795",
+      "pass": true
+    },
+    {
+      "file": "spectator_03_prompt.txt",
+      "bytes": 2290,
+      "sha256": "dc65c6fb3e5e54901d15d904f1f29e2916086bff08054020f84368d1a90f11c6",
+      "pass": true
+    },
+    {
+      "file": "spectator_03_turnaround_v01.png",
+      "bytes": 1891521,
+      "sha256": "9ea02c1f755129a06839d43d59c66954a17a9501a4173a4f6ad27c1d493b13ee",
+      "pass": true
+    },
+    {
+      "file": "verify_and_package.ps1",
+      "bytes": 5598,
+      "sha256": "0e70a1f794dd983c2bb4618fc9040913cf2db64989a687c4d23231232045c5d3",
+      "pass": true
+    },
+    {
+      "file": "manifest.json",
+      "bytes": 2673,
+      "sha256": "248a948221f7de987ae084594993ad0b4c9b71fe58613684da3342085d04255d",
+      "pass": true
+    }
+  ]
+}

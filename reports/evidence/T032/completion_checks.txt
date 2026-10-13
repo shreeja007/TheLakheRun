@@ -1,0 +1,11 @@
+Date: 2026-10-13
+Branch: migration/t032-option-c-integration
+T031 phase 1 commit: ee8541f
+npm run build: PASS (TypeScript + Vite)
+npm run test:ui: PASS (17 checks, Chrome 155.0.8059.39)
+verify_preservation.mjs: PASS (421 preserved / 429 protected; 8 authorized integration files changed)
+git diff --check: PASS
+git diff --cached --check: PASS
+Director and physical-device acceptance: PENDING
+Local review preview: http://127.0.0.1:4184/
+No art/model, movement/audio/world source change, remote push/merge, deployment or source-folder deletion.

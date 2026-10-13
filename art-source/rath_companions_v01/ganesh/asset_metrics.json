@@ -1,0 +1,112 @@
+{
+  "asset_id": "ganesh_rath_blockout_v01",
+  "variant": "ganesh",
+  "preset": {
+    "scale": 0.8,
+    "width": 0.88,
+    "pavilion_height": 0.94,
+    "post_width": 0.115,
+    "brace_width": 0.12,
+    "garland_loops": 2,
+    "garland_beads": 7,
+    "inset_panels": false
+  },
+  "wheel_radius_m": 0.512,
+  "blender_version": "5.2.2 LTS",
+  "units": "meters",
+  "blender_forward": "-Y",
+  "gltf_forward": "+Z",
+  "gltf_up": "+Y",
+  "root_origin": [
+    0,
+    0,
+    0
+  ],
+  "bounds_blender_min": [
+    -1.0489600896835327,
+    -2.5920000076293945,
+    0.0
+  ],
+  "bounds_blender_max": [
+    1.0489600896835327,
+    1.2480000257492065,
+    3.28056001663208
+  ],
+  "bounds_gltf_min": [
+    -1.0489600896835327,
+    0.0,
+    -1.2480000257492065
+  ],
+  "bounds_gltf_max": [
+    1.0489600896835327,
+    3.28056001663208,
+    2.5920000076293945
+  ],
+  "dimensions_gltf_xyz_m": [
+    2.0979201793670654,
+    3.28056001663208,
+    3.840000033378601
+  ],
+  "triangles": 6866,
+  "mesh_objects": 10,
+  "materials": [
+    "Chassis_RedOxide",
+    "Garland_Marigold",
+    "Roof_DarkTimber",
+    "Rope_Hemp",
+    "Seat_CrimsonCloth",
+    "Timber_Dark",
+    "Timber_Wheel",
+    "Trim_AgedBrass"
+  ],
+  "texture_images": 0,
+  "animation_clips": 0,
+  "node_names": [
+    "RathRoot",
+    "ChassisRoot",
+    "ChassisRoot_Mesh",
+    "DrawbeamRoot",
+    "DrawbeamRoot_Mesh",
+    "GarlandRoot",
+    "GarlandRoot_Mesh",
+    "PavilionRoot",
+    "PavilionRoot_Mesh",
+    "PlatformRoot",
+    "PlatformRoot_Mesh",
+    "RoofRoot",
+    "RoofRoot_Mesh",
+    "Wheel_FL",
+    "Wheel_FL_Mesh",
+    "Wheel_FR",
+    "Wheel_FR_Mesh",
+    "Wheel_RL",
+    "Wheel_RL_Mesh",
+    "Wheel_RR",
+    "Wheel_RR_Mesh"
+  ],
+  "wheel_pivots_blender": {
+    "FL": [
+      -0.8377600908279419,
+      -0.7360000014305115,
+      0.5120000243186951
+    ],
+    "FR": [
+      0.8377600908279419,
+      -0.7360000014305115,
+      0.5120000243186951
+    ],
+    "RL": [
+      -0.8377600908279419,
+      0.7360000014305115,
+      0.5120000243186951
+    ],
+    "RR": [
+      0.8377600908279419,
+      0.7360000014305115,
+      0.5120000243186951
+    ]
+  },
+  "dimensions_status": "proposed blockout dimensions, not historical measurements",
+  "glb_bytes": 517624,
+  "glb_sha256": "2ae69948bb927ab04b985cfcd0d9f55d6333eaf5d21aa9833b222ea443384d52"
+}

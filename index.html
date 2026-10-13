@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0e14" />
+  <meta name="description" content="A playful guardian challenge. Run, switch lanes, jump and slide." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Lakhey Run" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/icons/app-icon.svg" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <title>Lakhey Run</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0b0e14;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #e5e7eb;
+    }
+    #application-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+    #overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      box-sizing: border-box;
+    }
+
+    /* Top Bar: Left telemetry + Center score */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .hud-panel {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      max-width: 330px;
+    }
+    .hud-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      background: #0ea5e9;
+      color: #ffffff;
+    }
+    .hud-stats {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+    .stat-val {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+    .stat-state {
+      color: #4ade80;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(74, 222, 128, 0.15);
+    }
+
+    /* Center Prominent Score Board & Guardian Meter */
+    .score-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .score-board {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 14px;
+      padding: 8px 18px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 150px;
+      transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease-out, border-color 0.14s;
+    }
+    .score-board.score-pulse {
+      transform: scale(1.15);
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.85);
+      border-color: rgba(56, 189, 248, 0.7);
+    }
+    .score-number {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 26px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+    .score-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+    .score-sub-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 3px;
+    }
+    .best-badge {
+      font-size: 10px;
+      color: #fbbf24;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .coin-badge {
+      font-size: 11px;
+      color: #facc15;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(250, 204, 21, 0.15);
+      border: 1px solid rgba(250, 204, 21, 0.35);
+      padding: 1px 7px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.12s ease-out;
+    }
+    .coin-badge.coin-pop {
+      transform: scale(1.32);
+      background: rgba(250, 204, 21, 0.38);
+      box-shadow: 0 0 16px rgba(250, 204, 21, 0.75);
+    }
+    .combo-badge {
+      font-size: 9px;
+      color: #38bdf8;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-left: 2px;
+      display: none;
+    }
+    .combo-badge.active {
+      display: inline-block;
+    }
+
+    /* Top Right Audio & Settings */
+    .top-right-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .audio-btn {
+      pointer-events: auto;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #f8fafc;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      transition: background 0.15s, transform 0.05s;
+    }
+    .audio-btn:hover {
+      background: rgba(51, 65, 85, 0.95);
+    }
+    .audio-btn:active {
+      transform: scale(0.96);
+    }
+    .audio-btn.muted {
+      color: #94a3b8;
+      border-color: rgba(239, 68, 68, 0.4);
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    /* Guardian Proximity Bar */
+    .guardian-bar {
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 20px;
+      padding: 4px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .guardian-bar.danger-pulse {
+      animation: guardianDangerAlert 0.4s ease-in-out infinite alternate;
+      border-color: rgba(239, 68, 68, 0.85);
+      box-shadow: 0 0 16px rgba(239, 68, 68, 0.7);
+    }
+    @keyframes guardianDangerAlert {
+      0% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.6)); }
+      100% { transform: scale(1.08); filter: drop-shadow(0 0 14px rgba(239, 68, 68, 1.0)); }
+    }
+    .guardian-icon {
+      font-size: 12px;
+    }
+    .proximity-track {
+      width: 70px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    .proximity-fill {
+      height: 100%;
+      width: 30%;
+      background: #10b981;
+      border-radius: 3px;
+      transition: width 0.15s, background-color 0.2s;
+    }
+
+    /* Combo Multiplier Pill & Depleting Meter */
+    .multiplier-pill {
+      pointer-events: auto;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(245, 158, 11, 0.95));
+      border: 1px solid rgba(254, 240, 138, 0.75);
+      border-radius: 12px;
+      padding: 4px 10px;
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      min-width: 110px;
+      transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease-out, background 0.2s;
+    }
+    .multiplier-pill.multiplier-pop {
+      transform: scale(1.28);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    .multiplier-pill.tier-1 {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.92), rgba(217, 119, 6, 0.95));
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.5);
+    }
+    .multiplier-pill.tier-2 {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(249, 115, 22, 0.95));
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
+      border-color: #fecaca;
+    }
+    .multiplier-pill.tier-3 {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(236, 72, 153, 0.95));
+      box-shadow: 0 0 22px rgba(168, 85, 247, 0.8);
+      border-color: #f5d0fe;
+    }
+    .multiplier-pill.tier-4 {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.98), rgba(245, 158, 11, 0.98));
+      box-shadow: 0 0 28px rgba(250, 204, 21, 0.95), inset 0 0 12px rgba(255, 255, 255, 0.8);
+      border: 1.5px solid #ffffff;
+      animation: maxPillPulse 0.6s ease-in-out infinite alternate;
+    }
+    @keyframes maxPillPulse {
+      0% { transform: scale(1); filter: brightness(1); }
+      100% { transform: scale(1.06); filter: brightness(1.2); }
+    }
+    .multiplier-content {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    }
+    .multiplier-val {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 15px;
+      font-weight: 900;
+      color: #fef08a;
+      letter-spacing: 0.5px;
+    }
+    .multiplier-text {
+      font-size: 9px;
+      letter-spacing: 1px;
+      opacity: 0.92;
+    }
+    .multiplier-meter-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .multiplier-meter-fill {
+      height: 100%;
+      width: 100%;
+      background: #fef08a;
+      border-radius: 2px;
+      transition: width 0.08s linear;
+    }
+
+    /* In-Run High Score Celebration Banner */
+    .record-celebration-banner {
+      position: absolute;
+      top: 84px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: none;
+      z-index: 50;
+      animation: bannerSwoopDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes bannerSwoopDown {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.85); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+    .record-celebration-banner.banner-exit {
+      animation: bannerSwoopUp 0.35s ease-in forwards;
+    }
+    @keyframes bannerSwoopUp {
+      0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.85); }
+    }
+    .record-banner-inner {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.96), rgba(15, 23, 42, 0.96));
+      border: 2px solid #f59e0b;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), inset 0 0 15px rgba(251, 191, 36, 0.35);
+      border-radius: 16px;
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      white-space: nowrap;
+    }
+    .record-banner-icon {
+      font-size: 26px;
+      filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.8));
+      animation: iconBounce 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes iconBounce {
+      0% { transform: translateY(-2px) scale(1); }
+      100% { transform: translateY(2px) scale(1.15); }
+    }
+    .record-banner-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #fef08a;
+      text-shadow: 0 0 10px rgba(254, 240, 138, 0.6);
+      text-transform: uppercase;
+    }
+    .record-banner-subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    /* Floating Near-Miss & Skill Callout Toasts */
+    .callout-container {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 40;
+    }
+    .callout-toast {
+      pointer-events: none;
+      border-radius: 12px;
+      padding: 8px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      animation: calloutFloat 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes calloutFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.65);
+      }
+      18% {
+        opacity: 1;
+        transform: translateY(0) scale(1.1);
+      }
+      28% {
+        transform: translateY(-2px) scale(1.0);
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(-16px) scale(0.98);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-36px) scale(0.9);
+      }
+    }
+    .callout-clean-vault {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(59, 130, 246, 0.95));
+      border: 1.5px solid #7dd3fc;
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.6);
+    }
+    .callout-close-call {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(249, 115, 22, 0.95));
+      border: 1.5px solid #fed7aa;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+    }
+    .callout-gate-evaded {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(245, 158, 11, 0.95));
+      border: 1.5px solid #6ee7b7;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    }
+    .callout-combo-surge {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(236, 72, 153, 0.95));
+      border: 1.5px solid #f472b6;
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
+    }
+    .callout-wind-evaded {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(99, 102, 241, 0.95));
+      border: 1.5px solid #a5f3fc;
+      box-shadow: 0 0 22px rgba(14, 165, 233, 0.65);
+    }
+    .callout-milestone-cleared {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.98), rgba(220, 38, 38, 0.98));
+      border: 2px solid #fde047;
+      box-shadow: 0 0 32px rgba(245, 158, 11, 0.85), inset 0 0 14px rgba(254, 240, 138, 0.45);
+      transform-origin: center center;
+    }
+    .callout-tease-taunt {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.98), rgba(234, 88, 12, 0.98));
+      border: 2px solid #fef08a;
+      box-shadow: 0 0 28px rgba(245, 158, 11, 0.8), inset 0 0 12px rgba(254, 240, 138, 0.5);
+    }
+    .callout-title {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    }
+    .callout-sub {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fef08a;
+      letter-spacing: 0.5px;
+    }
+
+    /* Flying Score Digits (+Points flying to HUD Distance Meter) */
+    .fly-score-digit {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 19px;
+      font-weight: 900;
+      color: #fef08a;
+      text-shadow: 0 0 14px rgba(254, 240, 138, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+      z-index: 60;
+      animation: flyScoreToMeter 0.68s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes flyScoreToMeter {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.7);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -15px) scale(1.25);
+      }
+      70% {
+        opacity: 1;
+        transform: translate(-50%, -90px) scale(1.05);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -160px) scale(0.5);
+      }
+    }
+
+    /* Screen Skill & Adrenaline Flash Overlay */
+    #skill-flash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.08s ease-out;
+      z-index: 6;
+    }
+    #skill-flash.flash-vault {
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.28) 0%, rgba(14, 165, 233, 0) 70%);
+      opacity: 1;
+    }
+    #skill-flash.flash-near-miss {
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.35) 0%, rgba(239, 68, 68, 0.16) 75%);
+      opacity: 1;
+    }
+    #skill-flash.flash-record {
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.5) 0%, rgba(245, 158, 11, 0.28) 80%);
+      opacity: 1;
+    }
+
+    /* Biome Location Toast Banner (Temple Run Milestone Announcement) */
+    .biome-toast {
+      position: absolute;
+      top: 96px;
+      left: 50%;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: none;
+      z-index: 45;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 24px;
+      border-radius: 18px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .biome-toast.hidden {
+      display: none;
+    }
+    .biome-toast.toast-enter {
+      animation: biomeToastIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes biomeToastIn {
+      0% { opacity: 0; transform: translateX(-50%) translateY(-35px) scale(0.9); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+    .biome-toast.toast-exit {
+      animation: biomeToastOut 0.4s ease-in forwards;
+    }
+    @keyframes biomeToastOut {
+      0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-25px) scale(0.92); }
+    }
+
+    /* Biome 1: Durbar Royal Alley Theme */
+    .biome-toast.biome-durbar {
+      background: linear-gradient(135deg, rgba(69, 26, 17, 0.94), rgba(30, 20, 18, 0.94));
+      border: 1.5px solid #f97316;
+      box-shadow: 0 0 30px rgba(249, 115, 22, 0.45), inset 0 0 15px rgba(251, 146, 60, 0.25);
+    }
+    .biome-toast.biome-durbar .biome-toast-badge {
+      color: #fed7aa;
+      background: rgba(249, 115, 22, 0.25);
+      border-color: rgba(249, 115, 22, 0.4);
+    }
+
+    /* Biome 2: River Causeway Theme */
+    .biome-toast.biome-river {
+      background: linear-gradient(135deg, rgba(8, 47, 73, 0.94), rgba(12, 30, 45, 0.94));
+      border: 1.5px solid #38bdf8;
+      box-shadow: 0 0 30px rgba(56, 189, 248, 0.45), inset 0 0 15px rgba(56, 189, 248, 0.25);
+    }
+    .biome-toast.biome-river .biome-toast-badge {
+      color: #bae6fd;
+      background: rgba(14, 165, 233, 0.25);
+      border-color: rgba(14, 165, 233, 0.4);
+    }
+
+    /* Biome 3: Himalayan Temple Hill Theme */
+    .biome-toast.biome-hill {
+      background: linear-gradient(135deg, rgba(46, 24, 16, 0.94), rgba(20, 26, 20, 0.94));
+      border: 1.5px solid #eab308;
+      box-shadow: 0 0 30px rgba(234, 179, 8, 0.45), inset 0 0 15px rgba(250, 204, 21, 0.25);
+    }
+    .biome-toast.biome-hill .biome-toast-badge {
+      color: #fef08a;
+      background: rgba(234, 179, 8, 0.25);
+      border-color: rgba(234, 179, 8, 0.4);
+    }
+
+    .biome-toast-badge {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      margin-bottom: 3px;
+    }
+    .biome-toast-title {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+      white-space: nowrap;
+    }
+    .biome-toast-tagline {
+      font-size: 10px;
+      font-weight: 600;
+      color: #cbd5e1;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+
+    /* Kathmandu Festival Marigold Petals & Confetti Shower */
+    #confetti-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 55;
+    }
+    .confetti-petal {
+      position: absolute;
+      width: 13px;
+      height: 9px;
+      border-radius: 60% 40% 60% 0;
+      background: #f59e0b;
+      opacity: 0.95;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+      animation: petalTumble 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    .confetti-petal.deep-saffron {
+      background: #ea580c;
+    }
+    .confetti-gold-foil {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      background: #fef08a;
+      box-shadow: 0 0 8px rgba(254, 240, 138, 0.9);
+      animation: petalTumble 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    @keyframes petalTumble {
+      0% {
+        opacity: 1;
+        transform: translateY(-20px) translateX(0) rotate(0deg) scale(0.6);
+      }
+      25% {
+        transform: translateY(25vh) translateX(18px) rotate(120deg) scale(1.1);
+      }
+      50% {
+        transform: translateY(50vh) translateX(-14px) rotate(240deg) scale(1.0);
+      }
+      75% {
+        transform: translateY(75vh) translateX(12px) rotate(360deg) scale(0.9);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(105vh) translateX(-8px) rotate(480deg) scale(0.7);
+      }
+    }
+
+    /* Tuku's Playful Tease Bubble (Subway Surfers-style dare) */
+    .tease-bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.25), rgba(245, 158, 11, 0.2));
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      border-radius: 9999px;
+      padding: 6px 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
+      animation: teaseBounce 2.2s ease-in-out infinite;
+    }
+    @keyframes teaseBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    .tease-avatar {
+      font-size: 16px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .tease-text {
+      font-size: 13px;
+      letter-spacing: 0.2px;
+    }
+    .tease-speaker {
+      color: #38bdf8;
+      font-weight: 800;
+      margin-right: 4px;
+    }
+    .tease-quote {
+      color: #fef08a;
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    /* Center Ready Banner */
+    #ready-banner {
+      align-self: center;
+      margin-top: auto;
+      margin-bottom: 14px;
+      max-width: 440px;
+      width: 92%;
+      pointer-events: auto;
+      cursor: pointer;
+      background: rgba(15, 23, 42, 0.90);
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      box-shadow: 0 0 30px rgba(14, 165, 233, 0.25);
+      border-radius: 14px;
+      padding: 12px 20px;
+      text-align: center;
+      transition: transform 0.15s;
+    }
+    #ready-banner:hover {
+      transform: scale(1.02);
+    }
+    #ready-banner h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 3px;
+    }
+    #ready-banner p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    /* Game Over Modal (Friendly Lakhey Guardian Challenge) */
+    #gameover-modal {
+      align-self: center;
+      pointer-events: auto;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+      border-radius: 16px;
+      padding: 24px 28px;
+      text-align: center;
+      max-width: 370px;
+      width: 90%;
+      animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .gameover-badge {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #f59e0b;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+    .gameover-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-bottom: 4px;
+    }
+    .gameover-subtitle {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+    .score-summary-card {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-around;
+    }
+    .summary-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .summary-val {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 20px;
+      font-weight: 800;
+      color: #38bdf8;
+    }
+    .summary-lbl {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+    .new-record-pill {
+      font-size: 11px;
+      font-weight: 800;
+      color: #facc15;
+      background: rgba(250, 204, 21, 0.15);
+      border: 1px solid rgba(250, 204, 21, 0.3);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .retry-btn {
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+      transition: background 0.15s, transform 0.05s;
+    }
+    .retry-btn:hover {
+      background: #0369a1;
+    }
+    .retry-btn:active {
+      transform: scale(0.97);
+    }
+    .gameover-hint {
+      font-size: 10px;
+      color: #64748b;
+      margin-top: 8px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+    #startup-panel { position: fixed; inset: 0; z-index: 100; display: grid; place-content: center; gap: 16px; padding: 28px; text-align: center; background: #0b0e14; color: #e5e7eb; }
+    #startup-panel[hidden] { display: none; }
+    #startup-retry { padding: 14px 24px; min-height: 44px; background: #0284c7; color: white; border: 0; border-radius: 10px; cursor: pointer; }
+
+    /* Bottom Touch Controls Bar */
+    .controls-overlay {
+      pointer-events: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 440px;
+      align-self: center;
+    }
+    .dpad-bar {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+    .ctrl-btn {
+      flex: 1;
+      padding: 12px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(30, 41, 59, 0.9);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background 0.1s, transform 0.05s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    .ctrl-btn small {
+      font-size: 9px;
+      color: #94a3b8;
+      font-weight: normal;
+    }
+    .ctrl-btn:active {
+      transform: scale(0.95);
+      background: #0f172a;
+    }
+    .ctrl-btn.jump-btn {
+      background: rgba(14, 165, 233, 0.25);
+      border-color: rgba(14, 165, 233, 0.4);
+    }
+    .ctrl-btn.slide-btn {
+      background: rgba(245, 158, 11, 0.25);
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+    .action-row {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+    }
+    .sub-btn {
+      flex: 1;
+      padding: 7px 8px;
+      font-size: 11px;
+      background: rgba(30, 41, 59, 0.7);
+      color: #cbd5e1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .sub-btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+    }
+    .sub-btn.tease-btn {
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.35), rgba(245, 158, 11, 0.3));
+      border: 1px solid rgba(245, 158, 11, 0.6);
+      color: #fef08a;
+      font-weight: 700;
+    }
+    .sub-btn.tease-btn:hover {
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.55), rgba(245, 158, 11, 0.5));
+      border-color: #fef08a;
+    }
+    .input-log {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px;
+      color: #facc15;
+      margin-top: 4px;
+      min-height: 16px;
+    }
+    #danger-vignette {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      box-shadow: inset 0 0 100px rgba(220, 38, 38, 0.55);
+      opacity: 0;
+      transition: opacity 0.15s ease-out;
+      z-index: 5;
+    }
+
+    /* Controls Hint Pills */
+    .controls-hint-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .hint-pill {
+      font-size: 10px;
+      font-weight: 700;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+    }
+
+    /* Responsive Mobile Layout (Unobstructed View on Phones) */
+    @media (max-width: 640px) {
+      .hud-panel {
+        display: none; /* Hide verbose telemetry on phones to leave lane visibility 100% clear */
+      }
+      .top-header {
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .score-board {
+        padding: 6px 14px;
+        min-width: 130px;
+      }
+      .score-number {
+        font-size: 22px;
+      }
+      .controls-overlay {
+        max-width: 100%;
+        gap: 6px;
+      }
+      .ctrl-btn {
+        padding: 14px 4px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="application-canvas" tabindex="-1" aria-label="Lakhey Run game. Use arrow keys to change lanes, jump and slide."></canvas>
+  <div id="startup-panel" role="status">
+    <h2>Lakhey Run</h2>
+    <p id="startup-status">Opening the alley…</p>
+    <button id="startup-retry" type="button" hidden>Reload game</button>
+  </div>
+  <noscript><p class="startup-message">Lakhey Run needs JavaScript and WebGL. Enable JavaScript, then reload.</p></noscript>
+  <div id="danger-vignette"></div>
+  <div id="skill-flash"></div>
+  <div id="confetti-container"></div>
+  <div id="overlay">
+    <!-- Top Header -->
+    <div class="top-header">
+      <!-- Left Diagnostics Panel -->
+      <header class="hud-panel dev-only" aria-label="Developer diagnostics">
+        <div class="hud-title">
+          <span>Lakhey Run</span>
+          <span class="badge">Diagnostics</span>
+        </div>
+        <div class="hud-stats">
+          <div>State: <span id="game-state" class="stat-state">READY</span> | FPS: <span id="fps-val" class="stat-val">--</span></div>
+          <div>Draw Calls: <span id="dc-val" class="stat-val">--</span> | Tris: <span id="tri-val" class="stat-val">--</span></div>
+          <div>Lane: <span id="lane-val" class="stat-val">CENTER (0)</span> | Speed: <span id="speed-val" class="stat-val">10.5 m/s</span></div>
+          <div>Coins: <span id="diag-coins-val" class="stat-val">0</span> (Best: <span id="diag-best-coins-val" class="stat-val">0</span>)</div>
+          <div>Biome: <span id="diag-biome-val" class="stat-val">Durbar Royal Alley</span></div>
+          <div>Guardian: <span id="guardian-status-val" class="stat-val">Pursuing (4.2m)</span></div>
+        </div>
+        <div id="last-input-log" class="input-log">Last: Initialized</div>
+      </header>
+
+      <!-- Center Distance Board & Guardian Proximity Meter -->
+      <div class="score-container">
+        <div class="score-board">
+          <div class="score-label">Distance</div>
+          <div id="hud-score-val" class="score-number">0m</div>
+          <div class="score-sub-row">
+            <div class="best-badge">
+              <span>🏆 BEST:</span>
+              <span id="hud-best-val">0m</span>
+            </div>
+            <div class="coin-badge" id="hud-coin-badge">
+              <span>🪙</span>
+              <span id="hud-coins-val">0</span>
+              <span id="hud-combo-badge" class="combo-badge"></span>
+            </div>
+          </div>
+        </div>
+        <!-- Guardian Proximity Bar -->
+        <div class="guardian-bar">
+          <span class="guardian-icon">👹</span>
+          <span>Lakhey:</span>
+          <div class="proximity-track">
+            <div id="proximity-fill" class="proximity-fill"></div>
+          </div>
+          <span id="guardian-meter-val">4.2m</span>
+        </div>
+        <!-- Combo Multiplier Pill with Depleting Meter -->
+        <div id="hud-multiplier-pill" class="multiplier-pill hidden">
+          <div class="multiplier-content">
+            <span class="multiplier-fire">🔥</span>
+            <span id="hud-mult-val" class="multiplier-val">2x</span>
+            <span class="multiplier-text">COMBO</span>
+          </div>
+          <div class="multiplier-meter-track">
+            <div id="hud-mult-bar" class="multiplier-meter-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Right Audio Controls -->
+      <div class="top-right-bar">
+        <button id="btn-audio-toggle" class="audio-btn" type="button" aria-label="Mute sound" aria-pressed="false">
+          <span id="audio-icon">🔊</span>
+          <span id="audio-label">Sound on</span>
+        </button>
+        <div class="menu-tools">
+          <button id="btn-help" class="audio-btn" type="button">How to play</button>
+          <button id="btn-home-screen" class="audio-btn" type="button">Home screen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- In-Run High Score Celebration Swoop Banner -->
+    <div id="record-banner" class="record-celebration-banner hidden">
+      <div class="record-banner-inner">
+        <div class="record-banner-icon">🏆</div>
+        <div class="record-banner-text">
+          <div class="record-banner-title">NEW PERSONAL BEST!</div>
+          <div id="record-banner-subtitle" class="record-banner-subtitle">Surpassed Previous Record!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Biome Milestone Announcement Toast -->
+    <div id="biome-toast" class="biome-toast hidden">
+      <div id="biome-toast-badge" class="biome-toast-badge">📍 DURBAR SQUARE</div>
+      <div id="biome-toast-title" class="biome-toast-title">Durbar Royal Alley</div>
+      <div id="biome-toast-tagline" class="biome-toast-tagline">Ancient Red Brick Sanctuary</div>
+    </div>
+
+    <!-- Floating Near-Miss & Skill Callout Toast Container -->
+    <div id="callout-container" class="callout-container"></div>
+
+    <!-- Center Ready Banner with Subway Surfers-style playful tease dialog -->
+    <div id="ready-banner">
+      <div class="tease-bubble">
+        <span class="tease-avatar">🏃</span>
+        <div class="tease-text">
+          <strong class="tease-speaker">Tuku:</strong>
+          <span class="tease-quote">"Catch me if you can, Lakhey Dai! 👹"</span>
+        </div>
+      </div>
+      <p class="menu-eyebrow">THE GUARDIAN'S CHALLENGE</p>
+      <h1>Lakhey Run</h1>
+      <p>Stay ahead of Lakhey. Find your path.</p>
+      <button id="btn-play" class="retry-btn" type="button">Play</button>
+      <div class="controls-hint-row">
+        <span class="hint-pill"><span class="keyboard-hint">← [A / Left]</span><span class="touch-hint">← Swipe left</span></span>
+        <span class="hint-pill"><span class="keyboard-hint">↑ [Space / Up]</span><span class="touch-hint">↑ Swipe up</span></span>
+        <span class="hint-pill"><span class="keyboard-hint">↓ [S / Down]</span><span class="touch-hint">↓ Swipe down</span></span>
+        <span class="hint-pill"><span class="keyboard-hint">→ [D / Right]</span><span class="touch-hint">→ Swipe right</span></span>
+        <span class="hint-pill"><span class="keyboard-hint">😜 [T / E: Tease]</span><span class="touch-hint">😜 Tap Tease</span></span>
+      </div>
+    </div>
+
+    <section id="pause-panel" class="menu-card hidden" aria-labelledby="pause-title">
+      <p class="menu-eyebrow">TAKE A BREATHER</p>
+      <h2 id="pause-title">Run paused</h2>
+      <p>Your run is waiting right here.</p>
+      <button id="btn-resume" class="retry-btn" type="button">Resume run</button>
+    </section>
+
+    <!-- Game Over Modal (Friendly Guardian Catch) -->
+    <div id="gameover-modal" class="hidden" role="region" aria-label="Run results">
+      <div class="gameover-badge">CHALLENGE CONCLUDED</div>
+      <div class="gameover-title">GUARDIAN CAUGHT UP</div>
+      <div id="gameover-cause" class="gameover-subtitle">A spirited festival dare! Lakhey respectfully ended the run.</div>
+      
+      <div id="new-record-badge" class="new-record-pill hidden">🏆 NEW PERSONAL BEST!</div>
+
+      <div class="score-summary-card">
+        <div class="summary-col">
+          <span id="modal-distance-val" class="summary-val">0.0m</span>
+          <span class="summary-lbl">Distance</span>
+        </div>
+        <div class="summary-col">
+          <span id="modal-coins-val" class="summary-val">0</span>
+          <span class="summary-lbl">🪙 Coins</span>
+        </div>
+        <div class="summary-col">
+          <span id="modal-best-val" class="summary-val">0.0m</span>
+          <span class="summary-lbl">Personal Best</span>
+        </div>
+      </div>
+
+      <button id="btn-modal-retry" class="retry-btn" type="button">🔄 CHALLENGE AGAIN</button>
+      <div class="gameover-hint">Press Space, Enter, or tap to retry</div>
+    </div>
+
+    <!-- Bottom Touch / Click Control Pad -->
+    <div class="controls-overlay">
+      <div class="dpad-bar">
+        <button id="btn-left" class="ctrl-btn" type="button">
+          <span>⬅ LEFT</span>
+          <small>Dodge Lane</small>
+        </button>
+        <button id="btn-jump" class="ctrl-btn jump-btn" type="button">
+          <span>⬆ JUMP</span>
+          <small>Clear Barrier</small>
+        </button>
+        <button id="btn-slide" class="ctrl-btn slide-btn" type="button">
+          <span>⬇ SLIDE</span>
+          <small>Crouch Beam</small>
+        </button>
+        <button id="btn-right" class="ctrl-btn" type="button">
+          <span>➡ RIGHT</span>
+          <small>Dodge Lane</small>
+        </button>
+      </div>
+      <div class="action-row">
+        <button id="btn-tease" class="sub-btn tease-btn" type="button">😜 Tease<span class="keyboard-hint"> (T)</span></button>
+        <button id="btn-toggle-run" class="sub-btn" type="button">▶ Play</button>
+        <button id="btn-reset" class="sub-btn dev-only" type="button">🔄 Reset</button>
+        <button id="btn-cycle-seed" class="sub-btn dev-only" type="button">🎲 Seed: 42</button>
+      </div>
+    </div>
+  </div>
+  <dialog id="controls-tutorial" class="mobile-dialog" aria-labelledby="tutorial-title" aria-describedby="tutorial-hint">
+    <p id="tutorial-progress" class="menu-eyebrow">Controls · 1 / 4</p>
+    <h2 id="tutorial-title" aria-live="polite" aria-atomic="true">Find your lane</h2>
+    <p id="tutorial-hint">Swipe left to change lanes.</p>
+    <div id="tutorial-pad" aria-label="Swipe practice area">
+      <span id="tutorial-symbol" aria-hidden="true">←</span>
+      <span>SWIPE HERE</span>
+    </div>
+    <p id="tutorial-keyboard" class="support-text"></p>
+    <p id="tutorial-feedback" class="support-text" role="status" aria-live="polite">Practise here. Your run hasn’t started.</p>
+    <div class="dialog-actions">
+      <button id="tutorial-skip" class="sub-btn" type="button">Skip tutorial</button>
+      <button id="tutorial-next" class="retry-btn" type="button">Next</button>
+    </div>
+  </dialog>
+  <dialog id="home-screen-dialog" class="mobile-dialog" aria-labelledby="home-screen-title">
+    <p class="menu-eyebrow">READY WHEN YOU ARE</p>
+    <h2 id="home-screen-title">Keep a shortcut</h2>
+    <p id="install-instructions"></p>
+    <p id="offline-status" class="support-text" role="status" aria-live="polite">Online play is available.</p>
+    <div class="dialog-actions">
+      <button id="home-screen-close" class="sub-btn" type="button">Back to game</button>
+      <button id="btn-install" class="retry-btn" type="button" hidden>Install</button>
+    </div>
+  </dialog>
+  <script>
+    // Remains usable when game modules cannot load or WebGL is unavailable.
+    const startupPanel = document.getElementById('startup-panel');
+    const startupError = () => {
+      document.getElementById('startup-status').textContent = 'Couldn’t open the game. Reconnect and reload. If WebGL is unavailable, try another browser or device.';
+      document.getElementById('startup-retry').hidden = false;
+    };
+    window.addEventListener('error', startupError, true);
+    window.addEventListener('lakhey-ready', () => {
+      startupPanel.hidden = true;
+      window.removeEventListener('error', startupError, true);
+    }, { once: true });
+    document.getElementById('startup-retry').addEventListener('click', () => location.reload());
+  </script>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

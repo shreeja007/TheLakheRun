@@ -1,0 +1,158 @@
+{
+  "asset_id": "pulu_kisi_blockout_v01",
+  "blender_version": "5.2.2 LTS",
+  "units": "meters",
+  "blender_forward": "-Y",
+  "gltf_forward": "+Z",
+  "gltf_up": "+Y",
+  "root_origin": [
+    0,
+    0,
+    0
+  ],
+  "bounds_blender_min": [
+    -1.1026145219802856,
+    -2.2081570625305176,
+    0.0
+  ],
+  "bounds_blender_max": [
+    1.1026145219802856,
+    1.6343997716903687,
+    3.3279995918273926
+  ],
+  "bounds_gltf_min": [
+    -1.1026145219802856,
+    0.0,
+    -1.6343997716903687
+  ],
+  "bounds_gltf_max": [
+    1.1026145219802856,
+    3.3279995918273926,
+    2.2081570625305176
+  ],
+  "dimensions_gltf_xyz_m": [
+    2.2052290439605713,
+    3.3279995918273926,
+    3.8425568342208862
+  ],
+  "triangles": 16964,
+  "mesh_objects": 11,
+  "materials": [
+    "Canvas_WarmWhite",
+    "Eyes_Shoes_Charcoal",
+    "Garland_Marigold",
+    "Seams_Frame_Sole_Linen",
+    "Trim_MutedBlue",
+    "Trim_MutedGreen",
+    "Trim_RustRed",
+    "Tuft_RedFiber"
+  ],
+  "texture_images": 0,
+  "animation_clips": 0,
+  "node_names": [
+    "PuluRoot",
+    "ClothRoot",
+    "ClothRoot_Mesh",
+    "Feet_Front",
+    "Feet_Front_Mesh",
+    "Feet_Rear",
+    "Feet_Rear_Mesh",
+    "FrameRoot",
+    "FrameRoot_Mesh",
+    "GarlandRoot",
+    "GarlandRoot_Mesh",
+    "HeadRoot",
+    "Ear_L",
+    "Ear_L_Mesh",
+    "Ear_R",
+    "Ear_R_Mesh",
+    "HeadRoot_Mesh",
+    "TrunkRoot",
+    "TrunkRoot_Mesh",
+    "TuftRoot",
+    "TuftRoot_Mesh",
+    "TrimRoot",
+    "TrimRoot_Mesh"
+  ],
+  "group_parents": {
+    "PuluRoot": null,
+    "ClothRoot": "PuluRoot",
+    "Feet_Front": "PuluRoot",
+    "Feet_Rear": "PuluRoot",
+    "FrameRoot": "PuluRoot",
+    "GarlandRoot": "PuluRoot",
+    "HeadRoot": "PuluRoot",
+    "Ear_L": "HeadRoot",
+    "Ear_R": "HeadRoot",
+    "TrunkRoot": "HeadRoot",
+    "TuftRoot": "HeadRoot",
+    "TrimRoot": "PuluRoot"
+  },
+  "group_pivots_blender_world": {
+    "PuluRoot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "ClothRoot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "Feet_Front": [
+      0.0,
+      -0.8999999761581421,
+      0.0
+    ],
+    "Feet_Rear": [
+      0.0,
+      0.949999988079071,
+      0.0
+    ],
+    "FrameRoot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "GarlandRoot": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "HeadRoot": [
+      0.0,
+      -1.4500000476837158,
+      2.4000000953674316
+    ],
+    "Ear_L": [
+      -0.4300000071525574,
+      -1.3899999856948853,
+      2.4800000190734863
+    ],
+    "Ear_R": [
+      0.4300000071525574,
+      -1.3899999856948853,
+      2.4800000190734863
+    ],
+    "TrunkRoot": [
+      0.0,
+      -1.7699999809265137,
+      2.3399999141693115
+    ],
+    "TuftRoot": [
+      0.0,
+      -1.3899999856948853,
+      2.9700000286102295
+    ],
+    "TrimRoot": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "cloth_hem_height_m": 0.22,
+  "performer_foot_pairs": 2,
+  "dimensions_status": "proposed draft dimensions; not historical measurements",
+  "glb_bytes": 541976,
+  "glb_sha256": "66b1c86b9e20c7a159077c45f9bf61590eed45f91928325fa6efb40ce4d22ac1"
+}

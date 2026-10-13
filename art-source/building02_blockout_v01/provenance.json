@@ -1,0 +1,37 @@
+{
+  "ticket": "T026",
+  "date": "2026-10-12",
+  "asset_id": "building02_shopfront_v01",
+  "concept_acceptance": "Owner requested Building 02 model following visual acceptance; treated as acceptance of this source for the static model. Other T024 concepts not automatically accepted.",
+  "model_state": "Static model; director acceptance pending",
+  "authoring": "Original shopfront geometry adapted from local T025 generator, UVs, materials and two analytic repeating color tiles; previous packet unchanged",
+  "generator": "generate_building.py",
+  "generator_sha256": "b80f1e4988e966962ffe95a9c3a54ed8b26fc5be1923074690852e660b4547dd",
+  "blender_version": "5.2.2 LTS",
+  "concept_file": "references/accepted_building02_concept.png",
+  "concept_sha256": "88ff1a33d94299430a128de083f35830fca72351b3b01e7f18e441c413b4c96b",
+  "upstream_provenance": "art-source/festival_phase3_v01/provenance.json",
+  "reference_notes": "REFERENCE_NOTES.md",
+  "new_online_research": false,
+  "external_media_copied": false,
+  "textures": [
+    {
+      "file": "textures/brick_color_512.png",
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e",
+      "creator": "T026 generator"
+    },
+    {
+      "file": "textures/roof_color_512.png",
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770",
+      "creator": "T026 generator"
+    }
+  ],
+  "glb_sha256": "b85c2642ada586f3f852edf02c3578ffddd372c8566d72e278b5fa37beb3ea68",
+  "blend_sha256": "fe1fcbc2e98e642fadee5f4621c8a1afdc61e79b5d56dbe0903f524341c75334",
+  "limitations": [
+    "Working dimensions only",
+    "Simplified roof/stone/timber finish",
+    "No interior, collision, door behavior, animation or placement",
+    "No authenticity/engineering certification; upstream project rights not independently certified"
+  ]
+}

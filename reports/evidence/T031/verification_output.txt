@@ -1,0 +1,9 @@
+{
+  "copies": 5,
+  "exact": true,
+  "scenarios": "passed",
+  "citedSources": 18,
+  "localLinks": 3,
+  "protectedFiles": 429,
+  "protectedUnchanged": true
+}

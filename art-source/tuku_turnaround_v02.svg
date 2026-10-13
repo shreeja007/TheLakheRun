@@ -1,0 +1,378 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3200 2000" width="3200" height="2000">
+  <defs>
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif; font-weight: 800; fill: #F8FAFC; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif; font-weight: 600; fill: #94A3B8; }
+      .header-box { fill: #1E293B; stroke: #334155; stroke-width: 2; }
+      .card { fill: #1E293B; stroke: #334155; stroke-width: 2; rx: 16; }
+      .panel-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; font-size: 24px; fill: #38BDF8; letter-spacing: 2px; }
+      .guide-line { stroke: #334155; stroke-dasharray: 6 6; stroke-width: 1.5; }
+      .guide-text { font-family: ui-monospace, monospace; font-size: 16px; fill: #64748B; font-weight: 600; }
+      .note-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 16px; fill: #CBD5E1; line-height: 1.5; }
+      .swatch-label { font-family: ui-monospace, monospace; font-size: 15px; fill: #E2E8F0; font-weight: 700; }
+      .swatch-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #94A3B8; }
+    </style>
+    <!-- Gradients & Shadows -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="3200" height="2000" fill="#0B0F19"/>
+
+  <!-- Top Title Header Banner -->
+  <rect x="60" y="40" width="3080" height="130" rx="16" class="header-box" filter="url(#card-shadow)"/>
+  <text x="100" y="96" class="title" font-size="38">LAKHEY RUN — TUKU TECHNICAL TURNAROUND (SPECIFICATION v0.2)</text>
+  <text x="100" y="138" class="subtitle" font-size="20">HERO RUNNER ARCHETYPE: Original Young-Adult Kathmandu Trickster | Height: 1.68m (6.75–7 Heads) | Neutral A-Pose</text>
+
+  <!-- Status Pill -->
+  <rect x="2740" y="75" width="360" height="48" rx="24" fill="#0284C7"/>
+  <text x="2920" y="106" font-family="-apple-system, sans-serif" font-weight="800" font-size="18" fill="#FFFFFF" text-anchor="middle">DESIGN PROPOSAL v0.2</text>
+
+  <!-- Orthographic Height Guideline Grid -->
+  <!-- Ground Line Y = 1750 -->
+  <!-- Top of Head Y = 500 (Height = 1250px) -->
+  <g id="guidelines">
+    <line x1="100" y1="500" x2="2500" y2="500" class="guide-line"/>
+    <text x="70" y="505" class="guide-text" text-anchor="end">1.68m (CROWN)</text>
+
+    <line x1="100" y1="685" x2="2500" y2="685" class="guide-line"/>
+    <text x="70" y="690" class="guide-text" text-anchor="end">1.43m (CHIN/COLLAR)</text>
+
+    <line x1="100" y1="1035" x2="2500" y2="1035" class="guide-line"/>
+    <text x="70" y="1040" class="guide-text" text-anchor="end">0.96m (JACKET HEM)</text>
+
+    <line x1="100" y1="1120" x2="2500" y2="1120" class="guide-line"/>
+    <text x="70" y="1125" class="guide-text" text-anchor="end">0.85m (SHIRT HEM)</text>
+
+    <line x1="100" y1="1350" x2="2500" y2="1350" class="guide-line"/>
+    <text x="70" y="1355" class="guide-text" text-anchor="end">0.54m (KNEES)</text>
+
+    <line x1="100" y1="1750" x2="2500" y2="1750" stroke="#38BDF8" stroke-width="3"/>
+    <text x="70" y="1755" class="guide-text" fill="#38BDF8" text-anchor="end">0.00m (GROUND)</text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- VIEW 1: FRONT VIEW (Center X = 420)        -->
+  <!-- ========================================== -->
+  <g id="view-front">
+    <text x="420" y="220" class="panel-label" text-anchor="middle">1. FRONT VIEW</text>
+    <text x="420" y="250" class="subtitle" font-size="16" text-anchor="middle">Orthographic / A-Pose / Character Intro</text>
+
+    <!-- Shoes (Charcoal #25292B with Cream Sole #D7CDBE, Marigold Tab #DEA94B) -->
+    <!-- Left Shoe -->
+    <path d="M 330 1705 L 375 1705 L 385 1740 L 320 1740 Z" fill="#25292B"/>
+    <rect x="318" y="1736" width="70" height="12" rx="4" fill="#D7CDBE"/>
+    <!-- Right Shoe -->
+    <path d="M 465 1705 L 510 1705 L 520 1740 L 455 1740 Z" fill="#25292B"/>
+    <rect x="453" y="1736" width="70" height="12" rx="4" fill="#D7CDBE"/>
+    <!-- Tiny Marigold Heel Accent on Left Shoe -->
+    <rect x="320" y="1718" width="6" height="10" rx="2" fill="#DEA94B"/>
+
+    <!-- Tapered Pants (Charcoal Twill #2D3438) -->
+    <!-- Left Leg -->
+    <path d="M 390 1140 L 415 1140 L 375 1710 L 335 1710 Z" fill="#2D3438"/>
+    <!-- Right Leg -->
+    <path d="M 425 1140 L 450 1140 L 505 1710 L 465 1710 Z" fill="#2D3438"/>
+    <!-- Crotch & Upper Thighs -->
+    <path d="M 365 1120 L 475 1120 L 455 1250 L 420 1265 L 385 1250 Z" fill="#2D3438"/>
+
+    <!-- Longline Inner Shirt (Warm Cream #E8DDCA) extending 90px below jacket -->
+    <path d="M 360 1025 L 480 1025 L 485 1120 L 420 1125 L 355 1120 Z" fill="#E8DDCA"/>
+    <!-- Shirt Side Slits -->
+    <line x1="365" y1="1080" x2="365" y2="1120" stroke="#CBD5E1" stroke-width="2"/>
+    <line x1="475" y1="1080" x2="475" y2="1120" stroke="#CBD5E1" stroke-width="2"/>
+
+    <!-- Cropped Teal Jacket (Dusty Teal #2F7875) -->
+    <!-- Main open torso (reveals vertical cream shirt band) -->
+    <path d="M 345 740 L 495 740 L 480 1030 L 360 1030 Z" fill="#2F7875"/>
+    <!-- Exposed inner shirt center panel -->
+    <polygon points="405,740 435,740 435,1030 405,1030" fill="#E8DDCA"/>
+    <!-- Shirt Placket seam -->
+    <line x1="420" y1="740" x2="420" y2="1030" stroke="#CBD5E1" stroke-width="2"/>
+
+    <!-- Arms in A-Pose (25° angle) -->
+    <!-- Left Arm (wearer's right) -->
+    <path d="M 345 740 L 310 760 L 235 1100 L 265 1110 L 335 830 Z" fill="#2F7875"/>
+    <!-- Left Hand (Natural Skin Tone #C89568) -->
+    <ellipse cx="230" cy="1135" rx="16" ry="24" fill="#C89568"/>
+
+    <!-- Right Arm (wearer's left) -->
+    <path d="M 495 740 L 530 760 L 605 1100 L 575 1110 L 505 830 Z" fill="#2F7875"/>
+    <!-- Right Hand -->
+    <ellipse cx="610" cy="1135" rx="16" ry="24" fill="#C89568"/>
+
+    <!-- Crossbody Satchel Strap (Wearer's Left Shoulder to Right Hip) -->
+    <!-- From X = 490 (shoulder) down diagonally to X = 355 (right hip) -->
+    <polygon points="485,735 500,740 370,1035 355,1030" fill="#25292B"/>
+    <!-- Tiny edge of Satchel peek on wearer's right hip -->
+    <rect x="340" y="1020" width="22" height="45" rx="6" fill="#25292B"/>
+
+    <!-- Short Maroon Scarf / Neck Wrap (#8C414B) -->
+    <path d="M 390 690 C 390 680, 450 680, 450 690 L 460 740 L 380 740 Z" fill="#8C414B"/>
+    <!-- Short front tail tuck on wearer's left -->
+    <polygon points="435,735 455,735 450,795 430,790" fill="#8C414B"/>
+    <!-- Tiny border stitch accent -->
+    <line x1="432" y1="785" x2="448" y2="788" stroke="#DEA94B" stroke-width="2"/>
+
+    <!-- Head & Neck -->
+    <rect x="405" y="670" width="30" height="30" fill="#C89568"/>
+    <!-- Face (Warm medium brown #C89568) -->
+    <path d="M 390 560 C 390 530, 450 530, 450 560 L 445 650 C 445 675, 395 675, 395 650 Z" fill="#C89568"/>
+    <!-- Expressive Eyebrows & Eyes -->
+    <line x1="402" y1="600" x2="415" y2="598" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+    <line x1="425" y1="598" x2="438" y2="600" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="408" cy="610" r="4" fill="#1E293B"/>
+    <circle cx="432" cy="610" r="4" fill="#1E293B"/>
+    <!-- Mischievous half-smile -->
+    <path d="M 412 645 Q 424 650 432 642" stroke="#1E293B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+    <!-- Hair (Short untidy dark #25292B with asymmetric sweep) -->
+    <path d="M 385 570 C 380 500, 460 480, 460 540 C 475 520, 465 560, 455 580 C 440 520, 395 530, 385 570 Z" fill="#25292B"/>
+    <path d="M 440 515 Q 470 510 460 545" fill="#25292B"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- VIEW 2: LEFT PROFILE (Center X = 1050)     -->
+  <!-- ========================================== -->
+  <g id="view-left">
+    <text x="1050" y="220" class="panel-label" text-anchor="middle">2. LEFT PROFILE</text>
+    <text x="1050" y="250" class="subtitle" font-size="16" text-anchor="middle">Layering Depth &amp; Clean Hem Separation</text>
+
+    <!-- Shoe -->
+    <path d="M 1005 1705 L 1055 1705 L 1090 1740 L 995 1740 Z" fill="#25292B"/>
+    <rect x="993" y="1736" width="100" height="12" rx="4" fill="#D7CDBE"/>
+
+    <!-- Leg (Charcoal Twill #2D3438) -->
+    <path d="M 1015 1140 L 1085 1140 L 1060 1710 L 1005 1710 Z" fill="#2D3438"/>
+    <!-- Knee articulation bend detail -->
+    <circle cx="1065" cy="1350" r="4" fill="#1E293B"/>
+
+    <!-- Inner Shirt Hem (#E8DDCA) - 85px below jacket -->
+    <path d="M 1005 1025 L 1095 1025 L 1095 1120 L 1005 1120 Z" fill="#E8DDCA"/>
+
+    <!-- Cropped Teal Jacket (#2F7875) -->
+    <path d="M 995 740 L 1105 740 L 1095 1030 L 1005 1030 Z" fill="#2F7875"/>
+
+    <!-- Arm in A-Pose (Left side profile) -->
+    <path d="M 1045 740 L 1085 750 L 1060 1100 L 1030 1100 Z" fill="#2F7875"/>
+    <ellipse cx="1045" cy="1135" rx="14" ry="22" fill="#C89568"/>
+
+    <!-- Scarf (#8C414B) snug around collar -->
+    <rect x="1025" y="710" width="60" height="35" rx="8" fill="#8C414B"/>
+
+    <!-- Head Profile -->
+    <rect x="1040" y="670" width="25" height="35" fill="#C89568"/>
+    <path d="M 1025 560 C 1025 520, 1075 520, 1080 560 L 1085 610 L 1098 620 L 1085 630 L 1080 660 C 1080 675, 1035 675, 1025 660 Z" fill="#C89568"/>
+    <!-- Ear -->
+    <ellipse cx="1042" cy="620" rx="8" ry="12" fill="#C89568" stroke="#B47D52" stroke-width="1.5"/>
+
+    <!-- Hair Profile with rear asymmetrical sweep -->
+    <path d="M 1020 570 C 1010 510, 1070 480, 1085 530 C 1075 550, 1095 560, 1075 580 C 1055 530, 1025 540, 1020 570 Z" fill="#25292B"/>
+    <path d="M 1015 560 Q 995 585 1015 625 Z" fill="#25292B"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- VIEW 3: BACK VIEW (Center X = 1680)        -->
+  <!-- *** PRIMARY GAMEPLAY VIEW ***              -->
+  <!-- ========================================== -->
+  <g id="view-back">
+    <!-- Highlight Card behind primary gameplay view -->
+    <rect x="1440" y="200" width="480" height="1570" rx="20" fill="#131D31" stroke="#38BDF8" stroke-width="2.5" filter="url(#card-shadow)"/>
+    <text x="1680" y="250" class="panel-label" text-anchor="middle" fill="#38BDF8">3. BACK VIEW [MAIN GAMEPLAY VIEW]</text>
+    <text x="1680" y="280" class="subtitle" font-size="16" text-anchor="middle">Largest Color Mass: Teal Jacket + Diagonal Strap + Cream Hem</text>
+
+    <!-- Shoes from behind -->
+    <rect x="1578" y="1705" width="65" height="35" rx="6" fill="#25292B"/>
+    <rect x="1575" y="1736" width="71" height="12" rx="4" fill="#D7CDBE"/>
+    <!-- Marigold Heel Tab -->
+    <rect x="1605" y="1710" width="10" height="14" rx="2" fill="#DEA94B"/>
+
+    <rect x="1718" y="1705" width="65" height="35" rx="6" fill="#25292B"/>
+    <rect x="1715" y="1736" width="71" height="12" rx="4" fill="#D7CDBE"/>
+
+    <!-- Tapered Charcoal Pants (#2D3438) -->
+    <!-- Left Leg (wearer's right) -->
+    <path d="M 1590 1140 L 1650 1140 L 1640 1710 L 1585 1710 Z" fill="#2D3438"/>
+    <!-- Right Leg (wearer's left) -->
+    <path d="M 1710 1140 L 1770 1140 L 1775 1710 L 1720 1710 Z" fill="#2D3438"/>
+    <path d="M 1600 1120 L 1760 1120 L 1710 1260 L 1650 1260 Z" fill="#2D3438"/>
+
+    <!-- Cream Longline Shirt Hem (#E8DDCA) - VISIBLE 85px BELOW JACKET -->
+    <path d="M 1600 1025 L 1760 1025 L 1765 1120 L 1595 1120 Z" fill="#E8DDCA"/>
+    <line x1="1680" y1="1025" x2="1680" y2="1120" stroke="#CBD5E1" stroke-width="1.5"/>
+
+    <!-- Solid Dusty Teal Jacket Back (#2F7875) - Primary Gameplay Color Block -->
+    <path d="M 1585 740 L 1775 740 L 1760 1030 L 1600 1030 Z" fill="#2F7875"/>
+    <!-- Shoulder yoke stitch line -->
+    <line x1="1600" y1="785" x2="1760" y2="785" stroke="#235D5B" stroke-width="2.5"/>
+
+    <!-- Arms in A-Pose (Back View) -->
+    <!-- Left Arm -->
+    <path d="M 1585 740 L 1550 760 L 1475 1100 L 1505 1110 L 1575 830 Z" fill="#2F7875"/>
+    <ellipse cx="1470" cy="1135" rx="16" ry="24" fill="#C89568"/>
+
+    <!-- Right Arm -->
+    <path d="M 1775 740 L 1810 760 L 1885 1100 L 1855 1110 L 1785 830 Z" fill="#2F7875"/>
+    <ellipse cx="1890" cy="1135" rx="16" ry="24" fill="#C89568"/>
+
+    <!-- Crossbody Satchel & Diagonal Strap (WEARER'S LEFT SHOULDER TO RIGHT HIP) -->
+    <!-- Back View: Wearer's Left Shoulder is on the RIGHT side of image (X = 1750), going down to Right-Rear Hip on LEFT side of image (X = 1590) -->
+    <polygon points="1745,735 1765,740 1610,1035 1590,1030" fill="#25292B"/>
+
+    <!-- Compact Charcoal Satchel (#25292B) ON WEARER'S RIGHT-REAR HIP -->
+    <rect x="1565" y="1005" width="70" height="60" rx="10" fill="#25292B" stroke="#1E293B" stroke-width="2"/>
+    <!-- Bag Flap & Fastener Tab -->
+    <path d="M 1565 1005 L 1635 1005 L 1630 1035 L 1570 1035 Z" fill="#1A1F23"/>
+    <rect x="1595" y="1030" width="10" height="12" rx="2" fill="#334155"/>
+
+    <!-- Short Maroon Scarf (#8C414B) Visible at Collar -->
+    <path d="M 1640 700 L 1720 700 L 1730 740 L 1630 740 Z" fill="#8C414B"/>
+
+    <!-- Head & Hair Back Profile -->
+    <rect x="1665" y="680" width="30" height="25" fill="#C89568"/>
+    <!-- Hair Volume from Behind with signature asymmetric sweep -->
+    <path d="M 1635 560 C 1635 500, 1725 500, 1725 560 L 1735 635 C 1735 660, 1625 660, 1625 635 Z" fill="#25292B"/>
+    <!-- Asymmetric Sweep Tuft -->
+    <path d="M 1635 550 C 1615 520, 1640 490, 1680 490 C 1730 490, 1745 520, 1740 560 Z" fill="#25292B"/>
+    <path d="M 1690 490 Q 1735 480 1725 520 Z" fill="#25292B"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- VIEW 4: RIGHT PROFILE (Center X = 2280)    -->
+  <!-- ========================================== -->
+  <g id="view-right">
+    <text x="2280" y="220" class="panel-label" text-anchor="middle">4. RIGHT PROFILE</text>
+    <text x="2280" y="250" class="subtitle" font-size="16" text-anchor="middle">Satchel Clearance &amp; Arm Swing Verification</text>
+
+    <!-- Shoe -->
+    <path d="M 2235 1705 L 2285 1705 L 2320 1740 L 2225 1740 Z" fill="#25292B"/>
+    <rect x="2223" y="1736" width="100" height="12" rx="4" fill="#D7CDBE"/>
+
+    <!-- Leg -->
+    <path d="M 2245 1140 L 2315 1140 L 2290 1710 L 2235 1710 Z" fill="#2D3438"/>
+
+    <!-- Inner Shirt Hem (#E8DDCA) -->
+    <path d="M 2235 1025 L 2325 1025 L 2325 1120 L 2235 1120 Z" fill="#E8DDCA"/>
+
+    <!-- Cropped Teal Jacket (#2F7875) -->
+    <path d="M 2225 740 L 2335 740 L 2325 1030 L 2235 1030 Z" fill="#2F7875"/>
+
+    <!-- Satchel on Right-Rear Hip (#25292B) -->
+    <rect x="2210" y="1005" width="45" height="60" rx="8" fill="#25292B" stroke="#1A1F23" stroke-width="2"/>
+    <line x1="2255" y1="900" x2="2235" y2="1005" stroke="#25292B" stroke-width="14" stroke-linecap="round"/>
+
+    <!-- Arm in A-Pose (Shows clearance from satchel) -->
+    <path d="M 2275 740 L 2315 750 L 2290 1100 L 2260 1100 Z" fill="#2F7875"/>
+    <ellipse cx="2275" cy="1135" rx="14" ry="22" fill="#C89568"/>
+
+    <!-- Scarf Profile -->
+    <rect x="2255" y="710" width="60" height="35" rx="8" fill="#8C414B"/>
+
+    <!-- Head Profile -->
+    <rect x="2270" y="670" width="25" height="35" fill="#C89568"/>
+    <path d="M 2255 560 C 2255 520, 2305 520, 2310 560 L 2315 610 L 2328 620 L 2315 630 L 2310 660 C 2310 675, 2265 675, 2255 660 Z" fill="#C89568"/>
+    <ellipse cx="2272" cy="620" rx="8" ry="12" fill="#C89568" stroke="#B47D52" stroke-width="1.5"/>
+
+    <!-- Hair Profile -->
+    <path d="M 2250 570 C 2240 510, 2300 480, 2315 530 C 2305 550, 2325 560, 2305 580 C 2285 530, 2255 540, 2250 570 Z" fill="#25292B"/>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- RIGHT SIDEBAR: TECHNICAL INSETS & PALETTE  -->
+  <!-- ========================================== -->
+  <g id="sidebar" transform="translate(2540, 200)">
+    <!-- 1. Color Palette Card -->
+    <rect x="0" y="0" width="600" height="420" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="30" y="45" class="panel-label" font-size="20">COLOR PALETTE &amp; MATERIALS</text>
+
+    <!-- Swatch 1: Jacket -->
+    <rect x="30" y="70" width="55" height="55" rx="10" fill="#2F7875"/>
+    <text x="100" y="94" class="swatch-label">#2F7875 — DUSTY TEAL</text>
+    <text x="100" y="116" class="swatch-sub">Cropped Canvas Jacket (Primary Rear Readability)</text>
+
+    <!-- Swatch 2: Shirt -->
+    <rect x="30" y="140" width="55" height="55" rx="10" fill="#E8DDCA"/>
+    <text x="100" y="164" class="swatch-label">#E8DDCA — WARM CREAM</text>
+    <text x="100" y="186" class="swatch-sub">Longline Cotton Shirt (+8–10cm Lower Trim)</text>
+
+    <!-- Swatch 3: Pants -->
+    <rect x="30" y="210" width="55" height="55" rx="10" fill="#2D3438"/>
+    <text x="100" y="234" class="swatch-label">#2D3438 — CHARCOAL TWILL</text>
+    <text x="100" y="256" class="swatch-sub">Tapered Articulated Running Trousers</text>
+
+    <!-- Swatch 4: Scarf -->
+    <rect x="30" y="280" width="55" height="55" rx="10" fill="#8C414B"/>
+    <text x="100" y="304" class="swatch-label">#8C414B — MUTED MAROON</text>
+    <text x="100" y="326" class="swatch-sub">Compact Neck Wrap (No Flapping Cloth Physics)</text>
+
+    <!-- Swatch 5: Satchel & Accent -->
+    <rect x="30" y="350" width="25" height="50" rx="6" fill="#25292B"/>
+    <rect x="60" y="350" width="25" height="50" rx="6" fill="#DEA94B"/>
+    <text x="100" y="374" class="swatch-label">#25292B / #DEA94B (MARIGOLD)</text>
+    <text x="100" y="396" class="swatch-sub">Right-Hip Satchel &amp; Heel Accent Tab (&lt;2% area)</text>
+
+    <!-- 2. Mobile Silhouette Readability Test Strip -->
+    <rect x="0" y="450" width="600" height="380" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="30" y="495" class="panel-label" font-size="20">MOBILE SILHOUETTE READABILITY TEST</text>
+    <text x="30" y="525" class="subtitle" font-size="14">Rear View Rendered at Real In-Game Viewport Heights</text>
+
+    <!-- 120px Test Box -->
+    <rect x="40" y="550" width="240" height="250" rx="12" fill="#0B0F19" stroke="#334155"/>
+    <text x="160" y="585" class="subtitle" font-size="15" text-anchor="middle">@ 120px Viewport Scale</text>
+    <!-- Scaled Back Silhouette -->
+    <g transform="translate(142, 605) scale(0.096)">
+      <rect x="0" y="1140" width="160" height="600" fill="#2D3438"/>
+      <rect x="15" y="1025" width="170" height="100" fill="#E8DDCA"/>
+      <rect x="0" y="740" width="190" height="290" fill="#2F7875"/>
+      <polygon points="160,735 180,740 25,1035 5,1030" fill="#25292B"/>
+      <rect x="-10" y="1005" width="55" height="55" fill="#25292B"/>
+      <rect x="45" y="700" width="90" height="40" fill="#8C414B"/>
+      <ellipse cx="95" cy="590" rx="50" ry="60" fill="#25292B"/>
+    </g>
+    <text x="160" y="775" class="guide-text" font-size="13" fill="#4ADE80" text-anchor="middle">✓ Teal + Cream Hem Legible</text>
+
+    <!-- 70px Test Box -->
+    <rect x="320" y="550" width="240" height="250" rx="12" fill="#0B0F19" stroke="#334155"/>
+    <text x="440" y="585" class="subtitle" font-size="15" text-anchor="middle">@ 70px Viewport Scale</text>
+    <!-- Scaled Back Silhouette -->
+    <g transform="translate(425, 625) scale(0.056)">
+      <rect x="0" y="1140" width="160" height="600" fill="#2D3438"/>
+      <rect x="15" y="1025" width="170" height="100" fill="#E8DDCA"/>
+      <rect x="0" y="740" width="190" height="290" fill="#2F7875"/>
+      <polygon points="160,735 180,740 25,1035 5,1030" fill="#25292B"/>
+      <rect x="-10" y="1005" width="55" height="55" fill="#25292B"/>
+      <rect x="45" y="700" width="90" height="40" fill="#8C414B"/>
+      <ellipse cx="95" cy="590" rx="50" ry="60" fill="#25292B"/>
+    </g>
+    <text x="440" y="775" class="guide-text" font-size="13" fill="#4ADE80" text-anchor="middle">✓ Color Blocks Clear</text>
+
+    <!-- 3. Construction & Cultural Safety Verification -->
+    <rect x="0" y="860" width="600" height="710" rx="16" class="card" filter="url(#card-shadow)"/>
+    <text x="30" y="905" class="panel-label" font-size="20">CONSTRUCTION &amp; CULTURAL GATES</text>
+
+    <text x="30" y="950" class="note-text" font-weight="700" fill="#38BDF8">1. RIG &amp; PROP CLEARANCE RULES:</text>
+    <text x="30" y="980" class="note-text">• Satchel anchored to right-rear hip, clearing arm swings.</text>
+    <text x="30" y="1010" class="note-text">• Scarf is a compact neck wrap; zero cloth simulation needed.</text>
+    <text x="30" y="1040" class="note-text">• Consistent 8–10cm cream shirt hem separates torso and legs.</text>
+
+    <text x="30" y="1090" class="note-text" font-weight="700" fill="#F59E0B">2. CULTURAL &amp; DESIGN BOUNDARIES:</text>
+    <text x="30" y="1120" class="note-text">• Original fictional trickster; NOT a Jhyalincha reproduction.</text>
+    <text x="30" y="1150" class="note-text">• Modern everyday streetwear with restrained Newar craftsmanship</text>
+    <text x="30" y="1175" class="note-text">  influence; NO sacred/ceremonial costume elements copied.</text>
+    <text x="30" y="1205" class="note-text">• No ritual marks, sacred jewelry, or religious iconography.</text>
+
+    <text x="30" y="1255" class="note-text" font-weight="700" fill="#A855F7">3. TARGET 3D ASSET SPECS (FOR T007):</text>
+    <text x="30" y="1285" class="note-text">• Blender scale: 1.68m height, pivot at grounded origin (0,0,0).</text>
+    <text x="30" y="1315" class="note-text">• Poly budget: 5,000–8,000 triangles for mobile efficiency.</text>
+    <text x="30" y="1345" class="note-text">• Material slots: 1–2 shared materials, baked PBR textures.</text>
+    <text x="30" y="1375" class="note-text">• Clean quad-dominant topology suited for simple runner rig.</text>
+
+    <!-- Sign-off box -->
+    <rect x="30" y="1420" width="540" height="120" rx="12" fill="#0B0F19" stroke="#0284C7" stroke-width="1.5"/>
+    <text x="50" y="1455" font-family="-apple-system, sans-serif" font-weight="700" font-size="15" fill="#38BDF8">DIRECTOR APPROVAL CRITERION:</text>
+    <text x="50" y="1485" class="note-text" font-size="14" fill="#94A3B8">"Recognizable instantly from behind as a playful modern Kathmandu</text>
+    <text x="50" y="1510" class="note-text" font-size="14" fill="#94A3B8">local, with zero sacred or ritual performance connotations."</text>
+  </g>
+</svg>

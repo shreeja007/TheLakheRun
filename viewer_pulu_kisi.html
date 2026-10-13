@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pulu Kisi (White Elephant) 3D Model & Kinematics Inspector</title>
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0A0F1D; }
+    canvas { width: 100%; height: 100%; display: block; }
+    #overlay {
+      position: absolute; top: 20px; left: 20px; color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: rgba(15, 23, 42, 0.90); padding: 14px 22px; border-radius: 12px;
+      border: 1px solid #334155; pointer-events: none; max-width: 480px;
+    }
+    #overlay h1 { margin: 0 0 6px 0; font-size: 18px; color: #F59E0B; }
+    #overlay p { margin: 0; font-size: 13px; color: #94A3B8; line-height: 1.4; }
+    #controls {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 8px; background: rgba(15, 23, 42, 0.92);
+      padding: 10px 16px; border-radius: 10px; border: 1px solid #334155;
+      flex-wrap: wrap; justify-content: center;
+    }
+    button {
+      background: #1E293B; color: #F8FAFC; border: 1px solid #475569;
+      padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    button:hover { background: #334155; border-color: #F59E0B; }
+    button.active { background: #B91C1C; border-color: #F59E0B; }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <h1 id="view-title">Pulu Kisi (White Elephant) — 3D Model Inspector</h1>
+    <p id="view-desc">Kilagal Indra Jatra White Wicker Elephant | Woven White Cloth | Ceremonial Jhula Saddle | Brass Ghangla Neck Bell</p>
+  </div>
+  <canvas id="canvas"></canvas>
+
+  <div id="controls">
+    <button onclick="setView('perspective')">1. 3/4 Hero</button>
+    <button onclick="setView('front')">2. Front View</button>
+    <button onclick="setView('side')">3. Side Profile</button>
+    <button onclick="setView('top')">4. Top View</button>
+    <button id="btn-anim" onclick="toggleAnimation()">▶ Gallop Run: OFF</button>
+    <button id="btn-trunk" onclick="toggleTrunkSwing()">🐘 Trunk Swing: OFF</button>
+    <button id="btn-bell" onclick="toggleBellChime()">🔔 Bell Jingle: OFF</button>
+  </div>
+
+  <script type="module">
+    import * as pc from 'playcanvas';
+    window.pc = pc;
+
+    const canvas = document.getElementById('canvas');
+    const app = new pc.Application(canvas);
+    window.app = app;
+    app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
+    app.setCanvasResolution(pc.RESOLUTION_AUTO);
+
+    // Camera
+    const camera = new pc.Entity('Camera');
+    camera.addComponent('camera', {
+      clearColor: new pc.Color(0.08, 0.11, 0.18),
+      fov: 40,
+      nearClip: 0.1,
+      farClip: 120
+    });
+    app.root.addChild(camera);
+
+    // Studio Lighting
+    const keyLight = new pc.Entity('KeyLight');
+    keyLight.addComponent('light', { type: 'directional', color: new pc.Color(1.0, 0.96, 0.88), intensity: 1.6 });
+    keyLight.setEulerAngles(35, 45, 0);
+    app.root.addChild(keyLight);
+
+    const fillLight = new pc.Entity('FillLight');
+    fillLight.addComponent('light', { type: 'directional', color: new pc.Color(0.55, 0.70, 0.95), intensity: 0.8 });
+    fillLight.setEulerAngles(25, -135, 0);
+    app.root.addChild(fillLight);
+
+    const rimLight = new pc.Entity('RimLight');
+    rimLight.addComponent('light', { type: 'directional', color: new pc.Color(0.95, 0.95, 1.0), intensity: 1.4 });
+    rimLight.setEulerAngles(-20, 180, 0);
+    app.root.addChild(rimLight);
+
+    // Pedestal Ground Plane
+    const ground = new pc.Entity('Ground');
+    ground.addComponent('render', { type: 'plane' });
+    ground.setLocalScale(8, 1, 8);
+    ground.setLocalPosition(0, 0, 0);
+    const groundMat = new pc.StandardMaterial();
+    groundMat.diffuse = new pc.Color(0.12, 0.15, 0.22);
+    groundMat.update();
+    if (ground.render) ground.render.material = groundMat;
+    app.root.addChild(ground);
+
+    let puluKisiRoot = null;
+    let bodyNode, headNode, trunkNode, leftEarNode, rightEarNode, bellNode, tailNode;
+    let flLegNode, frLegNode, blLegNode, brLegNode;
+    let isAnimated = false;
+    let isTrunkOnly = false;
+    let isBellOnly = false;
+    let animTime = 0;
+
+    function bindJoints(entity) {
+      bodyNode = entity.findByName('BodyRoot');
+      headNode = entity.findByName('HeadRoot');
+      trunkNode = entity.findByName('TrunkRoot');
+      leftEarNode = entity.findByName('LeftEarRoot');
+      rightEarNode = entity.findByName('RightEarRoot');
+      bellNode = entity.findByName('BellRoot');
+      tailNode = entity.findByName('TailRoot');
+      flLegNode = entity.findByName('FrontLeftLegRoot');
+      frLegNode = entity.findByName('FrontRightLegRoot');
+      blLegNode = entity.findByName('BackLeftLegRoot');
+      brLegNode = entity.findByName('BackRightLegRoot');
+
+      window.__PULU_KISI_JOINTS__ = {
+        bodyNode, headNode, trunkNode, leftEarNode, rightEarNode, bellNode, tailNode,
+        flLegNode, frLegNode, blLegNode, brLegNode
+      };
+    }
+
+    // Load Model
+    app.assets.loadFromUrl('/models/pulu_kisi.glb', 'container', (err, asset) => {
+      if (err) {
+        console.error('Failed to load Pulu Kisi GLB:', err);
+        return;
+      }
+      puluKisiRoot = asset.resource.instantiateRenderEntity();
+      puluKisiRoot.setLocalPosition(0, 0, 0);
+      app.root.addChild(puluKisiRoot);
+      window.__PULU_KISI_ROOT__ = puluKisiRoot;
+
+      bindJoints(puluKisiRoot);
+      setView('perspective');
+      console.log('Pulu Kisi 3D model loaded successfully!');
+    });
+
+    window.setView = function(mode) {
+      const target = new pc.Vec3(0, 0.85, 0);
+      const title = document.getElementById('view-title');
+      const desc = document.getElementById('view-desc');
+
+      if (mode === 'perspective') {
+        camera.setPosition(2.8, 1.7, -3.2);
+        camera.lookAt(target);
+        title.textContent = 'Pulu Kisi — 3/4 Hero Perspective';
+        desc.textContent = 'Authentic Indra Jatra white wicker elephant with ceremonial crimson Jhula saddle, swinging trunk, and neck bell';
+      } else if (mode === 'front') {
+        camera.setPosition(0, 1.25, -3.6);
+        camera.lookAt(target);
+        title.textContent = 'Pulu Kisi — Front View (Crossroad Dash)';
+        desc.textContent = 'Rounded head dome, Asian elephant parietal cranial bumps, fan-shaped ears, and golden forehead diadem';
+      } else if (mode === 'side') {
+        camera.setPosition(3.8, 1.15, 0);
+        camera.lookAt(target);
+        title.textContent = 'Pulu Kisi — Side Profile';
+        desc.textContent = 'Wicker barrel body, draped white cloth apron, four articulated legs, and gold-trimmed ceremonial saddle blanket';
+      } else if (mode === 'top') {
+        camera.setPosition(0, 4.4, 0.01);
+        camera.lookAt(target);
+        title.textContent = 'Pulu Kisi — Top / Dorsal View';
+        desc.textContent = 'Saddle blanket symmetry, ear span clearance, and curved trunk silhouette';
+      }
+    };
+
+    window.toggleAnimation = function() {
+      isAnimated = !isAnimated;
+      const btn = document.getElementById('btn-anim');
+      btn.textContent = isAnimated ? '⏸ Gallop Run: ON' : '▶ Gallop Run: OFF';
+      btn.className = isAnimated ? 'active' : '';
+      if (!isAnimated) resetPose();
+    };
+
+    window.toggleTrunkSwing = function() {
+      isTrunkOnly = !isTrunkOnly;
+      const btn = document.getElementById('btn-trunk');
+      btn.textContent = isTrunkOnly ? '⏸ Trunk Swing: ON' : '🐘 Trunk Swing: OFF';
+      btn.className = isTrunkOnly ? 'active' : '';
+      if (!isTrunkOnly && !isAnimated) resetPose();
+    };
+
+    window.toggleBellChime = function() {
+      isBellOnly = !isBellOnly;
+      const btn = document.getElementById('btn-bell');
+      btn.textContent = isBellOnly ? '⏸ Bell Jingle: ON' : '🔔 Bell Jingle: OFF';
+      btn.className = isBellOnly ? 'active' : '';
+      if (!isBellOnly && !isAnimated) resetPose();
+    };
+
+    function resetPose() {
+      bodyNode?.setLocalPosition(0, 0.85, 0);
+      bodyNode?.setLocalEulerAngles(0, 0, 0);
+      headNode?.setLocalEulerAngles(0, 0, 0);
+      trunkNode?.setLocalEulerAngles(0, 0, 0);
+      leftEarNode?.setLocalEulerAngles(0, 0, 0);
+      rightEarNode?.setLocalEulerAngles(0, 0, 0);
+      bellNode?.setLocalEulerAngles(0, 0, 0);
+      tailNode?.setLocalEulerAngles(0, 0, 0);
+      flLegNode?.setLocalEulerAngles(0, 0, 0);
+      frLegNode?.setLocalEulerAngles(0, 0, 0);
+      blLegNode?.setLocalEulerAngles(0, 0, 0);
+      brLegNode?.setLocalEulerAngles(0, 0, 0);
+    }
+
+    app.on('update', (dt) => {
+      if (!bodyNode) return;
+
+      if (isAnimated) {
+        animTime += dt;
+        const speed = 8.5; // High-tempo festival gallop cadence
+        const t = animTime * speed;
+
+        // Energetic body bobbing & pitching
+        const bodyBob = Math.sin(t * 2.0) * 0.055;
+        const bodyPitch = Math.sin(t) * 4.5;
+        const bodyRoll = Math.cos(t * 0.5) * 3.5;
+        bodyNode.setLocalPosition(0, 0.85 + bodyBob, 0);
+        bodyNode.setLocalEulerAngles(bodyPitch, 0, bodyRoll);
+
+        // Head bounce
+        headNode?.setLocalEulerAngles(-bodyPitch * 0.8, Math.sin(t * 0.5) * 6.0, 0);
+
+        // Dynamic 4-Leg Gallop Gait (representing two human runners inside the elephant frame)
+        const legSwing = Math.sin(t) * 28.0;
+        flLegNode?.setLocalEulerAngles(legSwing, 0, 0);
+        brLegNode?.setLocalEulerAngles(legSwing * 0.9, 0, 0);
+        frLegNode?.setLocalEulerAngles(-legSwing, 0, 0);
+        blLegNode?.setLocalEulerAngles(-legSwing * 0.9, 0, 0);
+
+        // Trunk swinging playfully
+        const trunkSwing = Math.sin(t * 1.2) * 26.0;
+        const trunkPitch = -Math.abs(Math.sin(t * 1.2)) * 12.0;
+        trunkNode?.setLocalEulerAngles(trunkPitch, trunkSwing, 0);
+
+        // Flapping fan ears
+        const earFlap = Math.abs(Math.sin(t * 1.5)) * 18.0;
+        leftEarNode?.setLocalEulerAngles(0, -earFlap, 0);
+        rightEarNode?.setLocalEulerAngles(0, earFlap, 0);
+
+        // Centrifugal bell swinging
+        const bellSwing = Math.sin(t * 1.8) * 32.0;
+        bellNode?.setLocalEulerAngles(Math.abs(bellSwing) * 0.4, 0, bellSwing);
+
+        // Wagging tail
+        const tailWag = Math.sin(t * 1.6) * 24.0;
+        tailNode?.setLocalEulerAngles(0, tailWag, 0);
+      } else {
+        if (isTrunkOnly) {
+          animTime += dt;
+          const trunkSwing = Math.sin(animTime * 4.5) * 28.0;
+          trunkNode?.setLocalEulerAngles(0, trunkSwing, 0);
+        }
+        if (isBellOnly) {
+          animTime += dt;
+          const bellSwing = Math.sin(animTime * 6.0) * 35.0;
+          bellNode?.setLocalEulerAngles(0, 0, bellSwing);
+        }
+      }
+    });
+
+    app.start();
+  </script>
+</body>
+</html>

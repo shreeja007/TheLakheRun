@@ -1,0 +1,25 @@
+{
+  "ticket": "T022",
+  "date": "2026-10-11",
+  "asset_id": "pulu_kisi_blockout_v01",
+  "state": "simplified static draft; director/cultural acceptance pending",
+  "authoring": "Original procedural Blender geometry, following existing project-generated T019 concept",
+  "blender": "5.2.2 LTS",
+  "generator": "generate_pulu.py",
+  "generator_sha256": "823195265f5605f5938a5fd34ed8279782f901dd757c2ca009e1d1e546214c2e",
+  "concept_source": "art-source/festival_phase1_v01/pulu_kisi_concept_v01.png",
+  "concept_sha256": "b609f253d987022a1eb0e4211f7c92d54bc4fa194774f184ebb8cfc3d0e22c3e",
+  "research_register": "art-source/festival_phase1_v01/RESEARCH_AND_HANDOFF.md",
+  "new_online_research": false,
+  "external_media_copied": false,
+  "texture_dependencies": [],
+  "glb_sha256": "66b1c86b9e20c7a159077c45f9bf61590eed45f91928325fa6efb40ce4d22ac1",
+  "blend_sha256": "75f867bc52b2cfd07937739d259fd96525a318f64d2f811946b93636b629ffa3",
+  "simplifications": [
+    "Unverified exact dimensions",
+    "Plain face/ear trim, seams, ribbons, tuft and proxy shoes",
+    "Internal frame is suggested construction only",
+    "No rig/clips/colliders or approved choreography"
+  ],
+  "rights": "No outside mesh/photo/texture imported. Project-generated concept is design input; underlying project ownership not independently established. No new repository license imposed."
+}

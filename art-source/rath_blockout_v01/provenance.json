@@ -1,0 +1,21 @@
+{
+  "ticket": "T020",
+  "date": "2026-10-11",
+  "state": "blockout draft; director/cultural acceptance pending",
+  "authoring": "Original procedural Blender geometry authored in this ticket",
+  "blender": "5.2.2 LTS",
+  "concept_source": "art-source/festival_phase1_v01/kumari_rath_concept_v01.png",
+  "concept_sha256": "F9A00BF8324807584241BC2372BD8B6D82F3DA3EFFA2CF3C59F90C10F24BDE08",
+  "research_register": "art-source/festival_phase1_v01/RESEARCH_AND_HANDOFF.md",
+  "external_media_copied": false,
+  "texture_dependencies": [],
+  "glb_sha256": "7D51F2BA243FF5889076967A8A5ADF8066D273206EC5FDDD0373763C754F13FC",
+  "blend_sha256": "97DC00913A032606584D99B1CAADB54F230BC47249F6B05DFFE3A170A8D7D8E8",
+  "known_limitations": [
+    "Not an authentic ritual replica; simplified original nonfigural detailing",
+    "Dimensions are proposed blockout choices",
+    "No skeletal rig/animation/collision/in-game placement",
+    "8 materials and 23 primitives; final phone budgets unmeasured"
+  ],
+  "rights": "No outside mesh/photo/texture imported. Project supplied generated concept is visual input; underlying project ownership not independently established. No new license for the whole repository is imposed."
+}

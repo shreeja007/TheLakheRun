@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "asset_id": "pulu_kisi_blockout_v01",
+  "glb_sha256": "66b1c86b9e20c7a159077c45f9bf61590eed45f91928325fa6efb40ce4d22ac1",
+  "editable_blend_reopened": true,
+  "source_triangles": 16964,
+  "minimum_source_triangle_area_m2": 1.6938203453862928e-07,
+  "source_finite_nondegenerate_geometry": true,
+  "nodes": 23,
+  "meshes": 11,
+  "triangles": 16964,
+  "primitives": 26,
+  "materials": 8,
+  "no_external_resources": true,
+  "no_preview_scene": true,
+  "two_grounded_foot_pairs": true,
+  "cloth_hem_z_m": 0.21958671510219574,
+  "reimport_bounds_blender_min": [
+    -1.1026145219802856,
+    -2.2081570625305176,
+    0.0
+  ],
+  "reimport_bounds_blender_max": [
+    1.1026145219802856,
+    1.6343997716903687,
+    3.3279995918273926
+  ],
+  "attachment_checks": [
+    {
+      "node": "HeadRoot",
+      "pivot_blender": [
+        0.0,
+        -1.4500000476837158,
+        2.4000000953674316
+      ],
+      "rigid_rotation_keeps_attachment": true,
+      "mesh_point_moved_m": 0.15924194115420737
+    },
+    {
+      "node": "TrunkRoot",
+      "pivot_blender": [
+        0.0,
+        -1.7699999809265137,
+        2.3399999141693115
+      ],
+      "rigid_rotation_keeps_attachment": true,
+      "mesh_point_moved_m": 0.3853302340325655
+    },
+    {
+      "node": "Ear_L",
+      "pivot_blender": [
+        -0.4300000071525574,
+        -1.3899999856948853,
+        2.4800000190734863
+      ],
+      "rigid_rotation_keeps_attachment": true,
+      "mesh_point_moved_m": 0.1197829111586416
+    },
+    {
+      "node": "Ear_R",
+      "pivot_blender": [
+        0.4300000071525574,
+        -1.3899999856948853,
+        2.4800000190734863
+      ],
+      "rigid_rotation_keeps_attachment": true,
+      "mesh_point_moved_m": 0.1197829111586416
+    }
+  ],
+  "head_children_follow_attachment": true,
+  "body_unchanged_during_head_rotation": true
+}

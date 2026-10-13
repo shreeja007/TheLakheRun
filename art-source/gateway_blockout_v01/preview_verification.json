@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "check": "PNG signatures/dimensions/hashes; visual review separate",
+  "files": [
+    {
+      "file": "playcanvas_desktop.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 72285,
+      "sha256": "97fb2a78df4d1901d83d9b2c6d515acfa2b4279e3e2575d59546d3851d10a05e"
+    },
+    {
+      "file": "playcanvas_mobile_viewport.png",
+      "dimensions": [
+        390,
+        844
+      ],
+      "bytes": 16275,
+      "sha256": "2991beb9409ffa98a10f93b64850c1da1edca1f1a841a76ad6e037219dbfce73"
+    },
+    {
+      "file": "preview_back.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 705791,
+      "sha256": "a5111e9d989e2fa07dbbd661f2fae2c56070c62ef0461fc9d19eae695a9adeb0"
+    },
+    {
+      "file": "preview_front.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 703067,
+      "sha256": "d09d35db9eec9d74b5800bb9f926ee2c25082b311ae8728f5feefd8aaa999b7f"
+    },
+    {
+      "file": "preview_left.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 646833,
+      "sha256": "fb7fa48376262249cf8c1fb74e51a7f210ba4c1141383fbe97fad636b4ec6031"
+    },
+    {
+      "file": "preview_perspective.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 1043455,
+      "sha256": "dccc1d72eb57a848efedfb28e89eaf6e9ccc9182416b54f18079f2b23f4a01b1"
+    },
+    {
+      "file": "preview_right.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 648567,
+      "sha256": "e0a108aed203e3abdcc589547a742a1e8c98be795beaf6b28324e07787d27e1f"
+    },
+    {
+      "file": "references/accepted_gateway_concept.png",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "bytes": 1661986,
+      "sha256": "564af4590cb0edfb34d2bfd9223c1bb14912aa9f5360a802020827ca7c51bad4"
+    },
+    {
+      "file": "textures/brick_color_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 144651,
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "status": "passed",
+  "check": "PNG signatures/dimensions/hashes; visual review separate",
+  "files": [
+    {
+      "file": "playcanvas_desktop.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 177423,
+      "sha256": "ea253808c2eb03de23e65b22a63e4149cd5e041683257a68c62d35c3b4c89139"
+    },
+    {
+      "file": "playcanvas_mobile_viewport.png",
+      "dimensions": [
+        390,
+        844
+      ],
+      "bytes": 52140,
+      "sha256": "2f18efed8773ac7fe35f1f64b2c4a653c31354902ff0f8bf3b3238bfa86f09de"
+    },
+    {
+      "file": "preview_back.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 928889,
+      "sha256": "5b5fc40320c4e8d061744524f147e82718e10b3a14fb62d8e8b57d3bfee2a78e"
+    },
+    {
+      "file": "preview_front.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 932754,
+      "sha256": "c0e0e1afb711b7893421a50a17dcf212f3532b05b391b5a63ed8e314a016389c"
+    },
+    {
+      "file": "preview_left.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 805263,
+      "sha256": "f9c5cc67f78bbcb787c00372ba8b37de2c91acca148fb523659b2c9d03d86128"
+    },
+    {
+      "file": "preview_perspective.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 1290499,
+      "sha256": "40e22bba1a58b37bb8bb42e05e01bf304043500a191280202f71522af018c4a3"
+    },
+    {
+      "file": "preview_right.png",
+      "dimensions": [
+        1000,
+        1000
+      ],
+      "bytes": 797789,
+      "sha256": "d11d78689a2c5001b3e2f9a769c10756b1263985b5184ac10d490758f74b0f78"
+    },
+    {
+      "file": "references/accepted_building01_concept.png",
+      "dimensions": [
+        2054,
+        766
+      ],
+      "bytes": 1957005,
+      "sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4"
+    },
+    {
+      "file": "textures/brick_color_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 144651,
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    },
+    {
+      "file": "textures/roof_color_512.png",
+      "dimensions": [
+        512,
+        512
+      ],
+      "bytes": 232323,
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770"
+    }
+  ]
+}

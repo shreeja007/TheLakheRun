@@ -1,0 +1,75 @@
+{
+  "status": "passed",
+  "asset_id": "everyday_gateway_v01",
+  "glb_sha256": "781dc42c131c9d9caf1922cf001bbbc104e8c2a8fd343bf11243b1bf49109fab",
+  "triangles_instanced": 436,
+  "unique_gltf_meshes": 8,
+  "mesh_nodes": 8,
+  "node_count": 12,
+  "primitives_instanced": 8,
+  "materials": 4,
+  "images": [
+    {
+      "name": "brick_color_512",
+      "bytes": 144651,
+      "embedded": true,
+      "size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "source_min_triangle_area": 0.00018113039540790284,
+  "passage_rays_source_and_roundtrip": [
+    [
+      -1.9,
+      0.1
+    ],
+    [
+      -1.9,
+      1.6
+    ],
+    [
+      -1.9,
+      3.05
+    ],
+    [
+      0,
+      0.1
+    ],
+    [
+      0,
+      1.6
+    ],
+    [
+      0,
+      3.05
+    ],
+    [
+      1.9,
+      0.1
+    ],
+    [
+      1.9,
+      1.6
+    ],
+    [
+      1.9,
+      3.05
+    ]
+  ],
+  "measured_clear_width_m": 4.099999904632568,
+  "measured_lintel_underside_m": 3.180000066757202,
+  "roundtrip_bounds_blender_min": [
+    -3.049999952316284,
+    -0.5,
+    0.0
+  ],
+  "roundtrip_bounds_blender_max": [
+    3.049999952316284,
+    0.5,
+    3.9600000381469727
+  ],
+  "grounded": true,
+  "source_packed_textures": true
+}

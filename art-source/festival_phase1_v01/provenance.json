@@ -1,0 +1,53 @@
+{
+  "ticket": "T019",
+  "date": "2026-10-11",
+  "status": "concept draft; acceptance pending",
+  "tool": "built-in image_gen",
+  "external_media_used_as_generation_input": false,
+  "external_media_copied_into_repository": false,
+  "input": {
+    "path": "art-source/tuku_refinement_v03/tuku_turnaround_detailed_v03.png",
+    "role": "local owner-supplied style reference only",
+    "sha256": "3B175A1C91A19C9907C599B9044C8C01B6293178D2FCB1BF38EB187F3A040C10"
+  },
+  "research_register": "RESEARCH_AND_HANDOFF.md",
+  "generation_directory": "C:/Users/ShreejaManandhar/.codex/generated_images/01a12946-e210-7110-87ad-2be0f38393e7/",
+  "outputs": [
+    {
+      "file": "pulu_kisi_concept_v01.png",
+      "prompts": [
+        "pulu_prompt.txt",
+        "pulu_correction_prompt.txt"
+      ],
+      "generation": "exec-4882e473-6a18-46ab-976c-d9c9c8bed311.png",
+      "first_candidate": "exec-dc130e09-df62-4c64-91e0-f41e05a87831.png",
+      "correction": "lengthen cloth effigy body and show separate performer positions; initial single-person bell body rejected"
+    },
+    {
+      "file": "kumari_rath_concept_v01.png",
+      "prompt": "kumari_prompt.txt",
+      "generation": "exec-9dc26f95-cb90-4bd0-904f-826f82bafff7.png"
+    },
+    {
+      "file": "bhairab_rath_concept_v01.png",
+      "prompt": "bhairab_prompt.txt",
+      "generation": "exec-1fee6a17-9e17-43e1-8eaa-89f68bfe411a.png",
+      "input": "generated Kumari family reference"
+    },
+    {
+      "file": "ganesh_rath_concept_v01.png",
+      "prompt": "ganesh_prompt.txt",
+      "generation": "exec-5e4b6b01-6725-4728-afe9-3def6146854b.png",
+      "input": "generated Kumari family reference"
+    }
+  ],
+  "rights_notes": "Generated from project style reference plus text brief; outside photos viewed only, no licensed photo derivative declared. No claim of independently verified input ownership or cultural authenticity.",
+  "limitations": [
+    "not .blend/GLB/rigs",
+    "rath variants are provisional; traditional individual identifiers unverified",
+    "mask and sacred ornament omitted; Pulu face/trim simplified proposals",
+    "independently normalized sheets; no world-scale calibration",
+    "approximate generated multiview consistency; not true orthographic mesh renders"
+  ],
+  "gameplay_changed": false
+}

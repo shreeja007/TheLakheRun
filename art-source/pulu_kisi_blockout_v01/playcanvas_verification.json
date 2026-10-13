@@ -1,0 +1,273 @@
+{
+  "status": "passed",
+  "asset_id": "pulu_kisi_blockout_v01",
+  "glb_sha256": "66b1c86b9e20c7a159077c45f9bf61590eed45f91928325fa6efb40ce4d22ac1",
+  "browser": "chrome",
+  "headless": true,
+  "rendering": "ANGLE SwiftShader software; not physical-device performance testing",
+  "desktopViewport": [
+    1000,
+    900
+  ],
+  "mobileViewportOnly": [
+    390,
+    844
+  ],
+  "browserErrors": [],
+  "imported": {
+    "engineVersion": "2.23.2",
+    "graphicsBackend": "webgl2",
+    "meshInstances": 26,
+    "materials": [
+      "Canvas_WarmWhite",
+      "Trim_RustRed",
+      "Trim_MutedBlue",
+      "Trim_MutedGreen",
+      "Seams_Frame_Sole_Linen",
+      "Eyes_Shoes_Charcoal",
+      "Garland_Marigold",
+      "Tuft_RedFiber"
+    ],
+    "min": [
+      -1.1026145219802856,
+      0,
+      -1.6343997716903687
+    ],
+    "max": [
+      1.1026145219802856,
+      3.3279996514320374,
+      2.2081570625305176
+    ],
+    "rootPosition": [
+      0,
+      0,
+      0
+    ],
+    "animations": 0,
+    "pivots": [
+      {
+        "name": "HeadRoot",
+        "center": [
+          0,
+          2.4000000953674316,
+          1.4500000476837158
+        ],
+        "drift": 0,
+        "surfacePointMoved": true,
+        "childMeshes": 1
+      },
+      {
+        "name": "TrunkRoot",
+        "center": [
+          0,
+          2.3399999141693115,
+          1.7699999809265137
+        ],
+        "drift": 0,
+        "surfacePointMoved": true,
+        "childMeshes": 1
+      },
+      {
+        "name": "Ear_L",
+        "center": [
+          -0.4300000071525574,
+          2.4800000190734863,
+          1.3899999856948853
+        ],
+        "drift": 0,
+        "surfacePointMoved": true,
+        "childMeshes": 1
+      },
+      {
+        "name": "Ear_R",
+        "center": [
+          0.4300000071525574,
+          2.4800000190734863,
+          1.3899999856948853
+        ],
+        "drift": 0,
+        "surfacePointMoved": true,
+        "childMeshes": 1
+      }
+    ],
+    "positions": [
+      {
+        "name": "ClothRoot",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "FrameRoot",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "HeadRoot",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          2.4000000953674316,
+          1.4500000476837158
+        ]
+      },
+      {
+        "name": "TrunkRoot",
+        "parent": "HeadRoot",
+        "position": [
+          0,
+          2.3399999141693115,
+          1.7699999809265137
+        ]
+      },
+      {
+        "name": "Ear_L",
+        "parent": "HeadRoot",
+        "position": [
+          -0.4300000071525574,
+          2.4800000190734863,
+          1.3899999856948853
+        ]
+      },
+      {
+        "name": "Ear_R",
+        "parent": "HeadRoot",
+        "position": [
+          0.4300000071525574,
+          2.4800000190734863,
+          1.3899999856948853
+        ]
+      },
+      {
+        "name": "TuftRoot",
+        "parent": "HeadRoot",
+        "position": [
+          0,
+          2.9700000286102295,
+          1.3899999856948853
+        ]
+      },
+      {
+        "name": "GarlandRoot",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "TrimRoot",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Feet_Front",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          0,
+          0.8999999761581421
+        ]
+      },
+      {
+        "name": "Feet_Rear",
+        "parent": "PuluRoot",
+        "position": [
+          0,
+          0,
+          -0.949999988079071
+        ]
+      }
+    ],
+    "childrenFollow": true,
+    "bodyUnchanged": true,
+    "projected": [
+      [
+        525.5676016367318,
+        594.55200094808,
+        10.63070311150075
+      ],
+      [
+        189.18648813378823,
+        707.1276691356845,
+        7.556963359021097
+      ],
+      [
+        526.5337816539719,
+        227.8878362178613,
+        10.236312831076825
+      ],
+      [
+        172.53773389975947,
+        193.42325587822208,
+        7.1625730785971715
+      ],
+      [
+        747.7301664853472,
+        633.5298339171999,
+        9.32403083281811
+      ],
+      [
+        449.07146801374273,
+        787.482990093707,
+        6.250291080338457
+      ],
+      [
+        758.4315378424359,
+        216.0723563662151,
+        8.929640552394185
+      ],
+      [
+        445.75488441646814,
+        168.17488543528208,
+        5.855900799914531
+      ]
+    ]
+  },
+  "mobileProjection": [
+    [
+      211.68853071892116,
+      514.4081911212829
+    ],
+    [
+      18.330985590622795,
+      567.9841974372015
+    ],
+    [
+      212.11486447320974,
+      281.5600928000707
+    ],
+    [
+      12.70221877254503,
+      279.29229036483423
+    ],
+    [
+      347.0192237354708,
+      534.5286203178889
+    ],
+    [
+      167.73679866893968,
+      599.5786099287092
+    ],
+    [
+      351.2618716860071,
+      280.7116835826084
+    ],
+    [
+      166.7656687233677,
+      277.941803713486
+    ]
+  ]
+}

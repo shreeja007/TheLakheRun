@@ -1,0 +1,202 @@
+{
+  "status": "passed",
+  "source": "T025/T026 manifests",
+  "files": [
+    {
+      "file": "building01_blockout_v01/building01_residence_v01.blend",
+      "sha256": "4c2cca6b4ba7c308ee12218b544860d55e1604dc9c21e9e43410ba74ef61470c"
+    },
+    {
+      "file": "building01_blockout_v01/building01_residence_v01.glb",
+      "sha256": "f2837a955bc4cb399482b875122032f3e14bf5715b8955c3eaacbb7f92082d40"
+    },
+    {
+      "file": "building01_blockout_v01/generate_building.py",
+      "sha256": "ee504ffbbe284321cdba4680f3b20868974b3b26b628af68f90322e77cfa06be"
+    },
+    {
+      "file": "building01_blockout_v01/verify_export.py",
+      "sha256": "02a11c1d2be694584ab7482828f7858e04561b8ff591e74867e492fec5ea7746"
+    },
+    {
+      "file": "building01_blockout_v01/check_playcanvas.mjs",
+      "sha256": "91019b356c34c20652d85569b0d1b1e2b9043ea0f451afea0ba38626b5413168"
+    },
+    {
+      "file": "building01_blockout_v01/prepare_handoff.py",
+      "sha256": "600dda24dee1f4d11ac8f493d617c78f36150487374af69fac723be4d8ef745b"
+    },
+    {
+      "file": "building01_blockout_v01/HANDOFF.md",
+      "sha256": "0ce910dc879908d54a6b6dd59d5c50f78d81e5176a32645f5f5d8f96a3be5cfe"
+    },
+    {
+      "file": "building01_blockout_v01/REFERENCE_NOTES.md",
+      "sha256": "91111f6eca264e12a4d3b438c2ffeadf2269a10b0d7b16853adcb4e2d2a2f4a9"
+    },
+    {
+      "file": "building01_blockout_v01/MODEL_FACTS.md",
+      "sha256": "05488ca29bd92bceffc5949117813b8e2e367bb094f5f3d8c3079ba089175305"
+    },
+    {
+      "file": "building01_blockout_v01/asset_metrics.json",
+      "sha256": "e9c6166b09364767831ae73188ef9a2905c5f6497b3b68b9b641f143f8a75e5b"
+    },
+    {
+      "file": "building01_blockout_v01/export_verification.json",
+      "sha256": "85bd3ad07049d60019196a425a70d0090d91b96ae8138a895deff6a64e966c2b"
+    },
+    {
+      "file": "building01_blockout_v01/playcanvas_verification.json",
+      "sha256": "a01e267662806e628dc70c8f198ac80693bf9b7f55f0f8a4b03b6130105ef3f1"
+    },
+    {
+      "file": "building01_blockout_v01/provenance.json",
+      "sha256": "def3f4208c12d19bc97d01e80667b6c68cd560ecf3468878f4a334a60456c302"
+    },
+    {
+      "file": "building01_blockout_v01/preview_verification.json",
+      "sha256": "75f983341ed3eeebbccb751d56cbcbbdf03eec970023814c8ed0470a54498ace"
+    },
+    {
+      "file": "building01_blockout_v01/playcanvas_desktop.png",
+      "sha256": "ea253808c2eb03de23e65b22a63e4149cd5e041683257a68c62d35c3b4c89139"
+    },
+    {
+      "file": "building01_blockout_v01/playcanvas_mobile_viewport.png",
+      "sha256": "2f18efed8773ac7fe35f1f64b2c4a653c31354902ff0f8bf3b3238bfa86f09de"
+    },
+    {
+      "file": "building01_blockout_v01/preview_back.png",
+      "sha256": "5b5fc40320c4e8d061744524f147e82718e10b3a14fb62d8e8b57d3bfee2a78e"
+    },
+    {
+      "file": "building01_blockout_v01/preview_front.png",
+      "sha256": "c0e0e1afb711b7893421a50a17dcf212f3532b05b391b5a63ed8e314a016389c"
+    },
+    {
+      "file": "building01_blockout_v01/preview_left.png",
+      "sha256": "f9c5cc67f78bbcb787c00372ba8b37de2c91acca148fb523659b2c9d03d86128"
+    },
+    {
+      "file": "building01_blockout_v01/preview_perspective.png",
+      "sha256": "40e22bba1a58b37bb8bb42e05e01bf304043500a191280202f71522af018c4a3"
+    },
+    {
+      "file": "building01_blockout_v01/preview_right.png",
+      "sha256": "d11d78689a2c5001b3e2f9a769c10756b1263985b5184ac10d490758f74b0f78"
+    },
+    {
+      "file": "building01_blockout_v01/references/accepted_building01_concept.png",
+      "sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4"
+    },
+    {
+      "file": "building01_blockout_v01/textures/brick_color_512.png",
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    },
+    {
+      "file": "building01_blockout_v01/textures/roof_color_512.png",
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770"
+    },
+    {
+      "file": "building02_blockout_v01/building02_shopfront_v01.blend",
+      "sha256": "fe1fcbc2e98e642fadee5f4621c8a1afdc61e79b5d56dbe0903f524341c75334"
+    },
+    {
+      "file": "building02_blockout_v01/building02_shopfront_v01.glb",
+      "sha256": "b85c2642ada586f3f852edf02c3578ffddd372c8566d72e278b5fa37beb3ea68"
+    },
+    {
+      "file": "building02_blockout_v01/generate_building.py",
+      "sha256": "b80f1e4988e966962ffe95a9c3a54ed8b26fc5be1923074690852e660b4547dd"
+    },
+    {
+      "file": "building02_blockout_v01/verify_export.py",
+      "sha256": "2952c6f81615ad5a401fd21016e98073058ae4002426d2d84acb5ad67512b5a5"
+    },
+    {
+      "file": "building02_blockout_v01/check_playcanvas.mjs",
+      "sha256": "da802596f46aed474434143c764b64bc0e18fdb0c2e0967264bd753709333a61"
+    },
+    {
+      "file": "building02_blockout_v01/prepare_handoff.py",
+      "sha256": "1f3f8bad55778cd777742abdc18d621bb47a78e7a450f624d250d6a35c4225ac"
+    },
+    {
+      "file": "building02_blockout_v01/HANDOFF.md",
+      "sha256": "c00156a9946fabf8f0c35b33cea112e86298b4879920ecf283278ea7e4b0acd2"
+    },
+    {
+      "file": "building02_blockout_v01/REFERENCE_NOTES.md",
+      "sha256": "059c4263dbb43ee765bdb8de9c6af885c07ac59f28e7f5dc584125b0783a2969"
+    },
+    {
+      "file": "building02_blockout_v01/MODEL_FACTS.md",
+      "sha256": "53c46631291e8c47b9faf9187b676e4e478cf2c897e84673f879c4b4c3541cb4"
+    },
+    {
+      "file": "building02_blockout_v01/asset_metrics.json",
+      "sha256": "d86e68d29dc473c69675b8972f08c06aa1582678ede889b847841f77942f8349"
+    },
+    {
+      "file": "building02_blockout_v01/export_verification.json",
+      "sha256": "8c175dc652ed3726bcf7a548c91085f76a77dd9b244ba3690bf168a066538f59"
+    },
+    {
+      "file": "building02_blockout_v01/playcanvas_verification.json",
+      "sha256": "26b6212630c5daa418162d3b28132ff5de5cfdc1dc2be3217f96dc094930ab77"
+    },
+    {
+      "file": "building02_blockout_v01/provenance.json",
+      "sha256": "141a8bccf580d7ab4662683ea32df17c9e64c705b5ed3933bbcee087e450a894"
+    },
+    {
+      "file": "building02_blockout_v01/preview_verification.json",
+      "sha256": "94229ff30b0bff2c862a3e08a7f8d4ae9d3459309ca50f1bdb1b9b4608c29c4d"
+    },
+    {
+      "file": "building02_blockout_v01/previous_asset_preservation.json",
+      "sha256": "e1a8c4d9aa4bff7a810e741493e0c0b05eca5cd52082f99f6d9b1bfc4ee1494c"
+    },
+    {
+      "file": "building02_blockout_v01/playcanvas_desktop.png",
+      "sha256": "cfb87a4c72d3ae5c0825867b36a20fd7baf7d67008e3e58025a2ba2812d94b37"
+    },
+    {
+      "file": "building02_blockout_v01/playcanvas_mobile_viewport.png",
+      "sha256": "093c4ad411475e30966622708076c938a7eae7a5bb45caf7f8a698d57d858a9f"
+    },
+    {
+      "file": "building02_blockout_v01/preview_back.png",
+      "sha256": "7f04cd4eed74f4d0f35c4d055e75a52bdaa6c47ccf73a2ded1d0bef61950e3b1"
+    },
+    {
+      "file": "building02_blockout_v01/preview_front.png",
+      "sha256": "ecd101c46e8571a093e107609603e379517a192664bb2752172ab753281b48ba"
+    },
+    {
+      "file": "building02_blockout_v01/preview_left.png",
+      "sha256": "b758525e93ac2e2d1406110b4231ac8f17e8c46188ff6e433c93a3a71c5d5c8a"
+    },
+    {
+      "file": "building02_blockout_v01/preview_perspective.png",
+      "sha256": "a0b7a54892896aeddaa5b372427c8ee1f2b05ac3b9d6283e8c6aa15dd55d221a"
+    },
+    {
+      "file": "building02_blockout_v01/preview_right.png",
+      "sha256": "a53cb13991925bed9fbb636b70351b80f35951ce640fef2051d6dc8f722c0b93"
+    },
+    {
+      "file": "building02_blockout_v01/references/accepted_building02_concept.png",
+      "sha256": "88ff1a33d94299430a128de083f35830fca72351b3b01e7f18e441c413b4c96b"
+    },
+    {
+      "file": "building02_blockout_v01/textures/brick_color_512.png",
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    },
+    {
+      "file": "building02_blockout_v01/textures/roof_color_512.png",
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770"
+    }
+  ]
+}

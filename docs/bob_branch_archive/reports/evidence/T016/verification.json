@@ -1,0 +1,71 @@
+{
+  "origin": "http://127.0.0.1:4173",
+  "channel": "chrome",
+  "browser": "155.0.8059.39",
+  "results": [
+    {
+      "name": "Default HUD, keyboard tutorial, no tutorial movement, pause/resume, replay, mute",
+      "detail": "passed"
+    },
+    {
+      "name": "Persistent tutorial completion, natural collision/results and retry",
+      "detail": "passed"
+    },
+    {
+      "name": "Explicit debug HUD and live FPS",
+      "detail": "passed"
+    },
+    {
+      "name": "Emulated touch swipes in tutorial and gameplay (left/right/jump/slide)",
+      "detail": "passed"
+    },
+    {
+      "name": "Secondary touches and cancelled gestures do not start a run",
+      "detail": "passed"
+    },
+    {
+      "name": "320px portrait through 844px landscape menu/dialog bounds",
+      "detail": "passed"
+    },
+    {
+      "name": "Production service-worker snapshot, controlled reload, offline launch and play",
+      "detail": "passed"
+    },
+    {
+      "name": "Manifest, icon dimensions, all precache URLs",
+      "detail": "29 files, 9275205 bytes"
+    },
+    {
+      "name": "Blocked storage: tutorial skip and session fallback",
+      "detail": "passed"
+    },
+    {
+      "name": "Synthetic install event: one-use prompt, dismissal, modal input isolation",
+      "detail": "passed"
+    },
+    {
+      "name": "iPhone UA emulation: manual installation guidance (not Safari verification)",
+      "detail": "passed"
+    },
+    {
+      "name": "Emulated standalone mode hides redundant installation menu",
+      "detail": "passed"
+    },
+    {
+      "name": "Service-worker registration failure leaves online play usable",
+      "detail": "passed"
+    },
+    {
+      "name": "Unavailable WebGL displays an actionable startup failure (intentional boot error)",
+      "detail": "passed"
+    },
+    {
+      "name": "Real worker update waits without reloading a paused run; tab close activates it and removes old game cache",
+      "detail": "passed"
+    },
+    {
+      "name": "No uncaught page errors in desktop, touch and denied-storage checks",
+      "detail": "passed"
+    }
+  ]
+}

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tuku 3D Character & Kinematics Inspector</title>
+  <style>
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0A0F1D; }
+    canvas { width: 100%; height: 100%; display: block; }
+    #overlay {
+      position: absolute; top: 20px; left: 20px; color: #F8FAFC;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: rgba(15, 23, 42, 0.88); padding: 14px 22px; border-radius: 12px;
+      border: 1px solid #334155; pointer-events: none; max-width: 480px;
+    }
+    #overlay h1 { margin: 0 0 6px 0; font-size: 18px; color: #38BDF8; }
+    #overlay p { margin: 0; font-size: 13px; color: #94A3B8; line-height: 1.4; }
+    #controls {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: row; gap: 6px; background: rgba(15, 23, 42, 0.90);
+      padding: 8px 14px; border-radius: 9999px; border: 1px solid #334155;
+      max-width: 95vw; overflow-x: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 100;
+    }
+    button {
+      background: #1E293B; color: #F8FAFC; border: 1px solid #475569;
+      padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: 600;
+      white-space: nowrap; transition: background 0.15s, border-color 0.15s;
+    }
+    button:hover { background: #334155; border-color: #38BDF8; }
+    button.active { background: #0284C7; border-color: #38BDF8; color: #FFFFFF; }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <h1 id="view-title">Tuku — 3D Character (v0.3 Specification)</h1>
+    <p id="view-desc">1.68m Athletic Young Adult | Kathmandu Streetwear | Articulated Rig & Procedural Kinetics</p>
+  </div>
+  <canvas id="canvas"></canvas>
+
+  <div id="controls">
+    <button id="btn-model-ours" onclick="switchModel('ours')" class="active">★ Model: Ours (v0.5 Lofted)</button>
+    <button id="btn-model-dl" onclick="switchModel('downloaded')">📦 Model: Downloaded Pack (v0.3)</button>
+    <button onclick="setView('front')">1. Front</button>
+    <button onclick="setView('back')">2. Back (Main Gameplay)</button>
+    <button onclick="setView('perspective')">3. 3/4 Hero</button>
+    <button onclick="setView('side')">4. Right Profile</button>
+    <button id="btn-anim" onclick="toggleAnimation('run')">▶ Sprint Stride: OFF</button>
+    <button id="btn-jump-0" onclick="testJump(0)">⬆ Jump 1: Vault</button>
+    <button id="btn-jump-1" onclick="testJump(1)">🤸 Jump 2: Front Flip</button>
+    <button id="btn-jump-2" onclick="testJump(2)">👀 Jump 3: Tease Leap</button>
+    <button id="btn-slide-0" onclick="testSlide(0)">⬇ Slide 1: Temple Glide</button>
+    <button id="btn-slide-1" onclick="testSlide(1)">🌀 Slide 2: Dive Roll</button>
+    <button id="btn-slide-2" onclick="testSlide(2)">🎸 Slide 3: Knee Slide</button>
+    <button id="btn-dodge-0" onclick="testDodge(0, -1)">↔ Dodge 1: Skater Carve</button>
+    <button id="btn-dodge-1" onclick="testDodge(1, -1)">🦘 Dodge 2: Barrel Hop</button>
+    <button id="btn-dodge-2" onclick="testDodge(2, -1)">🔄 Dodge 3: 360 Spin</button>
+    <button id="btn-tease-1" onclick="testTease(0)">😜 Taunt 1</button>
+    <button id="btn-tease-2" onclick="testTease(1)">🙌 Taunt 2</button>
+    <button id="btn-tease-3" onclick="testTease(2)">😎 Taunt 3</button>
+  </div>
+
+  <script type="module">
+    import * as pc from 'playcanvas';
+    window.pc = pc;
+
+    const canvas = document.getElementById('canvas');
+    const app = new pc.Application(canvas);
+    window.app = app;
+    app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
+    app.setCanvasResolution(pc.RESOLUTION_AUTO);
+
+    // Camera
+    const camera = new pc.Entity('Camera');
+    camera.addComponent('camera', {
+      clearColor: new pc.Color(0.08, 0.11, 0.18),
+      fov: 36,
+      nearClip: 0.1,
+      farClip: 100
+    });
+    app.root.addChild(camera);
+
+    // Studio 3-Point Lighting with gentle warm ambiance & front face fill
+    app.scene.ambientLight = new pc.Color(0.32, 0.36, 0.46);
+
+    const keyLight = new pc.Entity('KeyLight');
+    keyLight.addComponent('light', { type: 'directional', color: new pc.Color(1.0, 0.94, 0.88), intensity: 1.05 });
+    keyLight.setEulerAngles(35, 45, 0);
+    app.root.addChild(keyLight);
+
+    const fillLight = new pc.Entity('FillLight');
+    fillLight.addComponent('light', { type: 'directional', color: new pc.Color(0.65, 0.75, 0.92), intensity: 0.65 });
+    fillLight.setEulerAngles(20, -135, 0);
+    app.root.addChild(fillLight);
+
+    const frontLight = new pc.Entity('FrontLight');
+    frontLight.addComponent('light', { type: 'directional', color: new pc.Color(1.0, 0.96, 0.92), intensity: 0.85 });
+    frontLight.setEulerAngles(15, 0, 0);
+    app.root.addChild(frontLight);
+
+    const rimLight = new pc.Entity('RimLight');
+    rimLight.addComponent('light', { type: 'directional', color: new pc.Color(0.95, 0.90, 0.82), intensity: 0.70 });
+    rimLight.setEulerAngles(-15, 180, 0);
+    app.root.addChild(rimLight);
+
+    // Ground Grid / Pedestal
+    const ground = new pc.Entity('GroundPlane');
+    ground.addComponent('render', { type: 'plane' });
+    ground.setLocalScale(4, 1, 4);
+    ground.setLocalPosition(0, 0, 0);
+    const groundMat = new pc.StandardMaterial();
+    groundMat.diffuse = new pc.Color(0.10, 0.14, 0.22);
+    groundMat.useMetalness = true;
+    groundMat.metalness = 0.1;
+    groundMat.gloss = 0.3;
+    groundMat.update();
+    if (ground.render) ground.render.material = groundMat;
+    app.root.addChild(ground);
+
+    window.__PC_APP__ = app;
+    let modelRoot = null;
+    let leftLegNode, rightLegNode, leftKneeNode, rightKneeNode;
+    let leftArmNode, rightArmNode, leftElbowNode, rightElbowNode;
+    let torsoNode, headNode, satchelNode, scarfTailNode;
+
+    let currentVariant = 'ours';
+
+    window.switchModel = function(variant) {
+      currentVariant = variant;
+      document.getElementById('btn-model-ours').className = variant === 'ours' ? 'active' : '';
+      document.getElementById('btn-model-dl').className = variant === 'downloaded' ? 'active' : '';
+
+      const title = document.getElementById('view-title');
+      const desc = document.getElementById('view-desc');
+      if (variant === 'ours') {
+        title.textContent = 'Tuku — Our Overhaul (v0.5 Lofted PBR)';
+        desc.textContent = '1.68m Athletic Young Adult | Continuous Lofted Silhouette | No Joint Holes | PBR Materials';
+      } else {
+        title.textContent = 'Tuku — Downloaded Pack (v0.3 Blockout Refinement)';
+        desc.textContent = '10,918 Tris | 512x512 Palette Texture Atlas | Child Meshes on Old v0.2 Skeleton';
+      }
+
+      const url = variant === 'ours' ? '/models/tuku_blockout_v02.glb' : '/models/tuku_refined_v03.glb';
+
+      if (modelRoot) {
+        app.root.removeChild(modelRoot);
+        modelRoot.destroy();
+        modelRoot = null;
+      }
+
+      app.assets.loadFromUrl(url, 'container', (err, asset) => {
+        if (err) {
+          console.error('Failed to load GLB:', err);
+          return;
+        }
+        modelRoot = asset.resource.instantiateRenderEntity();
+        modelRoot.setLocalPosition(0, 0, 0);
+        app.root.addChild(modelRoot);
+        window.__PC_MODEL__ = modelRoot;
+        window.__MODEL_LOADED__ = true;
+
+        // Cache joint nodes
+        leftLegNode = modelRoot.findByName('LeftLegRoot');
+        rightLegNode = modelRoot.findByName('RightLegRoot');
+        leftKneeNode = modelRoot.findByName('LeftKneeRoot');
+        rightKneeNode = modelRoot.findByName('RightKneeRoot');
+        leftArmNode = modelRoot.findByName('LeftArmRoot');
+        rightArmNode = modelRoot.findByName('RightArmRoot');
+        leftElbowNode = modelRoot.findByName('LeftElbowRoot');
+        rightElbowNode = modelRoot.findByName('RightElbowRoot');
+        torsoNode = modelRoot.findByName('TorsoRoot');
+        headNode = modelRoot.findByName('HeadRoot');
+        satchelNode = modelRoot.findByName('SatchelRoot');
+        scarfTailNode = modelRoot.findByName('ScarfTailRoot');
+        window.__JOINTS__ = { modelRoot, leftLegNode, rightLegNode, leftKneeNode, rightKneeNode, leftArmNode, rightArmNode, leftElbowNode, rightElbowNode, torsoNode, headNode, satchelNode, scarfTailNode };
+
+        // Enhance materials
+        const renders = modelRoot.findComponents('render');
+        for (const r of renders) {
+          if (r.meshInstances) {
+            for (const mi of r.meshInstances) {
+              const mat = mi.material;
+              if (mat) {
+                mat.useMetalness = true;
+                mat.gloss = 0.65;
+                mat.update();
+              }
+            }
+          }
+        }
+
+        console.log(`Successfully loaded model variant: ${variant}`);
+      });
+    };
+
+    // Load initial model (Ours)
+    window.switchModel('ours');
+
+    window.setView = function(viewName) {
+      const target = new pc.Vec3(0, 0.88, 0); // Focus on mid-torso
+      const title = document.getElementById('view-title');
+      const desc = document.getElementById('view-desc');
+
+      if (viewName === 'front') {
+        camera.setPosition(0, 0.90, -3.8); // Front looks towards +Z
+        camera.lookAt(target);
+        title.textContent = '1. FRONT VIEW (ORTHOGRAPHIC)';
+        desc.textContent = 'Expressive young adult face, stylized eyes, trickster smirk, maroon cowl, open teal jacket, cream shirt';
+      } else if (viewName === 'back') {
+        camera.setPosition(0, 0.90, 3.8); // Back looks towards -Z (primary gameplay view)
+        camera.lookAt(target);
+        title.textContent = '2. BACK VIEW [PRIMARY GAMEPLAY CAMERA]';
+        desc.textContent = 'Teal jacket mass, draped hood, back yoke seam, diagonal satchel strap, 10cm cream shirt hem, tapered charcoal legs';
+      } else if (viewName === 'side') {
+        camera.setPosition(-3.8, 0.90, 0); // Side view showing satchel clearance
+        camera.lookAt(target);
+        title.textContent = '3. RIGHT PROFILE VIEW (SATCHEL CLEARANCE)';
+        desc.textContent = 'Crossbody satchel anchored at right-rear hip with dual tactical buckles, clearing resting arm swing';
+      } else if (viewName === 'perspective') {
+        camera.setPosition(-2.2, 1.45, 2.8); // 3/4 hero perspective
+        camera.lookAt(target);
+        title.textContent = '4. THREE-QUARTER PERSPECTIVE HERO VIEW';
+        desc.textContent = 'Stylized athletic young-adult runner silhouette with complete layered Kathmandu festival outfit';
+      }
+    };
+
+    // Animation loop state
+    let isRunningAnim = false;
+    let animTime = 0;
+    let jumpTime = 0;
+    let isJumpingAnim = false;
+    let jumpVariant = 0;
+
+    let slideTime = 0;
+    let isSlidingAnim = false;
+    let slideVariant = 0;
+
+    let isDodgingAnim = false;
+    let dodgeTime = 0;
+    let dodgeVariant = 0;
+    let dodgeDir = -1;
+
+    let isTeasingAnim = false;
+    let teaseTime = 0;
+    let teaseVariant = 0;
+
+    window.toggleAnimation = function(type) {
+      isRunningAnim = !isRunningAnim;
+      const btn = document.getElementById('btn-anim');
+      btn.textContent = isRunningAnim ? '⏸ Sprint Stride: ON' : '▶ Sprint Stride: OFF';
+      btn.className = isRunningAnim ? 'active' : '';
+      if (!isRunningAnim) resetPose();
+    };
+
+    window.testJump = function(variant = 0) {
+      isJumpingAnim = true;
+      isSlidingAnim = false;
+      isDodgingAnim = false;
+      isTeasingAnim = false;
+      jumpTime = 0;
+      jumpVariant = variant;
+    };
+
+    window.testSlide = function(variant = 0) {
+      isSlidingAnim = true;
+      isJumpingAnim = false;
+      isDodgingAnim = false;
+      isTeasingAnim = false;
+      slideTime = 0;
+      slideVariant = variant;
+    };
+
+    window.testDodge = function(variant = 0, dir = -1) {
+      isDodgingAnim = true;
+      isJumpingAnim = false;
+      isSlidingAnim = false;
+      isTeasingAnim = false;
+      dodgeTime = 0;
+      dodgeVariant = variant;
+      dodgeDir = dir;
+    };
+
+    window.testTease = function(variant = 0) {
+      isTeasingAnim = true;
+      isJumpingAnim = false;
+      isSlidingAnim = false;
+      isDodgingAnim = false;
+      teaseTime = 0;
+      teaseVariant = variant;
+    };
+
+    function resetPose() {
+      if (!torsoNode) return;
+      leftLegNode?.setLocalEulerAngles(0, 0, 0);
+      rightLegNode?.setLocalEulerAngles(0, 0, 0);
+      leftKneeNode?.setLocalEulerAngles(0, 0, 0);
+      rightKneeNode?.setLocalEulerAngles(0, 0, 0);
+      leftArmNode?.setLocalEulerAngles(0, 0, -18);
+      rightArmNode?.setLocalEulerAngles(0, 0, 18);
+      leftElbowNode?.setLocalEulerAngles(0, 0, 0);
+      rightElbowNode?.setLocalEulerAngles(0, 0, 0);
+      satchelNode?.setLocalEulerAngles(0, -8, 0);
+      scarfTailNode?.setLocalEulerAngles(0, 0, 0);
+      headNode?.setLocalEulerAngles(0, 0, 0);
+      headNode?.setLocalPosition(0, 1.36, 0);
+      torsoNode?.setLocalEulerAngles(0, 0, 0);
+      if (modelRoot) {
+        modelRoot.setLocalPosition(0, 0, 0);
+        modelRoot.setLocalEulerAngles(0, 0, 0);
+      }
+    }
+
+    app.on('update', (dt) => {
+      if (!torsoNode) return;
+
+      if (isJumpingAnim) {
+        jumpTime += dt;
+        const p = jumpTime / 0.65;
+        if (p >= 1.0) {
+          isJumpingAnim = false;
+          resetPose();
+        } else {
+          const arc = Math.pow(Math.sin(p * Math.PI), 0.78);
+          modelRoot?.setLocalPosition(0, arc * 1.15, 0);
+
+          if (jumpVariant === 1) {
+            // Style 1: Front Flip Somersault (Full 360° forward somersault)
+            modelRoot?.setLocalEulerAngles(-360.0 * p, 0, 0);
+
+            if (p < 0.22) {
+              const f = p / 0.22;
+              leftLegNode?.setLocalEulerAngles(-20.0 + f * 45.0, 0, 4);
+              rightLegNode?.setLocalEulerAngles(20.0 - f * 45.0, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(30.0 + f * 50.0), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(30.0 + f * 50.0), 0, 0);
+              leftArmNode?.setLocalEulerAngles(-30.0 + f * 70.0, 0, -20.0);
+              rightArmNode?.setLocalEulerAngles(-30.0 + f * 70.0, 0, 20.0);
+              leftElbowNode?.setLocalEulerAngles(50.0 + f * 25.0, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(50.0 + f * 25.0, 0, 0);
+              torsoNode?.setLocalEulerAngles(15.0 * f, 0, 0);
+              headNode?.setLocalEulerAngles(12.0 * f, 0, 0);
+            } else if (p < 0.78) {
+              const tuckPeak = Math.sin(((p - 0.22) / 0.56) * Math.PI);
+              leftLegNode?.setLocalEulerAngles(52.0 + tuckPeak * 12.0, 0, 4);
+              rightLegNode?.setLocalEulerAngles(52.0 + tuckPeak * 12.0, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(108.0 + tuckPeak * 12.0), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(108.0 + tuckPeak * 12.0), 0, 0);
+              leftArmNode?.setLocalEulerAngles(48.0, 0, -22.0);
+              rightArmNode?.setLocalEulerAngles(48.0, 0, 22.0);
+              leftElbowNode?.setLocalEulerAngles(82.0, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(82.0, 0, 0);
+              torsoNode?.setLocalEulerAngles(22.0, 0, 0);
+              headNode?.setLocalEulerAngles(24.0, 0, 0);
+            } else {
+              const f = (p - 0.78) / 0.22;
+              leftLegNode?.setLocalEulerAngles(52.0 * (1.0 - f), 0, 4);
+              rightLegNode?.setLocalEulerAngles(52.0 * (1.0 - f) - 8.0 * f, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(108.0 * (1.0 - f) + 20.0), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(108.0 * (1.0 - f) + 20.0), 0, 0);
+              leftArmNode?.setLocalEulerAngles(48.0 * (1.0 - f) - 15.0 * f, 0, -22.0);
+              rightArmNode?.setLocalEulerAngles(48.0 * (1.0 - f) + 15.0 * f, 0, 22.0);
+              leftElbowNode?.setLocalEulerAngles(82.0 * (1.0 - f) + 30.0 * f, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(82.0 * (1.0 - f) + 30.0 * f, 0, 0);
+              torsoNode?.setLocalEulerAngles(22.0 * (1.0 - f), 0, 0);
+              headNode?.setLocalEulerAngles(24.0 * (1.0 - f), 0, 0);
+            }
+          } else if (jumpVariant === 2) {
+            // Style 2: Backward Teasing Jump (Airborne 180° spin-glance & taunt wave)
+            let spinYaw = 0;
+            if (p < 0.28) {
+              const f = p / 0.28;
+              spinYaw = 180.0 * (f * f * (3.0 - 2.0 * f));
+              leftLegNode?.setLocalEulerAngles(18.0 * f, 0, 4);
+              rightLegNode?.setLocalEulerAngles(-22.0 * f, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(30.0 + f * 40.0), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(40.0 + f * 30.0), 0, 0);
+              rightArmNode?.setLocalEulerAngles(-75.0 * f, 0, 32.0 * f);
+              rightElbowNode?.setLocalEulerAngles(-80.0 * f, 0, 0);
+              leftArmNode?.setLocalEulerAngles(-18.0 * f, 0, -26.0 * f);
+              leftElbowNode?.setLocalEulerAngles(-65.0 * f, 0, 0);
+              headNode?.setLocalEulerAngles(-6.0 * f, 10.0 * f, 0);
+              torsoNode?.setLocalEulerAngles(-8.0 * f, 0, 0);
+            } else if (p < 0.72) {
+              spinYaw = 180.0 + Math.sin(((p - 0.28) / 0.42) * Math.PI) * 6.0;
+              const teaseWave = Math.sin((p - 0.28) * 32.0) * 25.0;
+              leftLegNode?.setLocalEulerAngles(24.0, 0, 4);
+              rightLegNode?.setLocalEulerAngles(-26.0, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-68.0, 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-82.0, 0, 0);
+              rightArmNode?.setLocalEulerAngles(-82.0 + teaseWave * 0.2, 0, 34.0);
+              rightElbowNode?.setLocalEulerAngles(-85.0 + teaseWave, 0, 0);
+              leftArmNode?.setLocalEulerAngles(-18.0, 0, -26.0);
+              leftElbowNode?.setLocalEulerAngles(-68.0, 0, 0);
+              headNode?.setLocalEulerAngles(-8.0, 14.0, 8.0);
+              torsoNode?.setLocalEulerAngles(-8.0, 4.0, 0);
+            } else {
+              const f = (p - 0.72) / 0.28;
+              spinYaw = 180.0 * (1.0 - (f * f * (3.0 - 2.0 * f)));
+              leftLegNode?.setLocalEulerAngles(24.0 * (1.0 - f), 0, 4);
+              rightLegNode?.setLocalEulerAngles(-26.0 * (1.0 - f), 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(68.0 * (1.0 - f) + 20.0), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(82.0 * (1.0 - f) + 20.0), 0, 0);
+              rightArmNode?.setLocalEulerAngles(-82.0 * (1.0 - f) + 15.0 * f, 0, 34.0 * (1.0 - f) + 20.0 * f);
+              rightElbowNode?.setLocalEulerAngles(-85.0 * (1.0 - f) + 30.0 * f, 0, 0);
+              leftArmNode?.setLocalEulerAngles(-18.0 * (1.0 - f) - 15.0 * f, 0, -26.0 * (1.0 - f) - 20.0 * f);
+              leftElbowNode?.setLocalEulerAngles(-68.0 * (1.0 - f) + 30.0 * f, 0, 0);
+              headNode?.setLocalEulerAngles(-8.0 * (1.0 - f), 14.0 * (1.0 - f), 0);
+              torsoNode?.setLocalEulerAngles(-8.0 * (1.0 - f), 0, 0);
+            }
+            modelRoot?.setLocalEulerAngles(0, spinYaw, 0);
+          } else {
+            // Style 0: Normal Parkour Hurdle Vault
+            modelRoot?.setLocalEulerAngles(0, 0, 0);
+            if (p < 0.35) {
+              const f = p / 0.35;
+              leftLegNode?.setLocalEulerAngles(-15 + f * 35, 0, 4);
+              rightLegNode?.setLocalEulerAngles(25 - f * 45, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(20 + f * 60), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(40 + f * 30), 0, 0);
+              leftArmNode?.setLocalEulerAngles(-25 + f * 60, 0, -22);
+              rightArmNode?.setLocalEulerAngles(30 - f * 30, 0, 22);
+              leftElbowNode?.setLocalEulerAngles(70 - f * 25, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(50 - f * 15, 0, 0);
+              torsoNode?.setLocalEulerAngles(8 - f * 4, 0, 0);
+              headNode?.setLocalEulerAngles(-5, 0, 0);
+            } else if (p < 0.75) {
+              const tuck = Math.sin(((p - 0.35) / 0.40) * Math.PI);
+              leftLegNode?.setLocalEulerAngles(22 + tuck * 10, 0, 4);
+              rightLegNode?.setLocalEulerAngles(-22 - tuck * 10, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(75 + tuck * 15), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(85 + tuck * 10), 0, 0);
+              leftArmNode?.setLocalEulerAngles(32, 0, -32);
+              rightArmNode?.setLocalEulerAngles(32, 0, 32);
+              leftElbowNode?.setLocalEulerAngles(35, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(35, 0, 0);
+              torsoNode?.setLocalEulerAngles(12, 0, 0);
+              headNode?.setLocalEulerAngles(-4, 0, 0);
+            } else {
+              const f = (p - 0.75) / 0.25;
+              leftLegNode?.setLocalEulerAngles(22 * (1 - f), 0, 4);
+              rightLegNode?.setLocalEulerAngles(-20 * (1 - f), 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-(85 * (1 - f) + 15), 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-(90 * (1 - f) + 15), 0, 0);
+              leftArmNode?.setLocalEulerAngles(32 * (1 - f) - 10 * f, 0, -22);
+              rightArmNode?.setLocalEulerAngles(32 * (1 - f) + 10 * f, 0, 22);
+              leftElbowNode?.setLocalEulerAngles(35 + f * 20, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(35 + f * 20, 0, 0);
+              torsoNode?.setLocalEulerAngles(12 * (1 - f), 0, 0);
+              headNode?.setLocalEulerAngles(0, 0, 0);
+            }
+          }
+          const tuckCurve = Math.sin(p * Math.PI);
+          satchelNode?.setLocalEulerAngles(tuckCurve * 24, -8, 0);
+          scarfTailNode?.setLocalEulerAngles(-18 - tuckCurve * 26, 0, 0);
+        }
+      } else if (isSlidingAnim) {
+        slideTime += dt;
+        const p = slideTime / 0.65;
+        if (p >= 1.0) {
+          isSlidingAnim = false;
+          resetPose();
+        } else {
+          let dropCurve = 1.0;
+          if (p < 0.15) {
+            const t = p / 0.15;
+            dropCurve = t * t * (3.0 - 2.0 * t);
+          } else if (p > 0.80) {
+            const recov = (p - 0.80) / 0.20;
+            dropCurve = 1.0 - recov * recov * (3.0 - 2.0 * recov);
+          }
+          const slideDrop = -0.38 * dropCurve;
+
+          if (slideVariant === 1) {
+            // Style 1: Rolling slide / parkour dive roll
+            const rollY = slideDrop + Math.sin(p * Math.PI) * 0.45;
+            modelRoot?.setLocalPosition(0, rollY, 0);
+            modelRoot?.setLocalEulerAngles(-360.0 * p, 0, 0);
+
+            if (p < 0.20) {
+              const f = p / 0.20;
+              torsoNode?.setLocalEulerAngles(20.0 * f, 0, 0);
+              headNode?.setLocalPosition(0, 1.36 - 0.08 * f, -0.08 * f);
+              headNode?.setLocalEulerAngles(26.0 * f, 0, 0);
+              leftArmNode?.setLocalEulerAngles(-50.0 * f, 0, -20.0);
+              rightArmNode?.setLocalEulerAngles(-50.0 * f, 0, 20.0);
+              leftElbowNode?.setLocalEulerAngles(45.0 * f, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(45.0 * f, 0, 0);
+              leftLegNode?.setLocalEulerAngles(40.0 * f, 0, 4);
+              rightLegNode?.setLocalEulerAngles(40.0 * f, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-85.0 * f, 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-85.0 * f, 0, 0);
+            } else if (p < 0.80) {
+              torsoNode?.setLocalEulerAngles(25.0, 0, 0);
+              headNode?.setLocalPosition(0, 1.28, -0.08);
+              headNode?.setLocalEulerAngles(32.0, 0, 0);
+              leftArmNode?.setLocalEulerAngles(35.0, 0, -24.0);
+              rightArmNode?.setLocalEulerAngles(35.0, 0, 24.0);
+              leftElbowNode?.setLocalEulerAngles(75.0, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(75.0, 0, 0);
+              leftLegNode?.setLocalEulerAngles(55.0, 0, 4);
+              rightLegNode?.setLocalEulerAngles(55.0, 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-110.0, 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-110.0, 0, 0);
+            } else {
+              const f = (p - 0.80) / 0.20;
+              torsoNode?.setLocalEulerAngles(25.0 * (1.0 - f), 0, 0);
+              headNode?.setLocalPosition(0, 1.28 + 0.08 * f, -0.08 * (1.0 - f));
+              headNode?.setLocalEulerAngles(32.0 * (1.0 - f), 0, 0);
+              leftArmNode?.setLocalEulerAngles(35.0 * (1.0 - f), 0, -18.0);
+              rightArmNode?.setLocalEulerAngles(35.0 * (1.0 - f), 0, 18.0);
+              leftElbowNode?.setLocalEulerAngles(75.0 * (1.0 - f) + 60.0 * f, 0, 0);
+              rightElbowNode?.setLocalEulerAngles(75.0 * (1.0 - f) + 60.0 * f, 0, 0);
+              leftLegNode?.setLocalEulerAngles(55.0 * (1.0 - f), 0, 4);
+              rightLegNode?.setLocalEulerAngles(55.0 * (1.0 - f), 0, -4);
+              leftKneeNode?.setLocalEulerAngles(-110.0 * (1.0 - f) - 20.0 * f, 0, 0);
+              rightKneeNode?.setLocalEulerAngles(-110.0 * (1.0 - f) - 20.0 * f, 0, 0);
+            }
+            satchelNode?.setLocalEulerAngles(22.0 * dropCurve, -6, 0);
+            scarfTailNode?.setLocalEulerAngles(-60.0 * dropCurve, 0, 0);
+          } else if (slideVariant === 2) {
+            // Style 2: Double-knee rockstar power slide
+            modelRoot?.setLocalPosition(0, slideDrop, 0);
+            modelRoot?.setLocalEulerAngles(0, 0, 0);
+            torsoNode?.setLocalEulerAngles(38.0 * dropCurve, 0, 0);
+            headNode?.setLocalPosition(0, 1.36 - 0.05 * dropCurve, -0.08 * dropCurve);
+            headNode?.setLocalEulerAngles(-18.0 * dropCurve, 0, 0);
+            leftLegNode?.setLocalEulerAngles(74.0 * dropCurve, 0, 6.0 * dropCurve);
+            rightLegNode?.setLocalEulerAngles(74.0 * dropCurve, 0, -6.0 * dropCurve);
+            leftKneeNode?.setLocalEulerAngles(-122.0 * dropCurve, 0, 0);
+            rightKneeNode?.setLocalEulerAngles(-122.0 * dropCurve, 0, 0);
+            leftArmNode?.setLocalEulerAngles(-52.0 * dropCurve, 0, -38.0 * dropCurve);
+            leftElbowNode?.setLocalEulerAngles(45.0 * dropCurve, 0, 0);
+            rightArmNode?.setLocalEulerAngles(35.0 * dropCurve, 0, 36.0 * dropCurve);
+            rightElbowNode?.setLocalEulerAngles(-22.0 * dropCurve, 0, 0);
+            satchelNode?.setLocalEulerAngles(20.0 * dropCurve, -6, 0);
+            scarfTailNode?.setLocalEulerAngles(-68.0 * dropCurve, 0, 0);
+          } else {
+            // Style 0: Temple Run feet-first flagstone glide (Default)
+            modelRoot?.setLocalPosition(0, slideDrop, 0);
+            modelRoot?.setLocalEulerAngles(0, 0, 0);
+            torsoNode?.setLocalEulerAngles(28.0 * dropCurve, 0, 0);
+            headNode?.setLocalPosition(0, 1.36 - 0.04 * dropCurve, -0.06 * dropCurve);
+            headNode?.setLocalEulerAngles(-12.0 * dropCurve, 0, 0);
+            leftLegNode?.setLocalEulerAngles(86.0 * dropCurve, 0, 4.0 * dropCurve);
+            leftKneeNode?.setLocalEulerAngles(0, 0, 0);
+            rightLegNode?.setLocalEulerAngles(-38.0 * dropCurve, 0, -10.0 * dropCurve);
+            rightKneeNode?.setLocalEulerAngles(-116.0 * dropCurve, 0, 0);
+            rightArmNode?.setLocalEulerAngles(32.0 * dropCurve, 0, 18.0 + 16.0 * dropCurve);
+            rightElbowNode?.setLocalEulerAngles(-26.0 * dropCurve, 0, 0);
+            leftArmNode?.setLocalEulerAngles(-18.0 * dropCurve, 0, -18.0 - 10.0 * dropCurve);
+            leftElbowNode?.setLocalEulerAngles(-52.0 * dropCurve, 0, 0);
+            satchelNode?.setLocalEulerAngles(18.0 * dropCurve, -6, 0);
+            scarfTailNode?.setLocalEulerAngles(-55.0 * dropCurve, 0, 0);
+          }
+        }
+      } else if (isDodgingAnim) {
+        dodgeTime += dt;
+        const p = Math.min(1.0, dodgeTime / 0.24);
+        if (p >= 1.0) {
+          isDodgingAnim = false;
+          resetPose();
+        } else {
+          const latShift = dodgeDir * Math.sin(p * Math.PI) * 0.75;
+
+          if (dodgeVariant === 1) {
+            // Style 1: Lateral Barrel Hop
+            const hopY = Math.sin(p * Math.PI) * 0.22;
+            const hopRoll = dodgeDir * Math.sin(p * Math.PI) * 28.0;
+            modelRoot?.setLocalPosition(latShift, hopY, 0);
+            modelRoot?.setLocalEulerAngles(0, 0, hopRoll);
+
+            const tuck = Math.sin(p * Math.PI) * -38.0;
+            leftKneeNode?.setLocalEulerAngles(tuck, 0, 0);
+            rightKneeNode?.setLocalEulerAngles(tuck, 0, 0);
+            leftArmNode?.setLocalEulerAngles(0, 0, -18.0 - Math.sin(p * Math.PI) * 22.0);
+            rightArmNode?.setLocalEulerAngles(0, 0, 18.0 + Math.sin(p * Math.PI) * 22.0);
+          } else if (dodgeVariant === 2) {
+            // Style 2: 360° Spin Quick-Step
+            const s = p * p * (3.0 - 2.0 * p);
+            const spinYaw = dodgeDir * s * 360.0;
+            modelRoot?.setLocalPosition(latShift, 0, 0);
+            modelRoot?.setLocalEulerAngles(0, spinYaw, 0);
+
+            leftArmNode?.setLocalEulerAngles(-15.0, 0, -12.0);
+            rightArmNode?.setLocalEulerAngles(-15.0, 0, 12.0);
+            leftElbowNode?.setLocalEulerAngles(55.0, 0, 0);
+            rightElbowNode?.setLocalEulerAngles(55.0, 0, 0);
+            scarfTailNode?.setLocalEulerAngles(-20.0, -dodgeDir * 55.0 * Math.sin(p * Math.PI), 0);
+          } else {
+            // Style 0: Skater Carve
+            const bankAngle = -dodgeDir * Math.sin(p * Math.PI) * 18.0;
+            const cutYaw = -dodgeDir * Math.sin(p * Math.PI) * 12.0;
+            modelRoot?.setLocalPosition(latShift, 0, 0);
+            modelRoot?.setLocalEulerAngles(0, cutYaw, bankAngle);
+
+            leftKneeNode?.setLocalEulerAngles(dodgeDir < 0 ? -32 : -12, 0, 0);
+            rightKneeNode?.setLocalEulerAngles(dodgeDir > 0 ? -32 : -12, 0, 0);
+          }
+        }
+      } else if (isTeasingAnim) {
+        teaseTime += dt;
+        const totalDuration = 1.54;
+        if (teaseTime >= totalDuration) {
+          isTeasingAnim = false;
+          resetPose();
+        } else {
+          let yaw = 0;
+          let blendWeight = 1.0;
+          if (teaseTime < 0.22) {
+            const p = teaseTime / 0.22;
+            const s = p * p * (3.0 - 2.0 * p);
+            yaw = 180 * s;
+            blendWeight = s;
+          } else if (teaseTime < 1.32) {
+            const holdP = (teaseTime - 0.22) / 1.10;
+            yaw = 180 + Math.sin(holdP * Math.PI * 4.0) * 3.5;
+            blendWeight = 1.0;
+          } else {
+            const p = (teaseTime - 1.32) / 0.22;
+            const s = p * p * (3.0 - 2.0 * p);
+            yaw = 180 * (1.0 - s);
+            blendWeight = 1.0 - s;
+          }
+          modelRoot?.setLocalEulerAngles(3.0 * blendWeight, yaw, 0);
+
+          const strideAngle = teaseTime * 11.0;
+          const legSwing = Math.sin(strideAngle) * 30.0;
+          leftLegNode?.setLocalEulerAngles(-legSwing, 0, 3.0);
+          rightLegNode?.setLocalEulerAngles(legSwing, 0, -3.0);
+          const leftKneeBend = legSwing > 0 ? -Math.pow(Math.abs(legSwing) / 30.0, 1.2) * 72.0 : -Math.sin(Math.max(0, -legSwing) / 30.0 * Math.PI) * 16.0;
+          const rightKneeBend = legSwing < 0 ? -Math.pow(Math.abs(legSwing) / 30.0, 1.2) * 72.0 : -Math.sin(Math.max(0, legSwing) / 30.0 * Math.PI) * 16.0;
+          leftKneeNode?.setLocalEulerAngles(leftKneeBend, 0, 0);
+          rightKneeNode?.setLocalEulerAngles(rightKneeBend, 0, 0);
+
+          let rArmP = 0, rArmY = 0, rArmR = 18, rElb = 0;
+          let lArmP = 0, lArmY = 0, lArmR = -18, lElb = 0;
+          let hP = 0, hY = 0, hR = 0, tP = 0, tY = 0, tR = 0;
+
+          if (teaseVariant === 0) {
+            const teaseWave = Math.sin(teaseTime * 14.0) * 24.0;
+            rArmP = -78.0 + teaseWave * 0.15;
+            rArmR = 32.0;
+            rElb = -85.0 + teaseWave;
+            lArmP = -16.0;
+            lArmR = -26.0;
+            lElb = -72.0;
+            hP = Math.sin(teaseTime * 9.0) * 5.0 - 4.0;
+            hY = Math.sin(teaseTime * 4.5) * 8.0 - 10.0;
+            hR = 6.0;
+            tP = 2.0;
+            tY = Math.sin(teaseTime * 4.5) * 5.5;
+            tR = -3.0;
+          } else if (teaseVariant === 1) {
+            const waveA = Math.sin(teaseTime * 15.0) * 22.0;
+            const waveB = Math.cos(teaseTime * 15.0) * 22.0;
+            rArmP = -84.0 + waveA * 0.15;
+            rArmR = 36.0;
+            rElb = -76.0 + waveA;
+            lArmP = -84.0 + waveB * 0.15;
+            lArmR = -36.0;
+            lElb = -76.0 + waveB;
+            hP = Math.sin(teaseTime * 12.0) * 7.5 - 4.0;
+            tR = Math.sin(teaseTime * 6.0) * 5.5;
+          } else {
+            const chestThump = Math.sin(teaseTime * 8.0) * 5.0;
+            rArmP = -48.0;
+            rArmY = 24.0;
+            rArmR = 14.0;
+            rElb = -96.0 + chestThump;
+            lArmP = -18.0;
+            lArmR = -22.0;
+            lElb = -52.0;
+            hP = -14.0;
+            hY = -8.0;
+            hR = 4.0;
+            tP = -6.0;
+            tY = 4.0;
+          }
+
+          rightArmNode?.setLocalEulerAngles(rArmP * blendWeight, rArmY * blendWeight, rArmR * blendWeight + 18.0 * (1 - blendWeight));
+          rightElbowNode?.setLocalEulerAngles(rElb * blendWeight, 0, 0);
+          leftArmNode?.setLocalEulerAngles(lArmP * blendWeight, lArmY * blendWeight, lArmR * blendWeight - 18.0 * (1 - blendWeight));
+          leftElbowNode?.setLocalEulerAngles(lElb * blendWeight, 0, 0);
+          headNode?.setLocalEulerAngles(hP * blendWeight, hY * blendWeight, hR * blendWeight);
+          torsoNode?.setLocalEulerAngles(tP * blendWeight, tY * blendWeight, tR * blendWeight);
+          satchelNode?.setLocalEulerAngles(Math.sin(strideAngle * 2.0) * 12.0, -8, 0);
+          scarfTailNode?.setLocalEulerAngles(18.0 * blendWeight + Math.sin(strideAngle * 3.5) * 14.0, Math.cos(strideAngle * 2.2) * 10.0, 0);
+        }
+      } else if (isRunningAnim) {
+        animTime += dt * 12.0;
+        const strideAngle = animTime;
+        const legSwing = Math.sin(strideAngle) * 34.0;
+        const armSwing = -legSwing * 0.95;
+
+        const pelvicRoll = Math.sin(strideAngle) * 3.2;
+        const pelvicYaw = -Math.sin(strideAngle) * 4.0;
+
+        leftLegNode?.setLocalEulerAngles(legSwing, pelvicYaw, pelvicRoll + 3.0);
+        rightLegNode?.setLocalEulerAngles(-legSwing, -pelvicYaw, -pelvicRoll - 3.0);
+
+        // Biomechanically accurate knee flexion:
+        // Knee bends BACKWARD (heel kicks up towards buttocks behind runner, negative pitch around local X)
+        const leftKneeBend = legSwing < 0 ? -Math.pow(Math.abs(legSwing) / 34.0, 1.2) * 76.0 : -Math.sin(Math.max(0, legSwing) / 34.0 * Math.PI) * 16.0;
+        const rightKneeBend = legSwing > 0 ? -Math.pow(Math.abs(legSwing) / 34.0, 1.2) * 76.0 : -Math.sin(Math.max(0, -legSwing) / 34.0 * Math.PI) * 16.0;
+        leftKneeNode?.setLocalEulerAngles(leftKneeBend, 0, 0);
+        rightKneeNode?.setLocalEulerAngles(rightKneeBend, 0, 0);
+
+        // Biomechanically accurate runner arm drive:
+        // Elbow bends FORWARD (pumping fists in front of chest, positive pitch around local X)
+        const leftElbowBend = 68.0 - Math.sin(strideAngle) * 22.0;
+        const rightElbowBend = 68.0 + Math.sin(strideAngle) * 22.0;
+        leftArmNode?.setLocalEulerAngles(armSwing, 0, -18.0);
+        rightArmNode?.setLocalEulerAngles(-armSwing, 0, 18.0);
+        leftElbowNode?.setLocalEulerAngles(leftElbowBend, 0, 0);
+        rightElbowNode?.setLocalEulerAngles(rightElbowBend, 0, 0);
+
+        const satchelWobble = Math.sin(strideAngle * 2.0 - 0.4) * 14.0;
+        satchelNode?.setLocalEulerAngles(satchelWobble, -8, 0);
+
+        const windFlutter = Math.sin(strideAngle * 3.5) * 16.0;
+        scarfTailNode?.setLocalEulerAngles(-32.0 + windFlutter, 0, 0);
+
+        const headNod = Math.sin(strideAngle * 2.0) * 3.8;
+        headNode?.setLocalEulerAngles(headNod - 5.0, 0, 0);
+
+        const torsoCounterTwist = Math.sin(strideAngle) * 5.5;
+        const torsoMicroPitch = Math.abs(Math.sin(strideAngle * 2.0)) * 2.0;
+        torsoNode?.setLocalEulerAngles(torsoMicroPitch, torsoCounterTwist, -pelvicRoll * 0.5);
+
+        // Ground stride bob
+        const strideBob = Math.abs(Math.sin(strideAngle * 2.0)) * 0.048;
+        modelRoot?.setLocalPosition(0, strideBob, 0);
+      }
+    });
+
+    // Default view
+    window.setView('back');
+    app.start();
+  </script>
+</body>
+</html>

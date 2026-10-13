@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "archive": "ganesh_rath_handoff_v01.zip",
+  "bytes": 4088798,
+  "sha256": "5df4951c16b481a745187da32fae2d5f22b8b0a248fa06e28b7f2af4019d948e",
+  "entries": [
+    {
+      "entry": "ganesh/ganesh_rath_blockout_v01.blend",
+      "sha256": "76a60da148c3fcef39e5ae9ba71b9993ffc3543054df91d7be2c38b461b4c027"
+    },
+    {
+      "entry": "ganesh/ganesh_rath_blockout_v01.glb",
+      "sha256": "2ae69948bb927ab04b985cfcd0d9f55d6333eaf5d21aa9833b222ea443384d52"
+    },
+    {
+      "entry": "ganesh/playcanvas_desktop.png",
+      "sha256": "f8e32fdc320d8beedf3e0f745d8a32f177170b828cb806e761ad1861e9447b72"
+    },
+    {
+      "entry": "ganesh/playcanvas_mobile_viewport.png",
+      "sha256": "53067ded4bbfb1a2da41a7b6c7eddecf70171167bc21766eb571456f54869cd3"
+    },
+    {
+      "entry": "ganesh/preview_back.png",
+      "sha256": "f1507937444dcfba4ecf98dd699851ff1655a36bbed7bf322f80e4b15095a763"
+    },
+    {
+      "entry": "ganesh/preview_front.png",
+      "sha256": "accfa600880de183ebfe21672032c65cc47555f5c864efbe56e5663b162baa91"
+    },
+    {
+      "entry": "ganesh/preview_left.png",
+      "sha256": "6027381feac3222076c1dd424ac1d0c4d63019a7fe107a362998af4a75fa5293"
+    },
+    {
+      "entry": "ganesh/preview_perspective.png",
+      "sha256": "602f4c2c91a065cb7c101894d85a9f9c974adff240edb111706761764b06ca17"
+    },
+    {
+      "entry": "ganesh/HANDOFF.md",
+      "sha256": "e33c2111828f08902dfe6103de9349ec512d49c62da2debbf1f116417082d4f3"
+    },
+    {
+      "entry": "ganesh/asset_metrics.json",
+      "sha256": "aebdb336ff1a802729468ca90b6a958e2ef29fab7a89142388eef3fde4a5f254"
+    },
+    {
+      "entry": "ganesh/export_verification.json",
+      "sha256": "647005bf5a06f139fcd775447d6bccbfb4712747b7a41b1beff8112e79378be6"
+    },
+    {
+      "entry": "ganesh/playcanvas_verification.json",
+      "sha256": "1cc7e8c9b7b75df27d236f977506c9afeffeecbba39373715fa3c8760571dc66"
+    },
+    {
+      "entry": "ganesh/preview_verification.json",
+      "sha256": "8d19c912f38b7ba93273f72b6efbe5ba53b5a4dc6074b4d84769037ca516db51"
+    },
+    {
+      "entry": "ganesh/provenance.json",
+      "sha256": "cceeb41648185b43eadc2375016be28477e48c2a3033d497181b55cda33b16e7"
+    },
+    {
+      "entry": "generate_rath.py",
+      "sha256": "56c385d24bc5925d2bd23bcbdc66cc4e04bc2064e9b612504499a24441454dcc"
+    },
+    {
+      "entry": "verify_export.py",
+      "sha256": "cceb678d3d7c30e2526a7e1b46d42f1bd15c768545052faa9fd7cc7a523c945d"
+    },
+    {
+      "entry": "check_playcanvas.mjs",
+      "sha256": "5f93c8749408ba70dd408b3825ca029492d33aa33e5c6746c5f82f59cc273057"
+    },
+    {
+      "entry": "prepare_handoffs.py",
+      "sha256": "cac457cdf5918ee2eea28b9d84cfbb909f054697eee827b8310d7ef36a216fa0"
+    },
+    {
+      "entry": "README.md",
+      "sha256": "4ad319f65661dae640ca5ea0af04a763471a84ab544719901dbf3997848e02b4"
+    },
+    {
+      "entry": "ganesh/package_manifest.json",
+      "sha256": "c63e732a561efa3e648c7901e120564b92c88ead34eb4a0e723aeed32a26f0d5"
+    }
+  ]
+}

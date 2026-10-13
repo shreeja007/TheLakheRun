@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "asset_id": "building01_residence_v01",
+  "glb_sha256": "f2837a955bc4cb399482b875122032f3e14bf5715b8955c3eaacbb7f92082d40",
+  "triangles_instanced": 4588,
+  "unique_gltf_meshes": 13,
+  "mesh_nodes": 23,
+  "node_count": 30,
+  "primitives_instanced": 37,
+  "materials": 6,
+  "images": [
+    {
+      "name": "roof_color_512",
+      "bytes": 232323,
+      "embedded": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "brick_color_512",
+      "bytes": 144651,
+      "embedded": true,
+      "size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "source_min_triangle_area": 0.0003500012959917425,
+  "window_apertures_checked": [
+    "Window_Front_01",
+    "Window_Front_02",
+    "Window_Front_03",
+    "Window_Front_04",
+    "Window_Front_05",
+    "Window_Back_01",
+    "Window_Back_02",
+    "Window_Back_03",
+    "Window_Back_04",
+    "Window_Left_01",
+    "Window_Left_02",
+    "Window_Right_01",
+    "Window_Right_02"
+  ],
+  "door_aperture_checked": true,
+  "roundtrip_bounds_blender_min": [
+    -3.109999895095825,
+    -2.109999895095825,
+    0.0
+  ],
+  "roundtrip_bounds_blender_max": [
+    3.109999895095825,
+    2.005000114440918,
+    7.09499979019165
+  ],
+  "grounded": true,
+  "source_packed_textures": true
+}

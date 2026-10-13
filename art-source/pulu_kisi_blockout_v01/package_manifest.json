@@ -1,0 +1,90 @@
+{
+  "ticket": "T022",
+  "asset_id": "pulu_kisi_blockout_v01",
+  "files": {
+    "pulu_kisi_blockout_v01.blend": {
+      "bytes": 329209,
+      "sha256": "75f867bc52b2cfd07937739d259fd96525a318f64d2f811946b93636b629ffa3"
+    },
+    "pulu_kisi_blockout_v01.glb": {
+      "bytes": 541976,
+      "sha256": "66b1c86b9e20c7a159077c45f9bf61590eed45f91928325fa6efb40ce4d22ac1"
+    },
+    "playcanvas_desktop.png": {
+      "bytes": 73036,
+      "sha256": "61fea737b6f7ab80c3654f83354e335a9b9e6e1816d34d529fbe9500f1a697f2"
+    },
+    "playcanvas_mobile_viewport.png": {
+      "bytes": 35951,
+      "sha256": "ecb69e8d06b147333bb2cf6ee8c302ffa4c2e97a8ffb8fc418fc20d3fa88b2d3"
+    },
+    "preview_back.png": {
+      "bytes": 902874,
+      "sha256": "1a20182b9a9f59d5560ae8ada6c8283a6c8fe4e47b0db00ba3b3c34b7186931f"
+    },
+    "preview_front.png": {
+      "bytes": 922808,
+      "sha256": "39157e945251f8b8ee9484bfb31b210a2dfeb9455ffb41022452491796fccad9"
+    },
+    "preview_left.png": {
+      "bytes": 892135,
+      "sha256": "72133567a6d7273810369dbe1ad0d1cfa201f670b8117673f38e234c76aee61a"
+    },
+    "preview_perspective.png": {
+      "bytes": 942319,
+      "sha256": "368c576e6cad856f5b3336a8b2a4c7555dfaaa717aec31a654c5ce8f657c0c0f"
+    },
+    "preview_right.png": {
+      "bytes": 892031,
+      "sha256": "9ea63d4b502c698b40300d943e9e42ba3886341d2b4dcba6786e992e606cc41f"
+    },
+    "generate_pulu.py": {
+      "bytes": 19423,
+      "sha256": "823195265f5605f5938a5fd34ed8279782f901dd757c2ca009e1d1e546214c2e"
+    },
+    "verify_export.py": {
+      "bytes": 7774,
+      "sha256": "5b75ab66c43804b2fde4d06d35c3742c98e4c495bb3ac73a06b47fd610108c08"
+    },
+    "check_playcanvas.mjs": {
+      "bytes": 9216,
+      "sha256": "818f56d3cb69ed86c6f50db1b2db49d951cc69c5e0e88882c484dada8fac4eb2"
+    },
+    "prepare_handoff.py": {
+      "bytes": 14823,
+      "sha256": "f29ae0a135fe6c01d6ae964220f873cfd976fff77f55ad40d473ad14df0f5c17"
+    },
+    "HANDOFF.md": {
+      "bytes": 9567,
+      "sha256": "d2bad5d8417c4709587b1912b3b9a2a20e0685bb2fb99d089d8a49b6acd53edf"
+    },
+    "REFERENCE_NOTES.md": {
+      "bytes": 1995,
+      "sha256": "59977be307d032c4a34d2ccfa5717bf798b3136595dcc693fba519bc49717c93"
+    },
+    "asset_metrics.json": {
+      "bytes": 3151,
+      "sha256": "e9cbbea89ac6313f28e7f20465dd221c2c9d8ab5494b4509716376b236189f5b"
+    },
+    "export_verification.json": {
+      "bytes": 1920,
+      "sha256": "7f8d8fb98a1eb30d2baf7054ff397e122a7daf6330fe33fa16c2e29b925eb683"
+    },
+    "playcanvas_verification.json": {
+      "bytes": 5205,
+      "sha256": "eeb9ba94d8ac7477b29827ef5d7d8430259918cce7e4bf1390c2b949d7d01d1c"
+    },
+    "provenance.json": {
+      "bytes": 1388,
+      "sha256": "cf6456d001e16be6ce5278b3050c6d88d76e6fc48d87e81f18c918a7abdf9a5f"
+    },
+    "preview_verification.json": {
+      "bytes": 1488,
+      "sha256": "bc57b826eafd42ef070191b0e8a0a6b0362f0ffbc8c53fe50593f93f75f56d8f"
+    },
+    "previous_asset_preservation.json": {
+      "bytes": 7366,
+      "sha256": "54aba64b30828426b3d8efa76ab204addb5ca8356865004f2a75697a75ee4c0d"
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "entries": [
+    {
+      "entry": "everyday_gateway_v01.blend",
+      "bytes": 256827,
+      "sha256": "8dcfe0aa001b65fcc1bc138c4fecad534bcb9e58d8bb6292e6efb144a73b2e80"
+    },
+    {
+      "entry": "everyday_gateway_v01.glb",
+      "bytes": 177856,
+      "sha256": "781dc42c131c9d9caf1922cf001bbbc104e8c2a8fd343bf11243b1bf49109fab"
+    },
+    {
+      "entry": "generate_gateway.py",
+      "bytes": 12034,
+      "sha256": "60c1c2cafa023eeba1d698f4c67c4d0793abc084fc0b203d64a5257613a0a4da"
+    },
+    {
+      "entry": "verify_export.py",
+      "bytes": 7665,
+      "sha256": "83546f53b988e57f7e2de4e5574d23065609f4364cf944c892e3af90bb51acf8"
+    },
+    {
+      "entry": "check_playcanvas.mjs",
+      "bytes": 6526,
+      "sha256": "74e15eb7bd8b9e32cfdf591ea23b8687bc4b03340abc96746842e7c866b72e4e"
+    },
+    {
+      "entry": "prepare_handoff.py",
+      "bytes": 6654,
+      "sha256": "90e5ff3c7f74753464c8e79177c36a5400e1d7be34e17b92cd241d37b1240937"
+    },
+    {
+      "entry": "HANDOFF.md",
+      "bytes": 4763,
+      "sha256": "79cb3619a30639ae41eb8e16ddcc48d2dcf3e0df7864baee4d3aeca0f624c065"
+    },
+    {
+      "entry": "REFERENCE_NOTES.md",
+      "bytes": 1099,
+      "sha256": "cbd6e3dff593fa7e73ff3a4c71de4a283559f1917219be003256aa49912f7ac6"
+    },
+    {
+      "entry": "MODEL_FACTS.md",
+      "bytes": 1269,
+      "sha256": "d1b132b20fb659f843982292f69b649c71b55c96716e9798300979ee014ac8f8"
+    },
+    {
+      "entry": "asset_metrics.json",
+      "bytes": 2188,
+      "sha256": "f3587bf25eeada1407f469dbdc6ef4268e0d1697fc6b8a06a2f43474a3a02b64"
+    },
+    {
+      "entry": "export_verification.json",
+      "bytes": 1262,
+      "sha256": "bb5c1fc7577e8fb753de9202b57213cfa93178b8b1f04d4f4a4118e9c18fa496"
+    },
+    {
+      "entry": "playcanvas_verification.json",
+      "bytes": 2367,
+      "sha256": "1504e8adc8aea4c2d51fd7b89b18586459ba19bea4c2a45fe598c00d95dfb867"
+    },
+    {
+      "entry": "provenance.json",
+      "bytes": 1630,
+      "sha256": "154209c82f0b09fe5903035515d9ac9a45b4aa2499d26c5c991ee435a770bf76"
+    },
+    {
+      "entry": "preview_verification.json",
+      "bytes": 2158,
+      "sha256": "699cf0c7ecc0f96ec9732949878627bfe043800c5a4c81df6b1a01ee430de7ec"
+    },
+    {
+      "entry": "previous_asset_preservation.json",
+      "bytes": 8117,
+      "sha256": "ed7c8272efa199857b283edabd12a67d1288869bede4351261d9af447790a165"
+    },
+    {
+      "entry": "playcanvas_desktop.png",
+      "bytes": 72285,
+      "sha256": "97fb2a78df4d1901d83d9b2c6d515acfa2b4279e3e2575d59546d3851d10a05e"
+    },
+    {
+      "entry": "playcanvas_mobile_viewport.png",
+      "bytes": 16275,
+      "sha256": "2991beb9409ffa98a10f93b64850c1da1edca1f1a841a76ad6e037219dbfce73"
+    },
+    {
+      "entry": "preview_back.png",
+      "bytes": 705791,
+      "sha256": "a5111e9d989e2fa07dbbd661f2fae2c56070c62ef0461fc9d19eae695a9adeb0"
+    },
+    {
+      "entry": "preview_front.png",
+      "bytes": 703067,
+      "sha256": "d09d35db9eec9d74b5800bb9f926ee2c25082b311ae8728f5feefd8aaa999b7f"
+    },
+    {
+      "entry": "preview_left.png",
+      "bytes": 646833,
+      "sha256": "fb7fa48376262249cf8c1fb74e51a7f210ba4c1141383fbe97fad636b4ec6031"
+    },
+    {
+      "entry": "preview_perspective.png",
+      "bytes": 1043455,
+      "sha256": "dccc1d72eb57a848efedfb28e89eaf6e9ccc9182416b54f18079f2b23f4a01b1"
+    },
+    {
+      "entry": "preview_right.png",
+      "bytes": 648567,
+      "sha256": "e0a108aed203e3abdcc589547a742a1e8c98be795beaf6b28324e07787d27e1f"
+    },
+    {
+      "entry": "references/accepted_gateway_concept.png",
+      "bytes": 1661986,
+      "sha256": "564af4590cb0edfb34d2bfd9223c1bb14912aa9f5360a802020827ca7c51bad4"
+    },
+    {
+      "entry": "textures/brick_color_512.png",
+      "bytes": 144651,
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    },
+    {
+      "entry": "package_manifest.json",
+      "bytes": 3622,
+      "sha256": "c65dbf125be622f7657e1b6c44991b621bcffe253909c3eb5654a4b73e7f128a"
+    }
+  ],
+  "archive": "gateway_handoff_v01.zip",
+  "bytes": 5865677,
+  "sha256": "b9ad32aa5695fa1c56ce2449456d64313fcbe56c4606acce8c707934624bbab4"
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "file": "playcanvas_desktop.png",
+    "width": 1000,
+    "height": 900,
+    "bytes": 52086,
+    "sha256": "6B7B2345493AF9651FE9FDADB885B9B6B1596BE15C517D3ACA904BE6D72C7481"
+  },
+  {
+    "file": "playcanvas_mobile_viewport.png",
+    "width": 390,
+    "height": 844,
+    "bytes": 28359,
+    "sha256": "412A7BA7D2219D38F6D32CE0D73BD5723BAAC8DAAB0502E5E4FCCEBE7FE8D166"
+  },
+  {
+    "file": "preview_back.png",
+    "width": 1000,
+    "height": 900,
+    "bytes": 926988,
+    "sha256": "C83C89D7D7DE08AB91BEA03BCA0DF281708E07A5F6C44916F74364B85A4423F4"
+  },
+  {
+    "file": "preview_front.png",
+    "width": 1000,
+    "height": 900,
+    "bytes": 929005,
+    "sha256": "E2B053F8975E4281493EE5B2ED0394B9F984D1D8944223BCAE392B52E434A5BE"
+  },
+  {
+    "file": "preview_left.png",
+    "width": 1000,
+    "height": 900,
+    "bytes": 939944,
+    "sha256": "6F1A60EF26D1CEEFB1798D10CCA3FD9A2D110B6D7DBBE4FECF46FA59A2E09946"
+  },
+  {
+    "file": "preview_perspective.png",
+    "width": 1000,
+    "height": 900,
+    "bytes": 1028744,
+    "sha256": "AA18E55016FDE4D8488D66D4C0922491A38ED48AD40518FE2A49B6F56DA33E2A"
+  }
+]

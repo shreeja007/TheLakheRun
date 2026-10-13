@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "entries": [
+    {
+      "entry": "building01_residence_v01.blend",
+      "bytes": 508385,
+      "sha256": "4c2cca6b4ba7c308ee12218b544860d55e1604dc9c21e9e43410ba74ef61470c"
+    },
+    {
+      "entry": "building01_residence_v01.glb",
+      "bytes": 569056,
+      "sha256": "f2837a955bc4cb399482b875122032f3e14bf5715b8955c3eaacbb7f92082d40"
+    },
+    {
+      "entry": "generate_building.py",
+      "bytes": 15906,
+      "sha256": "ee504ffbbe284321cdba4680f3b20868974b3b26b628af68f90322e77cfa06be"
+    },
+    {
+      "entry": "verify_export.py",
+      "bytes": 7089,
+      "sha256": "02a11c1d2be694584ab7482828f7858e04561b8ff591e74867e492fec5ea7746"
+    },
+    {
+      "entry": "check_playcanvas.mjs",
+      "bytes": 6909,
+      "sha256": "91019b356c34c20652d85569b0d1b1e2b9043ea0f451afea0ba38626b5413168"
+    },
+    {
+      "entry": "prepare_handoff.py",
+      "bytes": 5735,
+      "sha256": "600dda24dee1f4d11ac8f493d617c78f36150487374af69fac723be4d8ef745b"
+    },
+    {
+      "entry": "HANDOFF.md",
+      "bytes": 5595,
+      "sha256": "0ce910dc879908d54a6b6dd59d5c50f78d81e5176a32645f5f5d8f96a3be5cfe"
+    },
+    {
+      "entry": "REFERENCE_NOTES.md",
+      "bytes": 1297,
+      "sha256": "91111f6eca264e12a4d3b438c2ffeadf2269a10b0d7b16853adcb4e2d2a2f4a9"
+    },
+    {
+      "entry": "MODEL_FACTS.md",
+      "bytes": 1267,
+      "sha256": "05488ca29bd92bceffc5949117813b8e2e367bb094f5f3d8c3079ba089175305"
+    },
+    {
+      "entry": "asset_metrics.json",
+      "bytes": 5601,
+      "sha256": "e9c6166b09364767831ae73188ef9a2905c5f6497b3b68b9b641f143f8a75e5b"
+    },
+    {
+      "entry": "export_verification.json",
+      "bytes": 1333,
+      "sha256": "85bd3ad07049d60019196a425a70d0090d91b96ae8138a895deff6a64e966c2b"
+    },
+    {
+      "entry": "playcanvas_verification.json",
+      "bytes": 2691,
+      "sha256": "a01e267662806e628dc70c8f198ac80693bf9b7f55f0f8a4b03b6130105ef3f1"
+    },
+    {
+      "entry": "provenance.json",
+      "bytes": 1743,
+      "sha256": "def3f4208c12d19bc97d01e80667b6c68cd560ecf3468878f4a334a60456c302"
+    },
+    {
+      "entry": "preview_verification.json",
+      "bytes": 2391,
+      "sha256": "75f983341ed3eeebbccb751d56cbcbbdf03eec970023814c8ed0470a54498ace"
+    },
+    {
+      "entry": "playcanvas_desktop.png",
+      "bytes": 177423,
+      "sha256": "ea253808c2eb03de23e65b22a63e4149cd5e041683257a68c62d35c3b4c89139"
+    },
+    {
+      "entry": "playcanvas_mobile_viewport.png",
+      "bytes": 52140,
+      "sha256": "2f18efed8773ac7fe35f1f64b2c4a653c31354902ff0f8bf3b3238bfa86f09de"
+    },
+    {
+      "entry": "preview_back.png",
+      "bytes": 928889,
+      "sha256": "5b5fc40320c4e8d061744524f147e82718e10b3a14fb62d8e8b57d3bfee2a78e"
+    },
+    {
+      "entry": "preview_front.png",
+      "bytes": 932754,
+      "sha256": "c0e0e1afb711b7893421a50a17dcf212f3532b05b391b5a63ed8e314a016389c"
+    },
+    {
+      "entry": "preview_left.png",
+      "bytes": 805263,
+      "sha256": "f9c5cc67f78bbcb787c00372ba8b37de2c91acca148fb523659b2c9d03d86128"
+    },
+    {
+      "entry": "preview_perspective.png",
+      "bytes": 1290499,
+      "sha256": "40e22bba1a58b37bb8bb42e05e01bf304043500a191280202f71522af018c4a3"
+    },
+    {
+      "entry": "preview_right.png",
+      "bytes": 797789,
+      "sha256": "d11d78689a2c5001b3e2f9a769c10756b1263985b5184ac10d490758f74b0f78"
+    },
+    {
+      "entry": "references/accepted_building01_concept.png",
+      "bytes": 1957005,
+      "sha256": "c84ced0f648279c9d3187f1a1ef24e1abd323691b5296eb57a6de967aafd64c4"
+    },
+    {
+      "entry": "textures/brick_color_512.png",
+      "bytes": 144651,
+      "sha256": "3088f16d4cbcc335d8072cf3819242e94fd80f41377022541dff82098a25075e"
+    },
+    {
+      "entry": "textures/roof_color_512.png",
+      "bytes": 232323,
+      "sha256": "fbf1940733dc86182d68cff03ce60547a019fbfda19a905d1adff9fdf0fbe770"
+    },
+    {
+      "entry": "package_manifest.json",
+      "bytes": 3636,
+      "sha256": "d53525f493d57a7074625ac3e6c13aaed69ad19d7f1f98805602cf08f283ac90"
+    }
+  ],
+  "archive": "building01_handoff_v01.zip",
+  "bytes": 8115934,
+  "sha256": "b0db6b7dea96073c755b961002dd74bf5268698a09163d5d75ccf66e7a9a2a86"
+}

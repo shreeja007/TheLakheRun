@@ -1,0 +1,26 @@
+TUKU — FIVE SEPARATE REFERENCE IMAGES (T018)
+Draft for director review; not approved final art.
+Built-in image_gen was used. Upright images are AI-isolated/redrawn references,
+not pixel-identical crops. The original sheet is preserved in tuku_refinement_v03.
+
+Files:
+tuku_front_v04.png — front, 1024 x 1536.
+tuku_left_side_v04.png — wearer LEFT, face points right, far-side bag.
+tuku_right_side_v04.png — wearer RIGHT, face points left, near-side bag.
+tuku_back_v04.png — back, bag on image-right.
+tuku_top_inferred_v04.png — inferred overhead, 1254 x 1254, front toward image-bottom.
+
+All four upright images are 1024 x 1536 with neutral opaque backgrounds.
+Top is supplementary construction reference: not a calibrated render of the GLB.
+Crown/shoulders hide much of body in a straight overhead view. Hood shape and
+bag exposure require modeling review; source has no top view.
+Side views are different anatomical sides, not mirrored copies.
+
+For a four-input Meshy workflow, use front/left/right/back together; keep top
+as supplementary reference. See T017 handoff for official guidance links.
+No upload, account access or 3D generation was performed.
+Before modeling: director checks identity, proportions, hood and right-rear bag.
+Exact prompts are saved alongside images; metadata and SHA256 in
+image_verification.json, derivation record in provenance.json.
+Suggested next work only: manually compare with current mesh and test
+the approved references in a separately authorized modeling ticket.
