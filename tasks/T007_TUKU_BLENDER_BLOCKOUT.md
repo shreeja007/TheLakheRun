@@ -1,6 +1,6 @@
 # T007 — Tuku Blender blockout and GLB
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M4  
 **Dependencies / approval:** T001 accepted; T006 sheet explicitly approved for 3D blockout  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/04_CHARACTER_TUKU.md`, `docs/06_WORLD_AND_ASSET_PIPELINE.md`

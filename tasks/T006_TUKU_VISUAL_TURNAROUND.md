@@ -1,6 +1,6 @@
 # T006 — Consistent Tuku turnaround concept sheet
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M4  
 **Dependencies / approval:** Owner authorizes Tuku v0.2 concept-sheet direction, including outfit palette  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/04_CHARACTER_TUKU.md`, `docs/03_STORY_AND_CULTURE.md`

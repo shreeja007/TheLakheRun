@@ -1,7 +1,8 @@
 # T031 — Migration phase 1: missing research handoff
 
 **Authorization:** Owner authorized the recommended migration sequence on 2026-10-13: “ok lets do all the things in order, phase by phase.” This ticket covers only phase 1, followed by a separate Option C integration ticket.
-**Implementation state:** COMPLETE; director review pending.
+**Implementation state:** COMPLETE. 
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.
 
 ## Scope and references
 

@@ -1,7 +1,7 @@
 # T016 — Implementation Result: Tuku Mid-Run "Turn and Tease" Mechanic
 
 **Implementation state:** COMPLETE  
-**Director review state:** PENDING  
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Date:** 2026-10-11  
 **Ticket:** `tasks/T016_TUKU_MID_RUN_TEASE.md` (Spirited Mid-Run Turn and Tease Mechanic)
 

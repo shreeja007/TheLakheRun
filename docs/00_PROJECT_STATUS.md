@@ -1,8 +1,17 @@
 # Project status — read first
 
-**As of:** 2026-10-09  
-**Phase:** Concept / game design / planning; implementation not started in this documentation pack.  
-**Near-term aim:** authorize a tiny browser-3D feasibility test after planning review.
+**As of:** 2026-11-02  
+**Phase:** Playable browser-3D runner built and **accepted by the Game Director** (D-016) after personal playtesting on Windows desktop (Chrome/Edge) and a physical Android phone (Chrome).  
+**Near-term aim:** cultural/rights review, iPhone/Safari check, then HTTPS staging (T014) and release QA (T015) once authorized.
+
+> *Earlier header (2026-10-09): "Concept / game design / planning; implementation not started" — superseded by the built and accepted game above. The sections below are preserved as originally recorded.*
+
+## Accepted build (2026-11-02)
+
+- All built tickets accepted for gameplay: T001–T013, T017–T020, T031–T034 and the unnumbered polish/biome/FX reports. See `../tasks/00_TASK_INDEX.md`.
+- Acceptance is gameplay/function only. It does **not** cover cultural sign-off for Lakhey, festival elements (Pulu Kisi, raths) or asset rights/provenance.
+- Not yet tested: iPhone/Safari, Firefox, OS install/offline on HTTPS hosting.
+- Implemented features the 2026-10-09 lists below still call PROPOSED/DEFERRED (coins, slide, Pulu Kisi hazard, rath procession, biomes) are now in the accepted build; the director should formally reconcile those rows in `docs/10_DECISIONS.md`.
 
 ## CONFIRMED by owner
 
@@ -36,7 +45,9 @@ See `docs/13_OPEN_QUESTIONS.md`. Top priorities: mobile orientation; input/camer
 
 ## Next authorized action
 
-**No ticket has been authorized by this package.** Proposed first assignment: `../tasks/T001_WEB_3D_FEASIBILITY.md` to test a tiny PlayCanvas TypeScript WebGL scene on real devices. It should not create a complete runner or hero assets. Approval is required to begin.
+**No new ticket is authorized.** Remaining work: T014 HTTPS staging (blocked on server details and permission), T015 final QA/release review (needs T014 plus cultural/rights sign-off), T028 income-research decisions, cultural reviewer contact, and owner decisions on engine (D-009), orientation, "Tuku" name and total-score meaning.
+
+*Earlier (2026-10-09): proposed first assignment was T001 feasibility; superseded — T001 is implemented and accepted.*
 
 ## Documentation update rule
 

@@ -36,15 +36,15 @@ export class ScoreManager {
       try {
         const savedDist = window.localStorage.getItem(ScoreManager.STORAGE_KEY);
         if (savedDist !== null) {
-          const parsed = parseFloat(savedDist);
-          if (!isNaN(parsed) && parsed >= 0) {
+          const parsed = Number(savedDist);
+          if (Number.isFinite(parsed) && parsed >= 0) {
             this.inMemoryBest = parsed;
           }
         }
         const savedCoins = window.localStorage.getItem(ScoreManager.STORAGE_KEY_COINS);
         if (savedCoins !== null) {
-          const parsedCoins = parseInt(savedCoins, 10);
-          if (!isNaN(parsedCoins) && parsedCoins >= 0) {
+          const parsedCoins = Number(savedCoins);
+          if (Number.isSafeInteger(parsedCoins) && parsedCoins >= 0) {
             this.inMemoryBestCoins = parsedCoins;
           }
         }

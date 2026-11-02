@@ -1,6 +1,6 @@
 # T010 — Guardian model blockout based on approved concept
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M4  
 **Dependencies / approval:** T009 concept and cultural gate accepted  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/05_CHARACTER_LAKHEY.md`, `docs/06_WORLD_AND_ASSET_PIPELINE.md`

@@ -1,7 +1,8 @@
 # T033 — Preserve focused-button shortcuts and merge the migration
 
 **Authorization:** On 2026-10-13, after the merge review identified the focused-button keyboard regression and recommended fixing it before merging, the owner instructed: “ok check and proceed the merge”. This authorizes the bounded fix, verification, backup and local merge described in that review.
-**Implementation state:** COMPLETE; focused-button regression and all 18 combined checks passed. Local fast-forward merge completed; director/device acceptance remains pending.
+**Implementation state:** COMPLETE; focused-button regression and all 18 combined checks passed. Local fast-forward merge completed. 
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.
 
 ## Read / references
 

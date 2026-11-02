@@ -1,6 +1,6 @@
 # T005 — Nonviolent Lakhey chase using a placeholder
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M3  
 **Dependencies / approval:** T004 accepted; director reviews chase-ending rules and tonal feedback  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/02_GAMEPLAY.md`, `docs/03_STORY_AND_CULTURE.md`, `docs/05_CHARACTER_LAKHEY.md`

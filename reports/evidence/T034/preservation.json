@@ -1,0 +1,20 @@
+{
+  "baseline": "fd77bca",
+  "protected_paths": [
+    "public",
+    "art-source",
+    "src/runner",
+    "src/world",
+    "src/fx",
+    "src/input",
+    "src/ui/ControlsTutorial.ts",
+    "src/ui/HomeScreen.ts",
+    "scripts/pwa-build.mjs",
+    "scripts/sw-template.js",
+    "docs/00_PROJECT_STATUS.md",
+    "docs/10_DECISIONS.md"
+  ],
+  "protected_file_count": 394,
+  "changed_protected_files": [],
+  "passed": true
+}

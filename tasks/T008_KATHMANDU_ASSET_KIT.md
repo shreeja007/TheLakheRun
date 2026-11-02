@@ -1,6 +1,6 @@
 # T008 — First small Kathmandu street module kit
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M4  
 **Dependencies / approval:** T003 accepted; director authorizes original architectural art brief  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/06_WORLD_AND_ASSET_PIPELINE.md`, `docs/12_RESEARCH_SOURCES.md`

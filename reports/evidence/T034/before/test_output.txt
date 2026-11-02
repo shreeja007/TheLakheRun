@@ -1,0 +1,20 @@
+
+> lakhey-run@0.1.0 test:ui
+> node scripts/test-ui-mobile.mjs
+
+PASS Focused mute button preserves T/E/P/Escape shortcuts and native Space/Enter activation: passed
+PASS Friend tease button still works; lane movement cancels tease; dedicated Resume works: passed
+PASS Default HUD, keyboard tutorial, no tutorial movement, pause/resume, replay, mute: passed
+PASS Persistent tutorial completion, real collision/catch simulation, results and retry: {"state":"GAME_OVER","simulationSteps":409,"distance":39.72754039287323}
+PASS Explicit debug HUD and live FPS: passed
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 30000ms exceeded.
+    at C:\Users\ShreejaManandhar\Desktop\TheGame\lakhey-run-planning_antigravity_original\scripts\test-ui-mobile.mjs:194:16 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.11.1

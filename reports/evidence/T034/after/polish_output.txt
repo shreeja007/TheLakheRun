@@ -1,0 +1,5 @@
+PASS 320x568: visibility, feedback, controls, pause/retry, audio and interruptions
+PASS 390x844: visibility, feedback, controls, pause/retry, audio and interruptions
+PASS 667x375: visibility, feedback, controls, pause/retry, audio and interruptions
+PASS 844x390: visibility, feedback, controls, pause/retry, audio and interruptions
+PASS 1280x800: visibility, feedback, controls, pause/retry, audio and interruptions

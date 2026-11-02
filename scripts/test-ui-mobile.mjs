@@ -186,6 +186,9 @@ try {
   assert.equal(await state(mobile), 'RUNNING');
   await mobile.waitForFunction(() => window.__game.getPlayer().getTelemetry().distance > 2);
   await mobile.waitForFunction(() => !window.__game.getPlayer().isIntroActive());
+  // Keep short jump/slide states observable across CDP round trips on software WebGL.
+  // Input still uses real touch events; simulation/collision progression is checked separately.
+  await mobile.evaluate(() => { window.__pcApp.timeScale = 0; });
   await swipe(mobile, '#application-canvas', -65, 0);
   await mobile.waitForFunction(() => window.__game.getPlayer().getTelemetry().targetLane === -1);
   await swipe(mobile, '#application-canvas', 65, 0);
@@ -196,6 +199,7 @@ try {
   await mobile.waitForFunction(() => window.__game.getPlayer().getTelemetry().isSliding);
   await screenshot(mobile, 'mobile-running');
   await mobile.click('#btn-toggle-run');
+  await mobile.evaluate(() => { window.__pcApp.timeScale = 1; });
   record('Emulated touch swipes in tutorial and gameplay (left/right/jump/slide)');
 
   await mobile.evaluate(() => window.__game.triggerAction('RESET', 'Test cancelled/multi-touch'));
@@ -214,7 +218,7 @@ try {
   for (const viewport of [{ width: 320, height: 568 }, { width: 390, height: 844 }, { width: 667, height: 375 }, { width: 844, height: 390 }]) {
     await mobile.setViewportSize(viewport);
     await mobile.evaluate(() => window.__game.triggerAction('RESET', 'Test layout'));
-    assert.equal(await mobile.locator('#biome-toast').isVisible(), false);
+    assert.equal(await mobile.locator('#run-feedback').isVisible(), false);
     await insideViewport(mobile, ['.score-board', '#btn-audio-toggle', '#btn-help', '#btn-home-screen', '#btn-play', '#btn-toggle-run', '#btn-tease', '#btn-left', '#btn-slide']);
     await mobile.click('#btn-help');
     await insideViewport(mobile, ['#controls-tutorial', '#tutorial-next', '#tutorial-skip']);
@@ -247,6 +251,7 @@ try {
   await mobile.click('#btn-toggle-run');
   record('Production service-worker snapshot, controlled reload, offline launch and play');
   await mobileContext.setOffline(false);
+  await mobileContext.close(); // These checks are complete; release the software GPU scene.
 
   const manifest = await (await context.request.get(`${origin}/manifest.webmanifest`)).json();
   assert.equal(manifest.display, 'standalone');
@@ -302,6 +307,7 @@ try {
   await denied.keyboard.press('Escape');
   assert.equal(await state(denied), 'PAUSED');
   record('Synthetic install event: one-use prompt, dismissal, modal input isolation');
+  await deniedContext.close();
 
   const iosContext = await browser.newContext({ ...devices['iPhone 13'], defaultBrowserType: undefined });
   const ios = await iosContext.newPage();
@@ -310,6 +316,7 @@ try {
   assert.match(await ios.locator('#install-instructions').textContent(), /Safari.*Share.*Add to Home Screen/);
   await screenshot(ios, 'ios-install-guidance-emulated');
   record('iPhone UA emulation: manual installation guidance (not Safari verification)');
+  await iosContext.close();
 
   const standaloneContext = await browser.newContext();
   await standaloneContext.addInitScript(() => {
@@ -320,6 +327,7 @@ try {
   await ready(standalone);
   assert.equal(await standalone.locator('#btn-home-screen').isVisible(), false);
   record('Emulated standalone mode hides redundant installation menu');
+  await standaloneContext.close();
 
   const failedContext = await browser.newContext();
   await failedContext.addInitScript(() => {
@@ -335,6 +343,7 @@ try {
   await failed.click('#tutorial-skip');
   assert.equal(await state(failed), 'RUNNING');
   record('Service-worker registration failure leaves online play usable');
+  await failedContext.close();
 
   const noWebglContext = await browser.newContext();
   await noWebglContext.addInitScript(() => {
@@ -350,6 +359,7 @@ try {
   assert.match(await noWebgl.locator('#startup-status').textContent(), /WebGL.*another browser/);
   await screenshot(noWebgl, 'webgl-unavailable');
   record('Unavailable WebGL displays an actionable startup failure (intentional boot error)');
+  await noWebglContext.close();
 
   // Isolated localhost server exercises the real worker lifecycle without editing the build.
   const output = resolve('dist');
@@ -391,7 +401,8 @@ try {
     assert.equal(oldCaches.length, 2);
     await lifecycle.close();
     const reopened = await lifecycleContext.newPage();
-    await reopened.goto(lifecycleOrigin);
+    await reopened.goto(lifecycleOrigin, { waitUntil: 'domcontentloaded' });
+    await reopened.waitForFunction(() => Boolean(window.__game));
     await reopened.waitForFunction(async () => (await caches.keys()).length === 1 && (await caches.keys())[0].endsWith('-update'));
     assert.equal(await state(reopened), 'READY');
     record('Real worker update waits without reloading a paused run; tab close activates it and removes old game cache');

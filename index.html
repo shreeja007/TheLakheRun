@@ -350,155 +350,6 @@
       transition: width 0.08s linear;
     }
 
-    /* In-Run High Score Celebration Banner */
-    .record-celebration-banner {
-      position: absolute;
-      top: 84px;
-      left: 50%;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: none;
-      z-index: 50;
-      animation: bannerSwoopDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-    @keyframes bannerSwoopDown {
-      0% { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.85); }
-      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-    }
-    .record-celebration-banner.banner-exit {
-      animation: bannerSwoopUp 0.35s ease-in forwards;
-    }
-    @keyframes bannerSwoopUp {
-      0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(0.85); }
-    }
-    .record-banner-inner {
-      background: linear-gradient(135deg, rgba(30, 27, 75, 0.96), rgba(15, 23, 42, 0.96));
-      border: 2px solid #f59e0b;
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), inset 0 0 15px rgba(251, 191, 36, 0.35);
-      border-radius: 16px;
-      padding: 10px 22px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      white-space: nowrap;
-    }
-    .record-banner-icon {
-      font-size: 26px;
-      filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.8));
-      animation: iconBounce 0.8s ease-in-out infinite alternate;
-    }
-    @keyframes iconBounce {
-      0% { transform: translateY(-2px) scale(1); }
-      100% { transform: translateY(2px) scale(1.15); }
-    }
-    .record-banner-title {
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #fef08a;
-      text-shadow: 0 0 10px rgba(254, 240, 138, 0.6);
-      text-transform: uppercase;
-    }
-    .record-banner-subtitle {
-      font-size: 11px;
-      font-weight: 700;
-      color: #cbd5e1;
-    }
-
-    /* Floating Near-Miss & Skill Callout Toasts */
-    .callout-container {
-      position: absolute;
-      top: 25%;
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      z-index: 40;
-    }
-    .callout-toast {
-      pointer-events: none;
-      border-radius: 12px;
-      padding: 8px 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      animation: calloutFloat 1.25s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    }
-    @keyframes calloutFloat {
-      0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.65);
-      }
-      18% {
-        opacity: 1;
-        transform: translateY(0) scale(1.1);
-      }
-      28% {
-        transform: translateY(-2px) scale(1.0);
-      }
-      80% {
-        opacity: 1;
-        transform: translateY(-16px) scale(0.98);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-36px) scale(0.9);
-      }
-    }
-    .callout-clean-vault {
-      background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(59, 130, 246, 0.95));
-      border: 1.5px solid #7dd3fc;
-      box-shadow: 0 0 20px rgba(14, 165, 233, 0.6);
-    }
-    .callout-close-call {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(249, 115, 22, 0.95));
-      border: 1.5px solid #fed7aa;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
-    }
-    .callout-gate-evaded {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(245, 158, 11, 0.95));
-      border: 1.5px solid #6ee7b7;
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
-    }
-    .callout-combo-surge {
-      background: linear-gradient(135deg, rgba(168, 85, 247, 0.95), rgba(236, 72, 153, 0.95));
-      border: 1.5px solid #f472b6;
-      box-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
-    }
-    .callout-wind-evaded {
-      background: linear-gradient(135deg, rgba(14, 165, 233, 0.95), rgba(99, 102, 241, 0.95));
-      border: 1.5px solid #a5f3fc;
-      box-shadow: 0 0 22px rgba(14, 165, 233, 0.65);
-    }
-    .callout-milestone-cleared {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.98), rgba(220, 38, 38, 0.98));
-      border: 2px solid #fde047;
-      box-shadow: 0 0 32px rgba(245, 158, 11, 0.85), inset 0 0 14px rgba(254, 240, 138, 0.45);
-      transform-origin: center center;
-    }
-    .callout-tease-taunt {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.98), rgba(234, 88, 12, 0.98));
-      border: 2px solid #fef08a;
-      box-shadow: 0 0 28px rgba(245, 158, 11, 0.8), inset 0 0 12px rgba(254, 240, 138, 0.5);
-    }
-    .callout-title {
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: 0.8px;
-      color: #ffffff;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
-    }
-    .callout-sub {
-      font-size: 11px;
-      font-weight: 700;
-      color: #fef08a;
-      letter-spacing: 0.5px;
-    }
-
     /* Flying Score Digits (+Points flying to HUD Distance Meter) */
     .fly-score-digit {
       position: absolute;
@@ -556,106 +407,6 @@
       background: radial-gradient(circle, rgba(254, 240, 138, 0.5) 0%, rgba(245, 158, 11, 0.28) 80%);
       opacity: 1;
     }
-
-    /* Biome Location Toast Banner (Temple Run Milestone Announcement) */
-    .biome-toast {
-      position: absolute;
-      top: 96px;
-      left: 50%;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: none;
-      z-index: 45;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 8px 24px;
-      border-radius: 18px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
-      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .biome-toast.hidden {
-      display: none;
-    }
-    .biome-toast.toast-enter {
-      animation: biomeToastIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-    @keyframes biomeToastIn {
-      0% { opacity: 0; transform: translateX(-50%) translateY(-35px) scale(0.9); }
-      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-    }
-    .biome-toast.toast-exit {
-      animation: biomeToastOut 0.4s ease-in forwards;
-    }
-    @keyframes biomeToastOut {
-      0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-25px) scale(0.92); }
-    }
-
-    /* Biome 1: Durbar Royal Alley Theme */
-    .biome-toast.biome-durbar {
-      background: linear-gradient(135deg, rgba(69, 26, 17, 0.94), rgba(30, 20, 18, 0.94));
-      border: 1.5px solid #f97316;
-      box-shadow: 0 0 30px rgba(249, 115, 22, 0.45), inset 0 0 15px rgba(251, 146, 60, 0.25);
-    }
-    .biome-toast.biome-durbar .biome-toast-badge {
-      color: #fed7aa;
-      background: rgba(249, 115, 22, 0.25);
-      border-color: rgba(249, 115, 22, 0.4);
-    }
-
-    /* Biome 2: River Causeway Theme */
-    .biome-toast.biome-river {
-      background: linear-gradient(135deg, rgba(8, 47, 73, 0.94), rgba(12, 30, 45, 0.94));
-      border: 1.5px solid #38bdf8;
-      box-shadow: 0 0 30px rgba(56, 189, 248, 0.45), inset 0 0 15px rgba(56, 189, 248, 0.25);
-    }
-    .biome-toast.biome-river .biome-toast-badge {
-      color: #bae6fd;
-      background: rgba(14, 165, 233, 0.25);
-      border-color: rgba(14, 165, 233, 0.4);
-    }
-
-    /* Biome 3: Himalayan Temple Hill Theme */
-    .biome-toast.biome-hill {
-      background: linear-gradient(135deg, rgba(46, 24, 16, 0.94), rgba(20, 26, 20, 0.94));
-      border: 1.5px solid #eab308;
-      box-shadow: 0 0 30px rgba(234, 179, 8, 0.45), inset 0 0 15px rgba(250, 204, 21, 0.25);
-    }
-    .biome-toast.biome-hill .biome-toast-badge {
-      color: #fef08a;
-      background: rgba(234, 179, 8, 0.25);
-      border-color: rgba(234, 179, 8, 0.4);
-    }
-
-    .biome-toast-badge {
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      margin-bottom: 3px;
-    }
-    .biome-toast-title {
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 0.8px;
-      color: #ffffff;
-      text-transform: uppercase;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-      white-space: nowrap;
-    }
-    .biome-toast-tagline {
-      font-size: 10px;
-      font-weight: 600;
-      color: #cbd5e1;
-      letter-spacing: 0.3px;
-      white-space: nowrap;
-    }
-
 
     /* Kathmandu Festival Marigold Petals & Confetti Shower */
     #confetti-container {
@@ -1098,6 +849,12 @@
             <div id="hud-mult-bar" class="multiplier-meter-fill"></div>
           </div>
         </div>
+        <div class="feedback-slot">
+          <div id="run-feedback" class="run-feedback" hidden>
+            <span id="run-feedback-text"></span>
+            <span id="run-feedback-points"></span>
+          </div>
+        </div>
       </div>
 
       <!-- Top Right Audio Controls -->
@@ -1112,27 +869,6 @@
         </div>
       </div>
     </div>
-
-    <!-- In-Run High Score Celebration Swoop Banner -->
-    <div id="record-banner" class="record-celebration-banner hidden">
-      <div class="record-banner-inner">
-        <div class="record-banner-icon">🏆</div>
-        <div class="record-banner-text">
-          <div class="record-banner-title">NEW PERSONAL BEST!</div>
-          <div id="record-banner-subtitle" class="record-banner-subtitle">Surpassed Previous Record!</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Biome Milestone Announcement Toast -->
-    <div id="biome-toast" class="biome-toast hidden">
-      <div id="biome-toast-badge" class="biome-toast-badge">📍 DURBAR SQUARE</div>
-      <div id="biome-toast-title" class="biome-toast-title">Durbar Royal Alley</div>
-      <div id="biome-toast-tagline" class="biome-toast-tagline">Ancient Red Brick Sanctuary</div>
-    </div>
-
-    <!-- Floating Near-Miss & Skill Callout Toast Container -->
-    <div id="callout-container" class="callout-container"></div>
 
     <!-- Center Ready Banner with Subway Surfers-style playful tease dialog -->
     <div id="ready-banner">

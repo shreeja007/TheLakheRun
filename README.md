@@ -72,6 +72,21 @@ npm run build      # Compile TypeScript and bundle production assets
 npm run preview    # Preview production bundle with network access
 ```
 
+## Existing-game audit and polish (T034, pending acceptance)
+
+The [current audit](audit.md) records confirmed defects, corrections and remaining review items. During a run, location/skill/record feedback shares one short line beside the score. Compact screens omit decorative screen-wide confetti/flashes/flying digits; short landscape uses one row of existing controls. Gameplay, models and scoring rules are preserved. Pause freezes the simulation, background/context loss pauses the run, and unmuting while paused keeps music stopped.
+
+After a production build, check this ticket against a local preview in another terminal:
+
+```powershell
+$env:UI_TEST_URL = 'http://127.0.0.1:4190'
+$env:UI_TEST_EVIDENCE_DIR = 'reports/evidence/T034/after'
+npm run test:ui
+node scripts/test-polish.mjs
+```
+
+Use `npm run preview -- --host 127.0.0.1 --port 4190 --strictPort` for that preview. The [T034 report](reports/T034_RESULT.md) contains fresh evidence and real-device limitations. Director acceptance remains pending; this work does not authorize deployment.
+
 ## Income research handoff (T031, pending review)
 
 The [income and growth proposal](reports/evidence/T028/INCOME_AND_GROWTH_PROPOSAL.md), [source register](reports/evidence/T028/source_register.json) and [reproducible revenue scenarios](reports/evidence/T028/revenue_scenarios.json) were transferred from the sibling workspace on 2026-10-13. Research is dated 2026-10-12; hypothetical revenue inputs are not earnings forecasts. No monetization approach has been approved or implemented.

@@ -1,6 +1,6 @@
 # T017 — Tuku Multi-Style Movement Variations (3 Jumps, 3 Slides, 3 Dodges)
 
-**Status:** REVIEW  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M2  
 **Dependencies:** T002, T007, T015, T016  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`

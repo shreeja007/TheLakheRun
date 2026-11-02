@@ -1,6 +1,6 @@
 # T018 — Procedural Multi-Style Movement Audio (Whooshes, Somersaults & Stone Skids)
 
-**Status:** REVIEW  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M2 / M5  
 **Dependencies:** T012, T017  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/07_AUDIO_UI_AND_ACCESSIBILITY.md`, `docs/10_DECISIONS.md`

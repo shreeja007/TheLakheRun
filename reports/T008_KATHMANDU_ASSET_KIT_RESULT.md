@@ -1,7 +1,7 @@
 # T008 — Kathmandu Environment & Biomes Detailing Audit Result
 
 **Implementation state:** COMPLETE  
-**Director review state:** PENDING  
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Date:** 2026-10-11  
 **Ticket:** `tasks/T008_KATHMANDU_ASSET_KIT.md` & `/goal audit detailing environment and biomes`
 

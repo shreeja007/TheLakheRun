@@ -19,6 +19,7 @@
 | D-013 | 2026-10-09 | PROPOSED | First graybox collision = game over; later mistake/proximity system | Validate by playtesting |
 | D-014 | 2026-10-09 | DEFERRED | Rath Pull, Pulu Kisi mode, festival lore chapters, unlocks, backend online rankings | Not in initial release |
 | D-015 | 2026-10-09 | SUPERSEDED | Unity/Android-first was original stack preference | Replaced by browser-first; specific engine still unchosen |
+| D-016 | 2026-11-02 | CONFIRMED | Game Director accepts the current built game and all built tickets (T001–T013, T017–T020, T031–T034 and the unnumbered polish/biome/FX reports) after personal playtest | Tested on Windows desktop (Chrome/Edge) and a physical Android phone (Chrome); director reported no defects. iPhone/Safari untested. Gameplay acceptance only: cultural reviewer sign-off, asset rights/provenance, engine (D-009) and other PROPOSED/DEFERRED rows are **not** changed by this entry. T028 research remains pending. |
 
 ## New decision template
 

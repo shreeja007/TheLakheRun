@@ -1,7 +1,7 @@
 # Option 2: Obstacle Hazards & Collectibles — Implementation & Game Feel Audit Result
 
 **Implementation state:** COMPLETE  
-**Director review state:** PENDING  
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Date:** 2026-10-10  
 **Ticket:** Option 2: Obstacle Hazards & Collectibles (Rolling clay matka pots, collectible ceremonial brass coins with magnetic pull, sliding street gate barriers, and Game Feel Polish)
 

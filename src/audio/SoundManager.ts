@@ -106,9 +106,7 @@ export class SoundManager {
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setValueAtTime(this.isMutedState ? 0 : 0.85, this.ctx.currentTime);
     }
-    if (!this.isMutedState && !this.isMusicPlaying) {
-      this.startMusic();
-    }
+    // START/Resume owns music startup. Unmuting must not restart a paused run.
     return this.isMutedState;
   }
 

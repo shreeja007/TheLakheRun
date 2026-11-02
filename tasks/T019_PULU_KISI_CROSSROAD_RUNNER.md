@@ -1,6 +1,6 @@
 # T019 — Pulu Kisi (White Elephant) Dynamic Crossroad Runner Hazard
 
-**Status:** COMPLETE (Ready for Director Review)  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M2 / M3  
 **Dependencies:** T003, T008, T012  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/03_STORY_AND_CULTURE.md`, `docs/04_GAMEPLAY_AND_MECHANICS.md`, `docs/10_DECISIONS.md`

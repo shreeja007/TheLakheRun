@@ -1,6 +1,6 @@
 # T004 — Scoring, collision failure and instant retry
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M2  
 **Dependencies / approval:** T003 accepted; graybox one-hit end rule agreed for this milestone  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/02_GAMEPLAY.md`, `docs/07_AUDIO_UI_AND_ACCESSIBILITY.md`

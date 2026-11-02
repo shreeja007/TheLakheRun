@@ -39,14 +39,58 @@ button:disabled { opacity: .55; cursor: default; }
 .controls-hint-row { flex-wrap: wrap; }
 .hint-pill { font-size: 9px; }
 .touch-hint { display: none; }
+
+/* Keep transient feedback with the score, above the oncoming road. */
+.feedback-slot { width: 100%; min-height: 24px; }
+.run-feedback {
+  display: flex; align-items: center; gap: 8px; max-width: 260px; height: 24px;
+  padding: 3px 8px; border-left: 2px solid #38bdf8; border-radius: 3px 7px 7px 3px;
+  background: rgba(11, 20, 31, .82); color: #e2e8f0; font-size: 11px; font-weight: 650;
+  pointer-events: none;
+}
+#run-feedback-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#run-feedback-points { flex-shrink: 0; color: #fbbf24; font-variant-numeric: tabular-nums; }
+.run-feedback[data-kind="record"] { border-left-color: #fbbf24; color: #fef08a; }
+.score-container { position: relative; }
+
+/* A compact, readable running HUD; full best-score details remain in menus/results. */
+body[data-game-state="RUNNING"] .best-badge { display: none; }
+body[data-game-state="RUNNING"] .score-container { width: min(260px, 60%); max-width: 60%; gap: 4px; }
+body[data-game-state="RUNNING"] .score-board {
+  flex-direction: row; align-items: center; gap: 10px; padding: 6px 10px;
+  border-radius: 10px; box-shadow: none; max-width: 100%;
+}
+body[data-game-state="RUNNING"] .score-label { display: none; }
+body[data-game-state="RUNNING"] .score-number {
+  font-size: 23px; letter-spacing: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+body[data-game-state="RUNNING"] .score-sub-row { margin-top: 0; }
+body[data-game-state="RUNNING"] .guardian-bar {
+  width: 100%; min-height: 22px; padding: 3px 6px; font-size: 10px; gap: 5px; box-shadow: none;
+}
+body[data-game-state="RUNNING"] .guardian-bar .proximity-track { flex: 1; width: auto; min-width: 20px; }
+body[data-game-state="RUNNING"] .multiplier-pill {
+  position: absolute; left: calc(100% + 7px); top: 0; margin: 0;
+  padding: 4px 6px; min-width: 0; border-radius: 8px; box-shadow: none;
+}
+body[data-game-state="RUNNING"] .multiplier-content { gap: 0; }
+body[data-game-state="RUNNING"] .multiplier-val { font-size: 13px; white-space: nowrap; }
+body[data-game-state="RUNNING"] .multiplier-fire,
+body[data-game-state="RUNNING"] .multiplier-text { display: none; }
+body[data-game-state="RUNNING"] .multiplier-meter-track { height: 2px; margin-top: 3px; }
+body[data-game-state="RUNNING"] .multiplier-pill.multiplier-pop { transform: none; }
+body[data-game-state="RUNNING"] .multiplier-pill.tier-4 { animation: none; }
+body[data-game-state="RUNNING"] .controls-overlay { gap: 5px; }
+body[data-game-state="RUNNING"] .ctrl-btn { min-height: 44px; }
+body[data-game-state="RUNNING"] .top-right-bar { gap: 0; }
+body[data-game-state="RUNNING"] #btn-audio-toggle { width: 44px; padding: 6px; justify-content: center; }
+body[data-game-state="RUNNING"] #audio-label { display: none; }
+body[data-game-state="RUNNING"] .action-row { gap: 6px; }
+
 @media (pointer: coarse) {
   .keyboard-hint { display: none; }
   .touch-hint { display: inline; }
 }
-.biome-toast, .record-celebration-banner { top: max(126px, calc(env(safe-area-inset-top) + 114px)); max-width: calc(100% - 24px); }
-.record-banner-inner { white-space: normal; padding: 8px 14px; }
-.record-banner-title { font-size: 12px; }
-.biome-toast { padding: 6px 14px; }
 #gameover-modal { animation: none; border-color: rgba(245, 158, 11, .45); }
 .gameover-subtitle { line-height: 1.5; }
 .gameover-hint { color: #b4c2d3; }
@@ -79,6 +123,13 @@ button:disabled { opacity: .55; cursor: default; }
   .mobile-dialog { padding: 18px; }
 }
 @media (max-height: 500px) and (min-width: 500px) {
+  body[data-game-state="RUNNING"] .controls-overlay {
+    width: 100%; max-width: none; flex-direction: row; align-items: stretch; gap: 6px;
+  }
+  body[data-game-state="RUNNING"] .dpad-bar { flex: 1; }
+  body[data-game-state="RUNNING"] .action-row { flex: 0 0 180px; }
+  body[data-game-state="RUNNING"] .action-row > button { flex: 1; min-width: 44px; padding: 6px; }
+  body[data-game-state="RUNNING"] .score-container { width: 220px; }
   .menu-card, #ready-banner, #gameover-modal {
     width: min(350px, calc(100% - 290px)); max-height: calc(100dvh - 28px);
     top: 12px; transform: translateX(-50%); padding: 12px 16px;

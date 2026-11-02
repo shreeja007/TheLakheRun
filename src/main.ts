@@ -10,10 +10,11 @@ import {
   TouchDevice,
 } from 'playcanvas';
 import { GameManager, GameTelemetryPayload } from './game/GameManager';
-import { GameOverData, GameState, BiomeType } from './types';
+import { GameOverData, GameState } from './types';
 import { BIOME_CONFIGS } from './world/RoadView';
 import { ControlsTutorial } from './ui/ControlsTutorial';
 import { HomeScreen } from './ui/HomeScreen';
+import { RunFeedback } from './ui/RunFeedback';
 import './ui/mobile.css';
 
 const debugHud = new URLSearchParams(location.search).get('debug') === '1';
@@ -37,16 +38,6 @@ const devicePixelRatio = window.devicePixelRatio || 1;
 app.graphicsDevice.maxPixelRatio = Math.min(devicePixelRatio, 1.75);
 app.setCanvasFillMode(FILLMODE_FILL_WINDOW);
 app.setCanvasResolution(RESOLUTION_AUTO);
-
-// Resilient WebGL Context Recovery
-canvas.addEventListener('webglcontextlost', (event) => {
-  event.preventDefault();
-  console.warn('WebGL context lost. Standing by for recovery...');
-}, false);
-
-canvas.addEventListener('webglcontextrestored', () => {
-  console.info('WebGL context restored successfully.');
-}, false);
 
 // Camera
 const camera = new Entity('MainCamera');
@@ -111,6 +102,22 @@ const targetAmbientColorScratch = new Color();
 const game = new GameManager(app, camera, canvas);
 const tutorial = new ControlsTutorial(game);
 const homeScreen = new HomeScreen();
+const runFeedback = new RunFeedback();
+const pauseForInterruption = () => {
+  if (game.getState() === 'RUNNING') game.triggerAction('PAUSE', 'Browser interruption');
+};
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) pauseForInterruption();
+});
+canvas.addEventListener('webglcontextlost', (event) => {
+  event.preventDefault();
+  pauseForInterruption();
+  console.warn('WebGL context lost; run paused while the browser restores rendering.');
+});
+canvas.addEventListener('webglcontextrestored', () => {
+  app.resizeCanvas();
+  console.info('WebGL context restored; resume when ready.');
+});
 game.setActionGuard((action) => !homeScreen.isOpen() && tutorial.allowAction(action));
 
 const pausePanel = document.getElementById('pause-panel');
@@ -146,63 +153,35 @@ const readyBanner = document.getElementById('ready-banner');
 const hudMultiplierPill = document.getElementById('hud-multiplier-pill');
 const hudMultVal = document.getElementById('hud-mult-val');
 const hudMultBar = document.getElementById('hud-mult-bar');
-const recordBanner = document.getElementById('record-banner');
-const recordBannerSubtitle = document.getElementById('record-banner-subtitle');
-const biomeToastEl = document.getElementById('biome-toast');
-const biomeToastBadge = document.getElementById('biome-toast-badge');
-const biomeToastTitle = document.getElementById('biome-toast-title');
-const biomeToastTagline = document.getElementById('biome-toast-tagline');
-const calloutContainer = document.getElementById('callout-container');
 const skillFlashEl = document.getElementById('skill-flash');
 const confettiContainer = document.getElementById('confetti-container');
 const scoreBoardEl = document.querySelector('.score-board');
 const overlayEl = document.getElementById('overlay');
 
-// 0. Biome Location Toast Banner
-let activeBiome: BiomeType | null = null;
-let biomeToastTimer: number | null = null;
-let biomeToastExitTimer: number | null = null;
-
-const hideBiomeToast = () => {
-  if (biomeToastTimer !== null) clearTimeout(biomeToastTimer);
-  if (biomeToastExitTimer !== null) clearTimeout(biomeToastExitTimer);
-  biomeToastTimer = biomeToastExitTimer = null;
-  biomeToastEl?.classList.add('hidden');
+// Keep decorative DOM effects off compact screens and reduced-motion layouts.
+const compactEffects = matchMedia('(max-width: 640px), (max-height: 500px), (pointer: coarse)');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const decorationTimers = new Set<number>();
+const scheduleDecoration = (callback: () => void, delay: number) => {
+  const timer = window.setTimeout(() => { decorationTimers.delete(timer); callback(); }, delay);
+  decorationTimers.add(timer);
 };
-
-const showBiomeToast = (name: string, tagline: string, biomeType: BiomeType) => {
-  if (!biomeToastEl || !biomeToastTitle || !biomeToastTagline || !biomeToastBadge) return;
-  hideBiomeToast();
-
-  biomeToastTitle.textContent = name;
-  biomeToastTagline.textContent = tagline;
-
-  if (biomeType === 'DURBAR_ALLEY') {
-    biomeToastBadge.textContent = '📍 DURBAR SQUARE';
-    biomeToastEl.className = 'biome-toast biome-durbar';
-  } else if (biomeType === 'RIVER_CAUSEWAY') {
-    biomeToastBadge.textContent = '🌊 RIVER GHAT BRIDGE';
-    biomeToastEl.className = 'biome-toast biome-river';
-  } else {
-    biomeToastBadge.textContent = '🏔️ HIMALAYAN PASS';
-    biomeToastEl.className = 'biome-toast biome-hill';
-  }
-
-  biomeToastEl.classList.remove('hidden', 'toast-exit');
-  biomeToastEl.classList.add('toast-enter');
-
-  if (biomeToastTimer !== null) clearTimeout(biomeToastTimer);
-  biomeToastTimer = window.setTimeout(() => {
-    biomeToastEl.classList.remove('toast-enter');
-    biomeToastEl.classList.add('toast-exit');
-    biomeToastExitTimer = window.setTimeout(() => {
-      biomeToastEl.classList.add('hidden');
-    }, 400);
-  }, 3200);
+const clearDecorations = () => {
+  for (const timer of decorationTimers) clearTimeout(timer);
+  decorationTimers.clear();
+  confettiContainer?.replaceChildren();
+  if (skillFlashEl) skillFlashEl.className = '';
+  document.querySelectorAll('.fly-score-digit').forEach(el => el.remove());
+  scoreBoardEl?.classList.remove('score-pulse');
 };
+const allowDecorations = () => !compactEffects.matches && !reducedMotion.matches;
+for (const media of [compactEffects, reducedMotion]) {
+  media.addEventListener('change', () => { if (!allowDecorations()) clearDecorations(); });
+}
 
 // 1. Adrenaline / Skill Screen Flash
 const triggerSkillFlash = (type: string) => {
+  if (!allowDecorations()) return;
   if (!skillFlashEl) return;
   skillFlashEl.className = '';
   void skillFlashEl.offsetWidth;
@@ -213,36 +192,36 @@ const triggerSkillFlash = (type: string) => {
   } else if (type === 'RECORD_BROKEN' || type === 'GUARDIAN_OUTPACED' || type === 'MILESTONE_CLEARED' || type === 'TEASE_TAUNT') {
     skillFlashEl.classList.add('flash-record');
   }
-  setTimeout(() => {
+  scheduleDecoration(() => {
     if (skillFlashEl) skillFlashEl.className = '';
   }, 140);
 };
 
 // 2. Flying Bonus Score Digit (+Points flying to HUD Distance Meter)
 const spawnFlyingScore = (points: number) => {
-  if (!overlayEl || points <= 0) return;
+  if (!overlayEl || points <= 0 || !allowDecorations()) return;
   const flyEl = document.createElement('div');
   flyEl.className = 'fly-score-digit';
   flyEl.textContent = `+${points}`;
   overlayEl.appendChild(flyEl);
 
-  setTimeout(() => {
+  scheduleDecoration(() => {
     if (scoreBoardEl) {
       scoreBoardEl.classList.remove('score-pulse');
       void (scoreBoardEl as HTMLElement).offsetWidth;
       scoreBoardEl.classList.add('score-pulse');
-      setTimeout(() => scoreBoardEl?.classList.remove('score-pulse'), 180);
+      scheduleDecoration(() => scoreBoardEl?.classList.remove('score-pulse'), 180);
     }
   }, 480);
 
-  setTimeout(() => {
+  scheduleDecoration(() => {
     flyEl.remove();
   }, 680);
 };
 
 // 3. Kathmandu Festival Marigold Petals (Sayapatri) & Gold Confetti Shower
 const launchFestivalConfetti = () => {
-  if (!confettiContainer) return;
+  if (!confettiContainer || !allowDecorations()) return;
   confettiContainer.innerHTML = '';
   const totalPetals = 38;
 
@@ -267,7 +246,7 @@ const launchFestivalConfetti = () => {
     confettiContainer.appendChild(petal);
   }
 
-  setTimeout(() => {
+  scheduleDecoration(() => {
     if (confettiContainer) confettiContainer.innerHTML = '';
   }, 2800);
 };
@@ -277,7 +256,10 @@ const btnAudioToggle = document.getElementById('btn-audio-toggle');
 const audioIcon = document.getElementById('audio-icon');
 const audioLabel = document.getElementById('audio-label');
 
+let displayedAudioMuted: boolean | undefined;
 const updateAudioUi = (isMuted: boolean) => {
+  if (isMuted === displayedAudioMuted) return;
+  displayedAudioMuted = isMuted;
   if (audioIcon) audioIcon.textContent = isMuted ? '🔇' : '🔊';
   if (audioLabel) audioLabel.textContent = isMuted ? 'Sound off' : 'Sound on';
   if (btnAudioToggle) {
@@ -386,19 +368,21 @@ let prevGuardianStr = '';
 let prevMeterStr = '';
 let prevDangerOpacity = -1;
 let prevMult = 1;
-let lastCalloutTimestamp = 0;
-let recordBannerTimer: number | null = null;
+let lastDecoratedCallout: GameTelemetryPayload['activeCallout'];
+let decorationRunId: number | undefined;
+const guardianBar = document.querySelector('.guardian-bar');
+const dangerVignette = document.getElementById('danger-vignette');
 
 game.onTelemetry((payload: GameTelemetryPayload) => {
   const { player, state, lastInput, currentScore, bestScore, guardianDistance, guardianState } = payload;
 
-  if (gameStateEl) {
+  if (debugHud && gameStateEl) {
     gameStateEl.textContent = state;
     gameStateEl.style.color =
       state === 'RUNNING' ? '#4ade80' : state === 'CAUGHT' ? '#f59e0b' : state === 'PAUSED' ? '#fbbf24' : state === 'GAME_OVER' ? '#f87171' : '#38bdf8';
   }
 
-  if (laneEl) {
+  if (debugHud && laneEl) {
     const isTransitioning = player.lane !== player.targetLane;
     const laneStr = `${laneLabels[player.targetLane]}${isTransitioning ? ' (moving)' : ''}`;
     if (laneStr !== prevLaneStr) {
@@ -407,7 +391,7 @@ game.onTelemetry((payload: GameTelemetryPayload) => {
     }
   }
 
-  if (speedEl) {
+  if (debugHud && speedEl) {
     const speedStr = `${payload.currentSpeed.toFixed(1)} m/s`;
     if (speedStr !== prevSpeedStr) {
       speedEl.textContent = speedStr;
@@ -497,100 +481,31 @@ game.onTelemetry((payload: GameTelemetryPayload) => {
     prevMult = payload.multiplier;
   }
 
-  // Floating Skill / Near-Miss Callout Toasts & Celebration Banner
-  if (payload.activeCallout && payload.activeCallout.timestamp !== lastCalloutTimestamp) {
-    lastCalloutTimestamp = payload.activeCallout.timestamp;
-    const callout = payload.activeCallout;
-
-    // Trigger Adrenaline Screen Flash
-    triggerSkillFlash(callout.type);
-
-    if (callout.type === 'RECORD_BROKEN') {
-      launchFestivalConfetti();
-      if (recordBanner) {
-        if (recordBannerTimer !== null) clearTimeout(recordBannerTimer);
-        if (recordBannerSubtitle) {
-          recordBannerSubtitle.textContent = callout.subtitle;
-        }
-        recordBanner.classList.remove('hidden', 'banner-exit');
-        void recordBanner.offsetWidth;
-
-        recordBannerTimer = window.setTimeout(() => {
-          recordBanner?.classList.add('banner-exit');
-          setTimeout(() => recordBanner?.classList.add('hidden'), 380);
-        }, 2800);
-      }
-    } else {
-      // For Torana milestones, trigger festival flower petals & confetti shower
-      if (callout.type === 'MILESTONE_CLEARED') {
-        launchFestivalConfetti();
-      }
-
-      // Spawn Flying Score Digit to Distance Meter
-      if (callout.points > 0) {
-        spawnFlyingScore(callout.points);
-      }
-
-      if (calloutContainer) {
-        // Keep at most 2 toasts active simultaneously to maintain clear lane visibility
-        while (calloutContainer.children.length >= 2) {
-          calloutContainer.removeChild(calloutContainer.firstChild!);
-        }
-
-        const toast = document.createElement('div');
-        const typeClass =
-          callout.type === 'CLEAN_VAULT' || callout.type === 'CLEAN_SLIDE'
-            ? 'callout-clean-vault'
-            : callout.type === 'WIND_GUST_EVADED'
-            ? 'callout-wind-evaded'
-            : callout.type === 'MILESTONE_CLEARED'
-            ? 'callout-milestone-cleared'
-            : callout.type === 'CLOSE_CALL'
-            ? 'callout-close-call'
-            : callout.type === 'GATE_EVADED'
-            ? 'callout-gate-evaded'
-            : callout.type === 'TEASE_TAUNT'
-            ? 'callout-tease-taunt'
-            : callout.type === 'GUARDIAN_OUTPACED'
-            ? 'callout-clean-vault'
-            : 'callout-combo-surge';
-
-        toast.className = `callout-toast ${typeClass}`;
-        toast.innerHTML = `
-          <div class="callout-title">${callout.title}</div>
-          <div class="callout-sub">${callout.subtitle}</div>
-        `;
-        calloutContainer.appendChild(toast);
-
-        setTimeout(() => {
-          toast.remove();
-        }, 1250);
-      }
+  runFeedback.update(payload);
+  if (payload.runId !== decorationRunId) clearDecorations();
+  decorationRunId = payload.runId;
+  if (payload.activeCallout !== lastDecoratedCallout) {
+    lastDecoratedCallout = payload.activeCallout;
+    if (state === 'RUNNING' && payload.activeCallout) {
+      const callout = payload.activeCallout;
+      triggerSkillFlash(callout.type);
+      if (callout.type === 'RECORD_BROKEN' || callout.type === 'MILESTONE_CLEARED') launchFestivalConfetti();
+      if (callout.type !== 'RECORD_BROKEN' && callout.type !== 'COMBO_SURGE') spawnFlyingScore(callout.points);
     }
   }
 
-  if (diagCoinsEl) {
+  if (debugHud && diagCoinsEl) {
     diagCoinsEl.textContent = `${player.coins}`;
   }
-  if (diagBestCoinsEl) {
+  if (debugHud && diagBestCoinsEl) {
     diagBestCoinsEl.textContent = `${game.getScoreManager().getBestCoins()}`;
   }
-  if (diagBiomeEl) {
+  if (debugHud && diagBiomeEl) {
     diagBiomeEl.textContent = `${payload.biomeName} (${Math.round(payload.biomeProgress * 100)}%)`;
   }
 
-  // Biome Transition Toast
-  if (payload.state === 'RUNNING') {
-    if (payload.currentBiome !== activeBiome) {
-      activeBiome = payload.currentBiome;
-      showBiomeToast(payload.biomeName, payload.biomeTagline, payload.currentBiome);
-    }
-  } else if (payload.state === 'READY') {
-    activeBiome = null;
-  }
-
   // Guardian Proximity Telemetry & Meter
-  if (guardianStatusEl) {
+  if (debugHud && guardianStatusEl) {
     const stateText =
       state === 'CAUGHT'
         ? 'Caught Aloft!'
@@ -630,7 +545,6 @@ game.onTelemetry((payload: GameTelemetryPayload) => {
     }
 
     // Toggle danger pulsing animation on guardian presence bar
-    const guardianBar = document.querySelector('.guardian-bar');
     if (guardianBar) {
       if (guardianDistance <= 2.8 && state === 'RUNNING') {
         guardianBar.classList.add('danger-pulse');
@@ -641,7 +555,6 @@ game.onTelemetry((payload: GameTelemetryPayload) => {
   }
 
   // Dynamic Danger Vignette Pulse when Guardian closes in
-  const dangerVignette = document.getElementById('danger-vignette');
   if (dangerVignette) {
     if (guardianDistance <= 3.2 && state === 'RUNNING') {
       const intensity = Math.min(1, (3.2 - guardianDistance) / (3.2 - 1.2));
@@ -656,7 +569,7 @@ game.onTelemetry((payload: GameTelemetryPayload) => {
     }
   }
 
-  if (lastInputLogEl) {
+  if (debugHud && lastInputLogEl) {
     lastInputLogEl.textContent = `Last: ${lastInput}`;
     if (lastInput.includes('CHALLENGE') || lastInput.includes('COLLISION') || lastInput.includes('CATCH')) {
       lastInputLogEl.style.color = '#f87171';
@@ -695,7 +608,9 @@ game.onGameOver((data: GameOverData) => {
 
   if (gameOverCauseEl) {
     const obsLabel =
-      data.obstacleType === 'LOW_BARRIER'
+      data.obstacleType === 'PULU_KISI_CROSSING'
+        ? 'Pulu Kisi crossing'
+        : data.obstacleType === 'LOW_BARRIER'
         ? 'Low Timber Hurdle'
         : data.obstacleType === 'ROLLING_MATKA'
         ? 'Rolling Clay Matka Pot'
@@ -734,21 +649,9 @@ game.onStateChange((state: GameState) => {
   }
 
   if (state !== 'RUNNING') {
-    hideBiomeToast();
+    runFeedback.clear();
     hudMultiplierPill?.classList.add('hidden');
-    if (recordBanner && !recordBanner.classList.contains('hidden')) {
-      recordBanner.classList.add('hidden');
-      if (recordBannerTimer !== null) clearTimeout(recordBannerTimer);
-    }
-    if (calloutContainer) {
-      calloutContainer.innerHTML = '';
-    }
-    if (confettiContainer) {
-      confettiContainer.innerHTML = '';
-    }
-    if (skillFlashEl) {
-      skillFlashEl.className = '';
-    }
+    clearDecorations();
   }
 
   if (btnToggleRun) {

@@ -1,7 +1,8 @@
 # T032 — Migration phase 2: integrate Option C
 
 **Authorization:** Owner authorized the recommended migration sequence on 2026-10-13: “ok lets do all the things in order, phase by phase.” T031 research transfer is complete. This ticket implements only Option C in the original development project and verifies the combined game.
-**Implementation state:** COMPLETE; 17 combined UI/PWA checks passed, director/device acceptance pending.
+**Implementation state:** COMPLETE; 17 combined UI/PWA checks passed. 
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.
 
 ## Read / references
 

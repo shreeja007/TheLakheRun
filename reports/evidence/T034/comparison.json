@@ -1,0 +1,50 @@
+{
+  "measurement": "Snapshot space between the lowest HUD/message and control bar; excludes 3D scenery and decorative particles, not an FPS/device benchmark",
+  "results": [
+    {
+      "viewport": "320x568",
+      "before_location_height": 69,
+      "after_feedback_height": 24,
+      "before_vertical_band_px": 190.4,
+      "after_vertical_band_px": 355.7,
+      "before_dom_confetti": 38,
+      "after_dom_confetti": 0
+    },
+    {
+      "viewport": "390x844",
+      "before_location_height": 69,
+      "after_feedback_height": 24,
+      "before_vertical_band_px": 427.1,
+      "after_vertical_band_px": 631.7,
+      "before_dom_confetti": 38,
+      "after_dom_confetti": 0
+    },
+    {
+      "viewport": "667x375",
+      "before_location_height": 69,
+      "after_feedback_height": 24,
+      "before_vertical_band_px": 68,
+      "after_vertical_band_px": 211.7,
+      "before_dom_confetti": 38,
+      "after_dom_confetti": 0
+    },
+    {
+      "viewport": "844x390",
+      "before_location_height": 69,
+      "after_feedback_height": 24,
+      "before_vertical_band_px": 83,
+      "after_vertical_band_px": 226.7,
+      "before_dom_confetti": 38,
+      "after_dom_confetti": 0
+    },
+    {
+      "viewport": "1280x800",
+      "before_location_height": 69,
+      "after_feedback_height": 24,
+      "before_vertical_band_px": 421.8,
+      "after_vertical_band_px": 587.7,
+      "before_dom_confetti": 38,
+      "after_dom_confetti": 38
+    }
+  ]
+}

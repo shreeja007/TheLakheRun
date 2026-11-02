@@ -1,0 +1,27 @@
+
+> lakhey-run@0.1.0 build
+> tsc && vite build
+
+vite v6.4.4 building for production...
+transforming...
+✓ 1277 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/viewer_kathmandu_kit.html             1.28 kB │ gzip:   0.72 kB
+dist/viewer_lakhey.html                    2.29 kB │ gzip:   1.07 kB
+dist/viewer_tuku.html                      3.68 kB │ gzip:   1.52 kB
+dist/index.html                           32.99 kB │ gzip:   7.57 kB
+dist/assets/main-DfIkVg2s.css              7.54 kB │ gzip:   2.27 kB
+dist/assets/kit_viewer-wayU4KHO.js         2.68 kB │ gzip:   1.14 kB
+dist/assets/lakhey_viewer-sUiznejJ.js      4.48 kB │ gzip:   1.75 kB
+dist/assets/viewer-BTgsfxnK.js            16.91 kB │ gzip:   4.50 kB
+dist/assets/main-u81SI1c8.js             240.79 kB │ gzip:  56.00 kB
+dist/assets/index-DRPfEmO4.js            511.14 kB │ gzip: 140.45 kB
+dist/assets/application-GjtiysUC.js    2,092.84 kB │ gzip: 542.07 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 8.04s
+Offline game snapshot: 33 files, 11382730 bytes, version 6da144e120cfb60a

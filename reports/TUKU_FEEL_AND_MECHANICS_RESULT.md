@@ -1,7 +1,7 @@
 # TUKU Character Feel & Movement Mechanics — Implementation Result
 
 **Implementation state:** COMPLETE  
-**Director review state:** PENDING  
+**Director review state:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Date:** 2026-10-10  
 **Ticket:** Tuku Runner Visual Character and Movement Feel Overhaul (Focus: Runner Feel, Lane Dodge, Sprint, Vault, Landing Squash)
 

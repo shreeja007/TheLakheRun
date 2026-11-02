@@ -11,6 +11,7 @@ import { SoundManager } from '../audio/SoundManager';
 import { ParticleFxManager } from '../fx/ParticleFxManager';
 
 export interface GameTelemetryPayload {
+  runId: number;
   player: PlayerTelemetry;
   state: GameState;
   lastInput: string;
@@ -39,6 +40,7 @@ export interface GameTelemetryPayload {
 }
 
 export class GameManager {
+  private runId = 0;
   private state: GameState = 'READY';
   private player: PlayerController;
   private road: RoadView;
@@ -312,6 +314,11 @@ export class GameManager {
   }
 
   public update(dt: number): void {
+    // Pause preserves the whole simulation, including airborne/lane/intro timing.
+    if (this.state === 'PAUSED') {
+      this.notifyTelemetry();
+      return;
+    }
     const isRunning = this.state === 'RUNNING';
     const isCaught = this.state === 'CAUGHT';
 
@@ -644,6 +651,7 @@ export class GameManager {
   }
 
   public retry(): void {
+    this.runId++;
     this.fx.reset();
     this.player.reset();
     this.player.startIntroPan();
@@ -669,6 +677,7 @@ export class GameManager {
   }
 
   public reset(seed?: number): void {
+    this.runId++;
     this.sound.stopMusic();
     this.fx.reset();
     this.player.reset();
@@ -782,6 +791,7 @@ export class GameManager {
 
       if (!this.cachedPayload) {
         this.cachedPayload = {
+          runId: this.runId,
           player: playerTel,
           state: this.state,
           lastInput: this.lastInputText,
@@ -810,6 +820,7 @@ export class GameManager {
         };
       } else {
         const p = this.cachedPayload;
+        p.runId = this.runId;
         p.player = playerTel;
         p.state = this.state;
         p.lastInput = this.lastInputText;

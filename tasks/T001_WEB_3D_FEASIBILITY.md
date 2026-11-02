@@ -1,6 +1,6 @@
 # T001 — Prove a tiny 3D browser scene
 
-**Status:** READY FOR APPROVAL (not authorized)  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M1  
 **Dependencies / approval:** Owner authorization for a time-boxed feasibility spike  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/08_TECHNICAL_ARCHITECTURE.md`, `docs/09_QA_AND_RELEASE.md`

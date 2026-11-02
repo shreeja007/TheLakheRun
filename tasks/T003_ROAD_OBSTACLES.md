@@ -1,6 +1,6 @@
 # T003 — Reusable road tiles and fair obstacles
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M2  
 **Dependencies / approval:** T002 accepted; director chooses first two hazard archetypes  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/02_GAMEPLAY.md`, `docs/06_WORLD_AND_ASSET_PIPELINE.md`

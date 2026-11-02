@@ -1,6 +1,6 @@
 # T011 — Minimal run, jump and end animations
 
-**Status:** PLANNED  
+**Status:** ACCEPTED — 2026-11-02, Game Director playtest on Windows desktop (Chrome/Edge) and Android phone (Chrome); see D-016. Cultural/rights review not covered.  
 **Milestone:** M5  
 **Dependencies / approval:** T007 Tuku blockout accepted; T010 guardian blockout accepted; gameplay logic stable  
 **Read:** `AGENTS.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, `docs/04_CHARACTER_TUKU.md`, `docs/05_CHARACTER_LAKHEY.md`, `docs/02_GAMEPLAY.md`
