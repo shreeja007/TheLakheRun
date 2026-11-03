@@ -38,8 +38,9 @@ export class InputManager {
         e.preventDefault();
       }
 
-      // Ignore auto-repeat for jump to ensure holding key doesn't trigger repeated jumps
-      if (e.repeat && ['Space', 'ArrowUp', 'KeyW'].includes(e.code)) {
+      // Ignore auto-repeat for movement keys: holding a key must not repeat jumps, chain lane
+      // changes into an edge bump, or re-slide with a one-frame standing gap.
+      if (e.repeat && ['Space', 'ArrowUp', 'KeyW', 'ArrowLeft', 'KeyA', 'ArrowRight', 'KeyD', 'ArrowDown', 'KeyS'].includes(e.code)) {
         return;
       }
 

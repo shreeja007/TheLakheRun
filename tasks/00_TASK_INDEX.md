@@ -28,6 +28,9 @@
 | [T032](T032_OPTION_C_INTEGRATION.md) | Migration phase 2: Option C in current original game and combined verification | Same direct phased-migration authorization; T031 complete | ACCEPTED 2026-11-02 (D-016) |
 | [T033](T033_FOCUSED_SHORTCUTS_AND_MERGE.md) | Fix focused-button shortcuts, verify and merge migration locally | Direct owner instruction on 2026-10-13 | ACCEPTED 2026-11-02 (D-016) |
 | [T034](T034_EXISTING_GAME_AUDIT_AND_POLISH.md) | Deep audit and existing-game polish, prioritizing mobile overlay visibility | Direct owner instruction on 2026-10-14 | ACCEPTED 2026-11-02 (D-016) |
+| [T035](T035_TUKU_MOVEMENT_PHYSICS_AUDIT.md) | Audit Tuku movement/physics; prioritized fixes | Direct owner instruction on 2026-11-03 | REVIEW; audit only, 6 confirmed defects (1 critical: lane spring unstable ≤30 fps); fixes await authorization |
+| [T036](T036_TUKU_MOVEMENT_FIXES_AND_EDGE_BUMP.md) | Fix Tuku movement defects M1–M7/M9 and add edge-bump rule | Direct owner instruction on 2026-11-03 | REVIEW; build, 18 UI/PWA checks, 6 polish cases and new movement checks passed; device acceptance pending |
+| [T037](T037_DIFFICULTY_RAMP.md) | Keep speed, row frequency and row density rising for ~2 minutes | Direct owner instruction on 2026-11-03 | REVIEW; curve/fairness checks, 18 UI/PWA checks and 6 polish cases passed; playtest tuning pending |
 
 ## How to assign the first task
 

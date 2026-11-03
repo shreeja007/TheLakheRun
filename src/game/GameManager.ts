@@ -1,5 +1,5 @@
 import { Application, Entity } from 'playcanvas';
-import { GameState, GameOverData, GuardianState, InputAction, PlayerTelemetry, SkillCalloutEvent, BiomeType, JumpStyle, SlideStyle, DodgeStyle, JUMP_STYLE_NAMES, SLIDE_STYLE_NAMES, DODGE_STYLE_NAMES } from '../types';
+import { CollisionInfo, GameState, GameOverData, GuardianState, InputAction, LaneIndex, PlayerTelemetry, SkillCalloutEvent, BiomeType, JumpStyle, SlideStyle, DodgeStyle, JUMP_STYLE_NAMES, SLIDE_STYLE_NAMES, DODGE_STYLE_NAMES } from '../types';
 import { InputManager } from '../input/InputManager';
 import { PlayerController } from '../runner/PlayerController';
 import { RoadView } from '../world/RoadView';
@@ -9,6 +9,7 @@ import { ScoreManager } from './ScoreManager';
 import { GuardianController } from '../runner/GuardianController';
 import { SoundManager } from '../audio/SoundManager';
 import { ParticleFxManager } from '../fx/ParticleFxManager';
+import { runSpeedAt, rowSpacingAt } from './Difficulty';
 
 export interface GameTelemetryPayload {
   runId: number;
@@ -63,6 +64,12 @@ export class GameManager {
   private lastInputText = 'Initialized (Ready to Run)';
   private caughtSequenceTimer = 0;
   public static readonly CAUGHT_DURATION = 2.6;
+  /** Longest Z step tested as one collision sample; larger frame steps are subdivided. */
+  public static readonly MAX_COLLISION_STEP = 0.5;
+  /** Follow distance Lakhey surges to when Tuku bumps into the road edge. */
+  public static readonly EDGE_BUMP_SURGE_DISTANCE = 2.2;
+  /** Set by an edge bump; a second bump while Lakhey is still close ends the run. */
+  private edgeBumpStrike = false;
   private pendingGameOverData?: GameOverData;
   private onStateChangeCb?: (state: GameState) => void;
   private onTelemetryCb?: (payload: GameTelemetryPayload) => void;
@@ -101,6 +108,7 @@ export class GameManager {
         this.fx.emitSlideFriction(x, y, z);
       }
     });
+    this.player.onEdgeBump((dir) => this.handleEdgeBump(dir));
     this.player.onDodge((dir: number, variant: DodgeStyle) => {
       if (this.state === 'RUNNING') {
         this.sound.playDodgeSound(variant);
@@ -195,7 +203,7 @@ export class GameManager {
         if (this.state === 'RUNNING') {
           actionExecuted = this.player.moveLeft();
           const dodgeStyle = DODGE_STYLE_NAMES[this.player.getDodgeVariant()];
-          this.lastInputText = `[${source}] -> Move Left (${dodgeStyle}) ${actionExecuted ? 'OK' : '(Boundary clamped)'}`;
+          this.lastInputText = `[${source}] -> Move Left ${actionExecuted ? `(${dodgeStyle}) OK` : '(Edge bump)'}`;
         }
         break;
 
@@ -203,7 +211,7 @@ export class GameManager {
         if (this.state === 'RUNNING') {
           actionExecuted = this.player.moveRight();
           const dodgeStyle = DODGE_STYLE_NAMES[this.player.getDodgeVariant()];
-          this.lastInputText = `[${source}] -> Move Right (${dodgeStyle}) ${actionExecuted ? 'OK' : '(Boundary clamped)'}`;
+          this.lastInputText = `[${source}] -> Move Right ${actionExecuted ? `(${dodgeStyle}) OK` : '(Edge bump)'}`;
         }
         break;
 
@@ -352,6 +360,7 @@ export class GameManager {
 
     // Player & road progression
     const guardianDist = this.guardian.getFollowDistance();
+    const previousPlayerZ = this.player.getZ();
     this.player.update(effectiveDt, isRunning, guardianDist);
     this.road.update(this.player.getZ(), effectiveDt);
 
@@ -377,13 +386,10 @@ export class GameManager {
         this.sound.playBiomeEntryFlourish(curBiomeInfo.type);
       }
 
-      // 1. Dynamic speed scaling (starts at 10.5 m/s, escalates gracefully to 15.2 m/s)
-      const dynamicSpeed = Math.min(15.2, 10.5 + currentDist * 0.012);
+      // 1–2. Difficulty curve: speed and hazard-row spacing keep ramping for ~2 minutes (see Difficulty.ts)
+      const dynamicSpeed = runSpeedAt(currentDist);
       this.player.setSpeed(dynamicSpeed);
-
-      // 2. Dynamic hazard spacing compression (compresses from 24m down to 17.5m at high speed)
-      const dynamicSpacing = Math.max(17.5, 24.0 - currentDist * 0.018);
-      this.obstacleManager.spawnSpacing = dynamicSpacing;
+      this.obstacleManager.spawnSpacing = rowSpacingAt(currentDist, dynamicSpeed);
 
       // 3. Dynamic chase tension: drone rumble & tempo escalation
       const gDist = this.guardian.getFollowDistance();
@@ -599,14 +605,12 @@ export class GameManager {
         }
       }
 
-      // 3D AABB Collision query
-      const hit = this.obstacleManager.checkCollisions(this.player.getBounds(), currentDist);
+      // 3D AABB Collision query (subdivided when a slow frame moves Tuku further than an obstacle is deep)
+      const hit = this.checkSweptCollisions(previousPlayerZ, currentDist);
 
       if (hit) {
         this.collisionCount++;
         this.player.flashCollision();
-        this.guardian.triggerCatch();
-        this.player.triggerCaughtSequence();
 
         if (hit.obstacleType === 'ROLLING_MATKA') {
           this.fx.emitPotShatter(this.player.getX(), this.player.getY(), this.player.getZ());
@@ -619,35 +623,104 @@ export class GameManager {
         } else if (hit.obstacleType === 'PRAYER_FLAG_GALE') {
           this.sound.playWindGaleSound();
         }
-        this.sound.playCatchFlourish();
-        this.sound.playGuardianRoarExertion();
-        this.fx.emitCaughtCelebration(this.player.getX(), 1.2, this.player.getZ());
-        this.sound.stopMusic();
-
-        // Record high score and high coins
-        const { isNewRecord, best, bestCoins } = this.scoreManager.registerScore(currentDist);
-        const coinsCollected = this.scoreManager.getCoins();
-        this.lastInputText = `👹 GUARDIAN CATCH: Lakhey scoops up the runner at ${currentDist.toFixed(1)}m!`;
-
-        this.pendingGameOverData = {
-          finalDistance: currentDist,
-          bestDistance: best,
-          isNewRecord,
-          coins: coinsCollected,
-          bestCoins: bestCoins,
-          obstacleType: hit.obstacleType,
-          lane: hit.lane,
-          guardianDistance: this.guardian.getFollowDistance(),
-        };
-
-        // Transition directly to cinematic CAUGHT sequence (Lakhey scoops & hoists Tuku before challenge modal)
-        this.caughtSequenceTimer = GameManager.CAUGHT_DURATION;
-        this.setState('CAUGHT');
-        this.notifyTelemetry();
+        this.catchRunner(currentDist, hit.obstacleType, hit.lane);
       }
     }
 
     this.notifyTelemetry();
+  }
+
+  private checkSweptCollisions(previousZ: number, distance: number): CollisionInfo | null {
+    const bounds = this.player.getBounds();
+    const step = previousZ - this.player.getZ(); // forward motion is toward -Z
+    const samples = Math.min(4, Math.floor(step / GameManager.MAX_COLLISION_STEP));
+    if (samples > 0) {
+      const { minZ, maxZ } = bounds;
+      // Test the skipped positions oldest-first, using this frame's X/Y and obstacle positions.
+      for (let i = samples; i >= 1; i--) {
+        const back = (step * i) / (samples + 1);
+        bounds.minZ = minZ + back;
+        bounds.maxZ = maxZ + back;
+        const hit = this.obstacleManager.checkCollisions(bounds, distance);
+        if (hit) {
+          bounds.minZ = minZ;
+          bounds.maxZ = maxZ;
+          return hit;
+        }
+      }
+      bounds.minZ = minZ;
+      bounds.maxZ = maxZ;
+    }
+    return this.obstacleManager.checkCollisions(bounds, distance);
+  }
+
+  /** Friendly, nonviolent catch shared by obstacle hits and the repeated edge bump. */
+  private catchRunner(currentDist: number, cause: GameOverData['obstacleType'], lane?: LaneIndex): void {
+    this.guardian.triggerCatch();
+    this.player.triggerCaughtSequence();
+    this.sound.playCatchFlourish();
+    this.sound.playGuardianRoarExertion();
+    this.fx.emitCaughtCelebration(this.player.getX(), 1.2, this.player.getZ());
+    this.sound.stopMusic();
+
+    // Record high score and high coins
+    const { isNewRecord, best, bestCoins } = this.scoreManager.registerScore(currentDist);
+    const coinsCollected = this.scoreManager.getCoins();
+    this.lastInputText = `👹 GUARDIAN CATCH: Lakhey scoops up the runner at ${currentDist.toFixed(1)}m!`;
+
+    this.pendingGameOverData = {
+      finalDistance: currentDist,
+      bestDistance: best,
+      isNewRecord,
+      coins: coinsCollected,
+      bestCoins: bestCoins,
+      obstacleType: cause,
+      lane,
+      guardianDistance: this.guardian.getFollowDistance(),
+    };
+
+    // Transition directly to cinematic CAUGHT sequence (Lakhey scoops & hoists Tuku before challenge modal)
+    this.caughtSequenceTimer = GameManager.CAUGHT_DURATION;
+    this.setState('CAUGHT');
+    this.notifyTelemetry();
+  }
+
+  /**
+   * Swiping toward a side Tuku cannot go: a visible bump and Lakhey surges closer.
+   * Bumping again before Lakhey has drifted back to his normal distance ends the run.
+   */
+  private handleEdgeBump(dir: -1 | 1): void {
+    if (this.state !== 'RUNNING') return;
+    const telemetry = this.player.getTelemetry();
+
+    if (this.edgeBumpStrike && !this.guardian.hasRecoveredFollowDistance()) {
+      this.edgeBumpStrike = false;
+      this.collisionCount++;
+      this.player.flashCollision();
+      this.sound.playLandingSound();
+      this.catchRunner(telemetry.distance, 'EDGE_BUMP', telemetry.targetLane);
+      return;
+    }
+
+    this.edgeBumpStrike = true;
+    this.guardian.surgeCloser(GameManager.EDGE_BUMP_SURGE_DISTANCE);
+    this.sound.playLandingSound();
+    this.sound.playGuardianRoarExertion();
+    this.player.triggerCameraShake(0.12, 0.22);
+    this.fx.emitDodgeSkid(telemetry.x + dir * 0.6, PlayerController.GROUND_Y, telemetry.z, dir);
+    this.activeSkillCallout = {
+      type: 'EDGE_BUMP',
+      title: "Blocked! Lakhey's closing in",
+      subtitle: 'Bump again before he drops back and he catches you',
+      points: 0,
+      multiplier: this.scoreManager.getMultiplier(),
+      timestamp: performance.now(),
+      lateralDir: dir,
+    };
+  }
+
+  public isEdgeBumpStrikeActive(): boolean {
+    return this.edgeBumpStrike && !this.guardian.hasRecoveredFollowDistance();
   }
 
   public retry(): void {
@@ -668,6 +741,7 @@ export class GameManager {
     this.pendingGameOverData = undefined;
     this.guardian.reset(0);
     this.collisionCount = 0;
+    this.edgeBumpStrike = false;
     this.sound.unlock();
     this.sound.playIntroFlourish();
     this.sound.startMusic();
@@ -694,6 +768,7 @@ export class GameManager {
     this.pendingGameOverData = undefined;
     this.guardian.reset(0);
     this.collisionCount = 0;
+    this.edgeBumpStrike = false;
     this.lastBiomeType = 'DURBAR_ALLEY';
     this.setState('READY');
     this.lastInputText = 'Reset complete. Tap to run.';

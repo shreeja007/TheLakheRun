@@ -2,6 +2,7 @@ import {
   Application,
   Color,
   Entity,
+  Quat,
   StandardMaterial,
   Vec3,
 } from 'playcanvas';
@@ -17,6 +18,7 @@ import {
   DODGE_STYLE_NAMES,
 } from '../types';
 import { RoadView } from '../world/RoadView';
+import { EARLY_TOP_SPEED, MAX_RUN_SPEED } from '../game/Difficulty';
 
 export { JUMP_STYLE_NAMES, SLIDE_STYLE_NAMES, DODGE_STYLE_NAMES };
 
@@ -28,6 +30,13 @@ export class PlayerController {
   public static readonly LANE_SWITCH_SPEED = 18.0; // Units/second lateral transition
   public static readonly INTRO_PAN_DURATION = 1.45; // Cinematic teaser swoop duration in seconds
   public static readonly SLIDE_DURATION = 0.65; // Crouch slide window in seconds
+  public static readonly SLAM_DURATION = 0.12; // Visual drop when sliding out of a jump
+  public static readonly DIVE_ROLL_PIVOT = 0.55; // Dive roll turns around the tucked body centre, not the hip
+  public static readonly EDGE_BUMP_DURATION = 0.3; // Visual knock-back when swiping into the road edge
+
+  private static wrapDegrees(angle: number): number {
+    return ((angle + 180) % 360 + 360) % 360 - 180;
+  }
 
   private entity: Entity;
   private shadowEntity: Entity;
@@ -53,6 +62,20 @@ export class PlayerController {
 
   // Kinetic Impact & Landing Squash
   private landingCompressionTimer = 0;
+
+  // Jump-to-slide slam, dive-roll pivot, slide camera easing and edge bump
+  private slamTimer = 0;
+  private slamHeight = 0;
+  private slamPitch = 0;
+  private slamYaw = 0;
+  private lastJumpSpinYaw = 0;
+  private slideCamOffset = 0;
+  private edgeBumpTimer = 0;
+  private edgeBumpDir: -1 | 1 = 1;
+  private onEdgeBumpCb?: (dir: -1 | 1) => void;
+  private readonly pivotQuat = new Quat();
+  private readonly pivotVec = new Vec3();
+  private readonly lookTarget = new Vec3();
 
   // Cinematic Intro & Standoff State
   private isReadyStandoff = true;
@@ -116,6 +139,7 @@ export class PlayerController {
   // Camera Shake
   private cameraShakeTime = 0;
   private cameraShakeMagnitude = 0;
+  private cameraShakeDuration = 0.25;
 
   constructor(app: Application, camera: Entity) {
     this.cameraEntity = camera;
@@ -262,6 +286,7 @@ export class PlayerController {
       if (this.onDodgeCb) this.onDodgeCb(-1, this.dodgeVariant);
       return true;
     }
+    this.triggerEdgeBump(-1);
     return false;
   }
 
@@ -278,7 +303,19 @@ export class PlayerController {
       if (this.onDodgeCb) this.onDodgeCb(1, this.dodgeVariant);
       return true;
     }
+    this.triggerEdgeBump(1);
     return false;
+  }
+
+  /** Swiping toward a side with no lane: knock against the edge (visual) and notify the game. */
+  private triggerEdgeBump(dir: -1 | 1): void {
+    this.edgeBumpDir = dir;
+    this.edgeBumpTimer = PlayerController.EDGE_BUMP_DURATION;
+    if (this.onEdgeBumpCb) this.onEdgeBumpCb(dir);
+  }
+
+  public onEdgeBump(cb: (dir: -1 | 1) => void): void {
+    this.onEdgeBumpCb = cb;
   }
 
   public onSlide(cb: (x: number, y: number, z: number, variant: SlideStyle) => void): void {
@@ -298,6 +335,7 @@ export class PlayerController {
       // Slide-cancel into jump immediately
       this.isSliding = false;
       this.slideElapsedTime = 0;
+      this.slamTimer = 0;
       this.headNode?.setLocalPosition(0, 1.36, 0);
     }
 
@@ -322,11 +360,17 @@ export class PlayerController {
 
     if (this.isSliding) return false;
 
-    // If mid-air, dive straight into a ground slide
+    // If mid-air, slam down into a ground slide. The low slide hitbox applies immediately;
+    // only the visual height and spin unwind over SLAM_DURATION instead of teleporting.
     if (this.isJumping) {
+      const jumpProgress = Math.min(1.0, this.jumpElapsedTime / PlayerController.JUMP_DURATION);
+      this.slamHeight = Math.max(0, this.currentY - PlayerController.GROUND_Y);
+      this.slamPitch = this.jumpVariant === 1 ? PlayerController.wrapDegrees(-360.0 * jumpProgress) : 0;
+      this.slamYaw = this.jumpVariant === 2 ? this.lastJumpSpinYaw : 0;
+      this.slamTimer = PlayerController.SLAM_DURATION;
       this.isJumping = false;
       this.jumpElapsedTime = 0;
-      this.currentY = PlayerController.GROUND_Y;
+      this.jumpBufferTimer = 0;
     }
 
     this.isSliding = true;
@@ -427,6 +471,7 @@ export class PlayerController {
   public triggerCameraShake(magnitude = 0.22, duration = 0.25): void {
     this.cameraShakeMagnitude = magnitude;
     this.cameraShakeTime = duration;
+    this.cameraShakeDuration = Math.max(0.001, duration);
   }
 
   public update(dt: number, isRunning: boolean, guardianDistance = 4.2): void {
@@ -503,12 +548,14 @@ export class PlayerController {
     const targetX = RoadView.LANE_X[this.targetLane];
     const dx = targetX - this.currentX;
 
-    // Critically damped spring (omega = 26.0 rad/s: responsive, snappy ~140ms settling, zero oscillation)
+    // Critically damped spring (omega = 26.0 rad/s), advanced with its exact solution so it stays
+    // stable and identical at any frame rate (an Euler step diverges below ~31 fps).
     const omega = 26.0;
-    const springForce = omega * omega * dx;
-    const dampingForce = 2.0 * omega * this.lateralVelocity;
-    this.lateralVelocity += (springForce - dampingForce) * dt;
-    this.currentX += this.lateralVelocity * dt;
+    const offset = -dx;
+    const c = this.lateralVelocity + omega * offset;
+    const decay = Math.exp(-omega * dt);
+    this.currentX = targetX + (offset + c * dt) * decay;
+    this.lateralVelocity = (c - omega * (offset + c * dt)) * decay;
 
     if (Math.abs(dx) < 0.003 && Math.abs(this.lateralVelocity) < 0.04) {
       this.currentX = targetX;
@@ -526,7 +573,7 @@ export class PlayerController {
 
     // Dynamic bank angle: driven directly by lateral velocity for true athletic skater carve
     const targetBank = isRunning ? Math.max(-18.0, Math.min(18.0, -(this.lateralVelocity / 16.0) * 16.0)) : 0;
-    this.currentBankAngle += (targetBank - this.currentBankAngle) * Math.min(1.0, dt * 26.0);
+    this.currentBankAngle += (targetBank - this.currentBankAngle) * (1.0 - Math.exp(-26.0 * dt));
     const bankAngle = this.currentBankAngle;
 
     // Torso cut yaw into the lateral dodge
@@ -550,6 +597,9 @@ export class PlayerController {
           this.isJumping = true;
           this.jumpElapsedTime = 0;
           this.jumpBufferTimer = 0;
+          // A buffered jump is a real new jump: new style plus its sound/feedback
+          this.jumpVariant = Math.floor(Math.random() * 3) as JumpStyle;
+          if (this.onJumpCb) this.onJumpCb(this.jumpVariant);
         } else {
           this.isJumping = false;
           this.jumpElapsedTime = 0;
@@ -592,7 +642,13 @@ export class PlayerController {
           dropCurve = 1.0 - recov * recov * (3.0 - 2.0 * recov);
         }
         const slideDrop = -0.38 * dropCurve;
-        this.currentY = PlayerController.GROUND_Y + slideDrop;
+        let slamOffset = 0;
+        if (this.slamTimer > 0) {
+          this.slamTimer = Math.max(0, this.slamTimer - dt);
+          const remaining = this.slamTimer / PlayerController.SLAM_DURATION;
+          slamOffset = this.slamHeight * remaining * remaining; // accelerates into the ground
+        }
+        this.currentY = PlayerController.GROUND_Y + slideDrop + slamOffset;
       } else if (this.isIntroPanning) {
         const panProgress = Math.min(1.0, this.introPanTime / PlayerController.INTRO_PAN_DURATION);
         const s = panProgress * panProgress * (3.0 - 2.0 * panProgress);
@@ -1295,6 +1351,7 @@ export class PlayerController {
           const t = (jumpProgress - 0.70) / 0.30;
           jumpSpinYaw = 180.0 * (1.0 - (t * t * (3.0 - 2.0 * t)));
         }
+        this.lastJumpSpinYaw = jumpSpinYaw;
         entityYaw = jumpSpinYaw;
       }
     }
@@ -1321,7 +1378,38 @@ export class PlayerController {
       }
     }
 
-    this.entity.setPosition(this.currentX, this.currentY, this.currentZ);
+    // Unwind any flip/spin left over from a jump that was slammed into a slide
+    if (this.slamTimer > 0) {
+      const remaining = this.slamTimer / PlayerController.SLAM_DURATION;
+      entityPitch += this.slamPitch * remaining;
+      entityYaw += this.slamYaw * remaining;
+    }
+
+    // Edge bump: brief knock toward the blocked side, then back (visual only; hitbox unchanged)
+    let bumpOffsetX = 0;
+    if (this.edgeBumpTimer > 0) {
+      this.edgeBumpTimer = Math.max(0, this.edgeBumpTimer - dt);
+      const p = 1.0 - this.edgeBumpTimer / PlayerController.EDGE_BUMP_DURATION;
+      const knock = Math.sin(Math.min(1.0, p * 3.0) * Math.PI * 0.5) * (1.0 - p) * (1.0 - p);
+      bumpOffsetX = this.edgeBumpDir * 0.55 * knock;
+      entityRoll += -this.edgeBumpDir * 24.0 * knock;
+    }
+
+    // Dive roll: rotate around the tucked body centre so the body rolls above the road
+    let pivotX = 0;
+    let pivotY = 0;
+    let pivotZ = 0;
+    if (this.isSliding && this.slideVariant === 1) {
+      const h = PlayerController.DIVE_ROLL_PIVOT;
+      this.pivotQuat.setFromEulerAngles(entityPitch, entityYaw, entityRoll);
+      this.pivotVec.set(0, h, 0);
+      this.pivotQuat.transformVector(this.pivotVec, this.pivotVec);
+      pivotX = -this.pivotVec.x;
+      pivotY = h - this.pivotVec.y;
+      pivotZ = -this.pivotVec.z;
+    }
+
+    this.entity.setPosition(this.currentX + bumpOffsetX + pivotX, this.currentY + pivotY, this.currentZ + pivotZ);
     this.entity.setEulerAngles(entityPitch, entityYaw, entityRoll);
 
     // Apply transform to ground shadow
@@ -1336,7 +1424,7 @@ export class PlayerController {
     let shakeOffsetY = 0;
     if (this.cameraShakeTime > 0) {
       this.cameraShakeTime -= dt;
-      const progress = Math.max(0, this.cameraShakeTime / 0.25);
+      const progress = Math.max(0, this.cameraShakeTime / this.cameraShakeDuration);
       const intensity = this.cameraShakeMagnitude * progress;
       shakeOffsetX = (Math.random() * 2 - 1) * intensity;
       shakeOffsetY = (Math.random() * 2 - 1) * intensity;
@@ -1405,20 +1493,25 @@ export class PlayerController {
       // Standard sprint chase trailing camera
       const camSwayX = isRunning && !this.isJumping ? Math.sin(this.strideTime) * 0.035 : 0;
       const camSwayY = isRunning && !this.isJumping ? Math.abs(Math.cos(this.strideTime * 2.0)) * 0.025 : 0;
-      const slideCamOffset = this.isSliding ? -0.42 : 0;
+      // Ease the slide camera dip in/out (~200 ms) instead of a one-frame 0.42 m pop
+      const slideCamTarget = this.isSliding ? -0.42 : 0;
+      this.slideCamOffset += (slideCamTarget - this.slideCamOffset) * (1.0 - Math.exp(-15.0 * dt));
 
       const cameraTargetX = this.currentX * 0.35 + shakeOffsetX + camSwayX;
-      const cameraTargetY = 4.2 + shakeOffsetY + camSwayY + slideCamOffset;
+      const cameraTargetY = 4.2 + shakeOffsetY + camSwayY + this.slideCamOffset;
       const cameraTargetZ = this.currentZ + 6.6;
 
       this.cameraEntity.setPosition(cameraTargetX, cameraTargetY, cameraTargetZ);
       // Camera looks forward along track with excellent lane visibility and guardian framing
-      this.cameraEntity.lookAt(new Vec3(this.currentX * 0.2, 0.8, this.currentZ - 4.5));
+      this.lookTarget.set(this.currentX * 0.2, 0.8, this.currentZ - 4.5);
+      this.cameraEntity.lookAt(this.lookTarget);
 
       // Dynamic speed-scaled FOV: expands from 56° to 63° to simulate speed rush
       if (this.cameraEntity.camera) {
         const speedRatio = Math.min(1.0, Math.max(0, (this.currentSpeed - 10.5) / 5.5));
-        const targetFov = 56.0 + speedRatio * 7.0;
+        // 56° → 63° over the early ramp, then up to 67° at the late-run top speed
+        const lateRatio = Math.min(1.0, Math.max(0, (this.currentSpeed - EARLY_TOP_SPEED) / (MAX_RUN_SPEED - EARLY_TOP_SPEED)));
+        const targetFov = 56.0 + speedRatio * 7.0 + lateRatio * 4.0;
         this.cameraEntity.camera.fov = targetFov;
       }
     }
@@ -1632,6 +1725,14 @@ export class PlayerController {
     this.introPanTime = 0;
     this.idleTime = 0;
     this.landingCompressionTimer = 0;
+    this.slamTimer = 0;
+    this.slamHeight = 0;
+    this.slamPitch = 0;
+    this.slamYaw = 0;
+    this.slideCamOffset = 0;
+    this.edgeBumpTimer = 0;
+    this.isDodgeActive = false;
+    this.dodgeTimer = 0;
     this.isTeasing = false;
     this.teaseTime = 0;
     this.teaseYaw = 160.0;

@@ -51,6 +51,7 @@ button:disabled { opacity: .55; cursor: default; }
 #run-feedback-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 #run-feedback-points { flex-shrink: 0; color: #fbbf24; font-variant-numeric: tabular-nums; }
 .run-feedback[data-kind="record"] { border-left-color: #fbbf24; color: #fef08a; }
+.run-feedback[data-kind="warning"] { border-left-color: #f87171; color: #fecaca; }
 .score-container { position: relative; }
 
 /* A compact, readable running HUD; full best-score details remain in menus/results. */

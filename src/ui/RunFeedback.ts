@@ -47,6 +47,9 @@ export class RunFeedback {
       this.show(payload.biomeName, 2, 1100, 'location', activeCallout.points);
     } else if (activeCallout.type === 'RECORD_BROKEN') {
       this.show('New personal best', 3, 1300, 'record');
+    } else if (activeCallout.type === 'EDGE_BUMP') {
+      // A warning outranks routine skill messages and replaces the location label.
+      this.show(activeCallout.title, 2, 1300, 'warning');
     } else {
       const now = performance.now();
       if (now - this.lastRoutineAt < 650) return;

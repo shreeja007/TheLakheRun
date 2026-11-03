@@ -1,0 +1,95 @@
+{
+  "laneChange": {
+    "24": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    },
+    "30": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    },
+    "60": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    },
+    "120": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    }
+  },
+  "poses": {
+    "slides": {
+      "0": {
+        "lowest": -0.097,
+        "lowestMid": 0.049
+      },
+      "1": {
+        "lowest": -0.125,
+        "lowestMid": 0.058
+      },
+      "2": {
+        "lowest": -0.175,
+        "lowestMid": -0.152
+      }
+    },
+    "jumps": {
+      "0": -0.008,
+      "1": -0.093,
+      "2": -0.084
+    },
+    "runningLowest": -0.017,
+    "midAirSlide": {
+      "yBefore": 2.091,
+      "hitboxTopImmediately": 0.38,
+      "maxDropPerFrame": 0.441,
+      "yAfter8Frames": 0.12
+    },
+    "slideCameraMaxStepPerFrame": 0.102,
+    "bufferedJumpCallbacks": 2
+  },
+  "edgeBump": {
+    "first": {
+      "state": "RUNNING",
+      "lane": 1,
+      "strike": true,
+      "guardianBefore": 4.2,
+      "guardianAfter": 2.31,
+      "feedback": "Blocked! Lakhey's closing in",
+      "feedbackKind": "warning"
+    },
+    "second": {
+      "stateImmediately": "CAUGHT",
+      "stateAfterSequence": "GAME_OVER",
+      "cause": "Bumped the road edge again in RIGHT (+1) while Lakhey was close. He scooped up the runner with friendly guardian pride!"
+    }
+  },
+  "edgeBumpRecovered": {
+    "strikeAfterFirst": true,
+    "recoveredAfterS": 8.87,
+    "stateAfterSecondBump": "RUNNING",
+    "strikeAgain": true
+  },
+  "heldKey": {
+    "targetLane": 1,
+    "strike": false
+  },
+  "lowFpsCollision": {
+    "withoutSubdivision": {
+      "state": "RUNNING",
+      "stepPerFrame": 1.52
+    },
+    "withSubdivision": {
+      "state": "CAUGHT",
+      "stepPerFrame": 1.52
+    }
+  },
+  "pageErrors": []
+}

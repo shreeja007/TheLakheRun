@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "icons": "node scripts/generate-app-icons.mjs",
-    "test:ui": "node scripts/test-ui-mobile.mjs"
+    "test:ui": "node scripts/test-ui-mobile.mjs",
+    "test:movement": "node scripts/test-movement.mjs"
   },
   "dependencies": {
     "playcanvas": "^2.23.2"

@@ -78,7 +78,7 @@ export interface GameOverData {
   isNewRecord: boolean;
   coins: number;
   bestCoins: number;
-  obstacleType?: ObstacleType;
+  obstacleType?: ObstacleType | 'EDGE_BUMP';
   lane?: LaneIndex;
   guardianDistance: number;
 }
@@ -94,7 +94,8 @@ export type SkillCalloutType =
   | 'WIND_GUST_EVADED'
   | 'MILESTONE_CLEARED'
   | 'TEASE_TAUNT'
-  | 'PULU_KISI_EVADED';
+  | 'PULU_KISI_EVADED'
+  | 'EDGE_BUMP';
 
 export interface SkillCalloutEvent {
   type: SkillCalloutType;

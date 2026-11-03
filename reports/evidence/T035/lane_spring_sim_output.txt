@@ -1,0 +1,27 @@
+CURRENT (semi-implicit Euler):
+{"fps":144,"dt":0.0069,"overshootM":0,"settleMs":410,"devAfter20Frames":0.192}
+{"fps":120,"dt":0.0083,"overshootM":0,"settleMs":417,"devAfter20Frames":0.113}
+{"fps":60,"dt":0.0167,"overshootM":0,"settleMs":450,"devAfter20Frames":0.007}
+{"fps":45,"dt":0.0222,"overshootM":0,"settleMs":467,"devAfter20Frames":0}
+{"fps":40,"dt":0.025,"overshootM":0,"settleMs":475,"devAfter20Frames":0}
+{"fps":35,"dt":0.0286,"overshootM":0,"settleMs":571,"devAfter20Frames":0}
+{"fps":32,"dt":0.0313,"overshootM":0.204,"settleMs":3656,"devAfter20Frames":0.118}
+{"fps":30,"dt":0.0333,"result":"DIVERGED","frame":117}
+{"fps":25,"dt":0.04,"result":"DIVERGED","frame":25}
+{"fps":20,"dt":0.05,"result":"DIVERGED","frame":13}
+{"fps":15,"dt":0.0667,"result":"DIVERGED","frame":8}
+{"fps":10,"dt":0.1,"result":"DIVERGED","frame":5}
+ANALYTIC (frame-rate independent) for comparison:
+{"fps":144,"overshootM":0,"settleMs":368}
+{"fps":60,"overshootM":0,"settleMs":367}
+{"fps":30,"overshootM":0,"settleMs":367}
+{"fps":20,"overshootM":0,"settleMs":400}
+{"fps":10,"overshootM":0,"settleMs":400}
+Stability bound: fps > 31.4
+LOW_BARRIER: overlap window 1.00m; can be skipped below 15.2 fps (dt clamp 0.1 => up to 1.52m/frame)
+ROLLING_MATKA: overlap window 1.36m; can be skipped below 13.2 fps (dt clamp 0.1 => up to 1.80m/frame)
+OVERHEAD_BEAM: overlap window 1.30m; can be skipped below 11.7 fps (dt clamp 0.1 => up to 1.52m/frame)
+SLIDING_GATE: overlap window 1.10m; can be skipped below 13.8 fps (dt clamp 0.1 => up to 1.52m/frame)
+GHAT_STEPS: overlap window 1.30m; can be skipped below 11.7 fps (dt clamp 0.1 => up to 1.52m/frame)
+Top speed 15.2 reached at 392 m, ~ 30.8 s of running
+Dive-roll mid-roll head joint world Y ~ -0.74 m (below ground if < 0)

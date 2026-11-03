@@ -54,6 +54,12 @@ export class GuardianController {
     this.targetFollowDistance = Math.max(1.9, Math.min(this.targetFollowDistance, targetDist));
   }
 
+  /** True once Lakhey has drifted back to (or beyond) his normal follow distance. */
+  public hasRecoveredFollowDistance(): boolean {
+    return this.state !== 'TRACKING' ||
+      this.targetFollowDistance >= GuardianController.DEFAULT_FOLLOW_DISTANCE - 0.05;
+  }
+
   public pushBack(amount = 0.8): void {
     if (this.state !== 'TRACKING') return;
     this.targetFollowDistance = Math.min(4.8, this.targetFollowDistance + amount);

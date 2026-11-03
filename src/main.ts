@@ -626,7 +626,9 @@ game.onGameOver((data: GameOverData) => {
         ? 'Himalayan Prayer Flag Gale'
         : 'Terracotta Obstacle';
     const laneName = data.lane !== undefined ? laneLabels[data.lane] : '';
-    gameOverCauseEl.textContent = `Caught on ${obsLabel} in ${laneName}. Lakhey scooped up the runner with friendly guardian pride!`;
+    gameOverCauseEl.textContent = data.obstacleType === 'EDGE_BUMP'
+      ? `Bumped the road edge again in ${laneName} while Lakhey was close. He scooped up the runner with friendly guardian pride!`
+      : `Caught on ${obsLabel} in ${laneName}. Lakhey scooped up the runner with friendly guardian pride!`;
   }
 });
 

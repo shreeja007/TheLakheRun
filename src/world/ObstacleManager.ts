@@ -8,6 +8,7 @@ import {
 } from 'playcanvas';
 import { BoundingBox3D, CollisionInfo, LaneIndex, ObstacleType, SkillCalloutType } from '../types';
 import { RoadView } from './RoadView';
+import { rowPatternWeightsAt } from '../game/Difficulty';
 
 export interface ActiveObstacle {
   id: number;
@@ -197,7 +198,7 @@ export class ObstacleManager {
     trimMat.gloss = 0.4;
     trimMat.update();
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 12; i++) { // squeeze rows use two tall blocks each
       const e = new Entity(`TallBlock_${i}`);
       const mainBox = new Entity('MainBox');
       mainBox.addComponent('render', { type: 'box' });
@@ -1336,15 +1337,20 @@ export class ObstacleManager {
     const cycleDist = ((dist % RoadView.TOTAL_CYCLE_LENGTH) + RoadView.TOTAL_CYCLE_LENGTH) % RoadView.TOTAL_CYCLE_LENGTH;
     const biomeIdx = Math.floor(cycleDist / RoadView.BIOME_LENGTH); // 0 = Durbar, 1 = Causeway, 2 = Temple Hill
 
-    // Option 1: Pulu Kisi Dynamic Crossroad Runner Hazard (18% chance at intersections/courtyards)
-    if (roll < 0.18 && this.puluKisiPool.length > 0) {
+    // Pattern mix tightens with distance (see Difficulty.ts)
+    const weights = rowPatternWeightsAt(dist);
+    const gateEnd = weights.puluKisi + weights.slidingGate;
+    const singleEnd = gateEnd + weights.single;
+    const doubleEnd = singleEnd + weights.double;
+
+    // Option 1: Pulu Kisi Dynamic Crossroad Runner Hazard (intersections/courtyards)
+    if (roll < weights.puluKisi && this.puluKisiPool.length > 0) {
       const dir = this.random() < 0.5 ? 1 : -1;
       this.activatePuluKisi(z, dir);
       return;
     }
 
-    const subRoll = this.random();
-    if (subRoll < 0.25) {
+    if (roll < gateEnd) {
       // Pattern 1: Dynamic Sliding Gate (Oscillates between lane -1 & 0 or lane 0 & 1)
       const isRightPair = this.random() < 0.5;
       const slideCenter = isRightPair
@@ -1367,13 +1373,13 @@ export class ObstacleManager {
         }
         this.activateStandardObstacle(type, oppositeLane, z);
       }
-    } else if (roll < 0.6) {
+    } else if (roll < singleEnd) {
       // Pattern 2: Single hazard (1 lane blocked, 2 lanes completely open)
       const laneIndex = Math.floor(this.random() * 3);
       const lane = lanes[laneIndex];
       const type = this.pickThematicHazard(biomeIdx);
       this.activateStandardObstacle(type, lane, z);
-    } else {
+    } else if (roll < doubleEnd) {
       // Pattern 3: Double hazard (1 lane guaranteed completely open, 2 lanes obstructed)
       // Pick the open lane first
       const openLaneIndex = Math.floor(this.random() * 3);
@@ -1384,7 +1390,26 @@ export class ObstacleManager {
         const type = this.pickThematicHazard(biomeIdx);
         this.activateStandardObstacle(type, lane, z);
       }
+    } else {
+      // Pattern 4: Squeeze (later in the run) — two tall blocks and one lane that needs a jump or slide
+      const passLane = lanes[Math.floor(this.random() * 3)];
+      if (this.tallBlockPool.length < 2) {
+        // Not enough pooled blocks: fall back to a fair single hazard rather than a partial wall
+        this.activateStandardObstacle(this.pickPassableHazard(biomeIdx), passLane, z);
+        return;
+      }
+      for (const lane of lanes) {
+        this.activateStandardObstacle(lane === passLane ? this.pickPassableHazard(biomeIdx) : 'TALL_BLOCK', lane, z);
+      }
     }
+  }
+
+  /** A biome-themed obstacle that can always be cleared by a jump or a slide. */
+  private pickPassableHazard(biomeIdx: number): ObstacleType {
+    const r = this.random();
+    if (biomeIdx === 1) return r < 0.5 ? 'GHAT_STEPS' : 'BRIDGE_ROPE';
+    if (biomeIdx === 2) return r < 0.5 ? 'PRAYER_FLAG_GALE' : 'LOW_BARRIER';
+    return r < 0.5 ? 'LOW_BARRIER' : 'OVERHEAD_BEAM';
   }
 
   private pickThematicHazard(biomeIdx: number): ObstacleType {
