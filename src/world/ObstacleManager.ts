@@ -9,6 +9,7 @@ import {
 import { BoundingBox3D, CollisionInfo, LaneIndex, ObstacleType, SkillCalloutType } from '../types';
 import { RoadView } from './RoadView';
 import { rowPatternWeightsAt } from '../game/Difficulty';
+import { batchArticulatedModel } from '../game/Batching';
 
 export interface ActiveObstacle {
   id: number;
@@ -67,6 +68,12 @@ export class ObstacleManager {
   private prayerFlagGalePool: ActiveObstacle[] = [];
   private puluKisiPool: ActiveObstacle[] = [];
   private activeObstacles: ActiveObstacle[] = [];
+
+  // T038: each pooled Pulu Kisi model is one dynamic batch (37 draw calls → 8). Disabling a batched
+  // entity rebuilds its batch, so an idle Pulu Kisi stays enabled, parked far below the road, and its
+  // batch is hidden instead.
+  private static readonly PULU_PARK_Y = -400;
+  private puluBatchGroups = new Map<ActiveObstacle, number>();
   private animTime = 0;
 
   // Configurable parameters
@@ -912,7 +919,7 @@ export class ObstacleManager {
       }
 
       e.addChild(fallback);
-      e.enabled = false;
+      e.setPosition(0, ObstacleManager.PULU_PARK_Y, 0); // parked, stays enabled (see PULU_PARK_Y)
       this.rootEntity.addChild(e);
 
       const obstacleRecord: ActiveObstacle = {
@@ -947,6 +954,9 @@ export class ObstacleManager {
             modelEntity.name = 'PuluKisi_3D_Rig';
             e.addChild(modelEntity);
             fallback.enabled = false;
+            const groupId = batchArticulatedModel(this.app, `PuluKisiBatch_${i}`, modelEntity);
+            if (groupId !== undefined) this.puluBatchGroups.set(obstacleRecord, groupId);
+            this.updatePuluBatchVisibility();
 
             obstacleRecord.puluJoints = {
               bodyNode: modelEntity.findByName('BodyRoot') as Entity,
@@ -969,27 +979,27 @@ export class ObstacleManager {
     }
 
     this.loadObstacleTextures([
-      { url: '/models/textures/tex_hazard_chevron.png', mat: lowMat, repeat: new Vec2(2, 1) },
-      { url: '/models/textures/tex_timber_sal.png', mat: legMat, repeat: new Vec2(1, 2) },
-      { url: '/models/textures/tex_brick_dachi.png', mat: tallMat, repeat: new Vec2(1, 2) },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: trimMat, repeat: new Vec2(1, 1), metalness: 0.7, gloss: 0.6 },
-      { url: '/models/textures/tex_matka_pottery.png', mat: potClayMat, repeat: new Vec2(1, 1) },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: potBandMat, repeat: new Vec2(1, 1) },
-      { url: '/models/textures/tex_timber_sal.png', mat: potRimMat, repeat: new Vec2(1, 1) },
-      { url: '/models/textures/tex_timber_sal.png', mat: gateWoodMat, repeat: new Vec2(1, 3) },
-      { url: '/models/textures/tex_window_akijhya.png', mat: latticeMat, repeat: new Vec2(1, 2) },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: brassBossMat, repeat: new Vec2(1, 1), metalness: 0.7, gloss: 0.65 },
-      { url: '/models/textures/tex_stone_bridge.png', mat: ironRailMat, repeat: new Vec2(2, 1) },
-      { url: '/models/textures/tex_lantern_amber.png', mat: lanternMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.9, 0.6, 0.15) },
-      { url: '/models/textures/tex_timber_sal.png', mat: timberBeamMat, repeat: new Vec2(2, 1) },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: bellMat, repeat: new Vec2(1, 1), metalness: 0.6, gloss: 0.7 },
-      { url: '/models/textures/tex_timber_sal.png', mat: ghatWoodMat, repeat: new Vec2(2, 1) },
-      { url: '/models/textures/tex_timber_sal.png', mat: ghatRiserMat, repeat: new Vec2(2, 1) },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: ghatBrassMat, repeat: new Vec2(1, 1), metalness: 0.65, gloss: 0.6 },
-      { url: '/models/textures/tex_timber_sal.png', mat: bridgePylonMat, repeat: new Vec2(1, 4) },
-      { url: '/models/textures/tex_timber_sal.png', mat: hempCableMat, repeat: new Vec2(3, 1) },
-      { url: '/models/textures/tex_lantern_amber.png', mat: lanternBronzeMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.9, 0.6, 0.15) },
-      { url: '/models/textures/tex_timber_sal.png', mat: bambooPoleMat, repeat: new Vec2(1, 4) },
+      { url: '/models/textures/tex_hazard_chevron.webp', mat: lowMat, repeat: new Vec2(2, 1) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: legMat, repeat: new Vec2(1, 2) },
+      { url: '/models/textures/tex_brick_dachi.webp', mat: tallMat, repeat: new Vec2(1, 2) },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: trimMat, repeat: new Vec2(1, 1), metalness: 0.7, gloss: 0.6 },
+      { url: '/models/textures/tex_matka_pottery.webp', mat: potClayMat, repeat: new Vec2(1, 1) },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: potBandMat, repeat: new Vec2(1, 1) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: potRimMat, repeat: new Vec2(1, 1) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: gateWoodMat, repeat: new Vec2(1, 3) },
+      { url: '/models/textures/tex_window_akijhya.webp', mat: latticeMat, repeat: new Vec2(1, 2) },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: brassBossMat, repeat: new Vec2(1, 1), metalness: 0.7, gloss: 0.65 },
+      { url: '/models/textures/tex_stone_bridge.webp', mat: ironRailMat, repeat: new Vec2(2, 1) },
+      { url: '/models/textures/tex_lantern_amber.webp', mat: lanternMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.9, 0.6, 0.15) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: timberBeamMat, repeat: new Vec2(2, 1) },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: bellMat, repeat: new Vec2(1, 1), metalness: 0.6, gloss: 0.7 },
+      { url: '/models/textures/tex_timber_sal.webp', mat: ghatWoodMat, repeat: new Vec2(2, 1) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: ghatRiserMat, repeat: new Vec2(2, 1) },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: ghatBrassMat, repeat: new Vec2(1, 1), metalness: 0.65, gloss: 0.6 },
+      { url: '/models/textures/tex_timber_sal.webp', mat: bridgePylonMat, repeat: new Vec2(1, 4) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: hempCableMat, repeat: new Vec2(3, 1) },
+      { url: '/models/textures/tex_lantern_amber.webp', mat: lanternBronzeMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.9, 0.6, 0.15) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: bambooPoleMat, repeat: new Vec2(1, 4) },
     ]);
   }
 
@@ -1049,7 +1059,7 @@ export class ObstacleManager {
 
     // Return all active obstacles to pool
     for (const obs of this.activeObstacles) {
-      obs.entity.enabled = false;
+      this.deactivateEntity(obs);
       obs.hasTriggeredSkillCheck = false;
       if (obs.guideTrackEntity) {
         obs.guideTrackEntity.enabled = false;
@@ -1077,6 +1087,23 @@ export class ObstacleManager {
     this.activeObstacles = [];
 
     this.nextSpawnZ = this.initialSpawnZ;
+    this.updatePuluBatchVisibility();
+  }
+
+  private deactivateEntity(obs: ActiveObstacle): void {
+    if (obs.type === 'PULU_KISI_CROSSING') obs.entity.setPosition(0, ObstacleManager.PULU_PARK_Y, obs.z);
+    else obs.entity.enabled = false;
+  }
+
+  /** Hide the batch of every parked Pulu Kisi (re-applied each update, so it survives a rebuild). */
+  private updatePuluBatchVisibility(): void {
+    if (!this.app.batcher) return;
+    // getBatches is public in the engine but marked private in its type definitions.
+    const batcher = this.app.batcher as unknown as { getBatches(id: number): { meshInstance: { visible: boolean } }[] };
+    for (const [obs, groupId] of this.puluBatchGroups) {
+      const visible = this.activeObstacles.includes(obs);
+      for (const batch of batcher.getBatches(groupId)) batch.meshInstance.visible = visible;
+    }
   }
 
   public update(dt: number, playerZ: number): void {
@@ -1290,7 +1317,7 @@ export class ObstacleManager {
     for (let i = this.activeObstacles.length - 1; i >= 0; i--) {
       const obs = this.activeObstacles[i];
       if (obs.z > recycleThreshold) {
-        obs.entity.enabled = false;
+        this.deactivateEntity(obs);
         if (obs.guideTrackEntity) {
           obs.guideTrackEntity.enabled = false;
         }
@@ -1323,6 +1350,7 @@ export class ObstacleManager {
       this.spawnHazardRow(this.nextSpawnZ);
       this.nextSpawnZ -= this.spawnSpacing;
     }
+    this.updatePuluBatchVisibility();
   }
 
   private spawnHazardRow(z: number): void {

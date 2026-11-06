@@ -8,6 +8,7 @@ import {
   Mouse,
   RESOLUTION_AUTO,
   TouchDevice,
+  Vec3,
 } from 'playcanvas';
 import { GameManager, GameTelemetryPayload } from './game/GameManager';
 import { GameOverData, GameState } from './types';
@@ -723,6 +724,38 @@ app.on('update', (dt: number) => {
     frameCount = 0;
     lastFpsTime = now;
   }
+});
+
+// T038 warm-up: the first time an object is drawn, the browser compiles its shader and uploads its
+// textures, which stalled the first run's intro swoop and first rows for ~0.1 s at a time. For two
+// frames after start-up and after each asset finishes loading (all on the home screen in practice),
+// draw without frustum culling, and include every pooled obstacle and particle parked 500 m below the
+// road for that render only. Off-screen geometry is clipped, so nothing visible changes.
+let warmUpFrames = 2;
+const warmUpPools = ['ObstaclesRoot', 'ParticleFxRoot']
+  .map((name) => app.root.findByName(name) as Entity | null)
+  .filter((root): root is Entity => root !== null);
+const warmedEntities: { entity: Entity; position: Vec3 }[] = [];
+app.assets.on('load', () => { warmUpFrames = 2; });
+app.on('prerender', () => {
+  if (camera.camera) camera.camera.frustumCulling = warmUpFrames <= 0;
+  if (warmUpFrames <= 0) return;
+  warmUpFrames--;
+  for (const pool of warmUpPools) {
+    for (const child of pool.children as Entity[]) {
+      if (child.enabled) continue;
+      warmedEntities.push({ entity: child, position: child.getLocalPosition().clone() });
+      child.setLocalPosition(0, -500, 0);
+      child.enabled = true;
+    }
+  }
+});
+app.on('postrender', () => {
+  for (const { entity, position } of warmedEntities) {
+    entity.enabled = false;
+    entity.setLocalPosition(position);
+  }
+  warmedEntities.length = 0;
 });
 
 // Start engine

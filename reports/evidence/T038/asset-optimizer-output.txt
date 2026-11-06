@@ -1,0 +1,18 @@
+public/models/tuku_blockout_v02.glb: 648,504 -> 511,668 bytes
+public/models/lakhey_blockout_v02.glb: 2,410,012 -> 1,683,188 bytes
+textures/tex_brick_aged.webp: 9,381 -> 420 bytes
+textures/tex_brick_dachi.webp: 30,165 -> 2,386 bytes
+textures/tex_bronze_wheel.webp: 268,585 -> 25,540 bytes
+textures/tex_hazard_chevron.webp: 13,987 -> 688 bytes
+textures/tex_lantern_amber.webp: 90,255 -> 37,692 bytes
+textures/tex_matka_pottery.webp: 246,285 -> 13,012 bytes
+textures/tex_road_flagstone.webp: 9,339 -> 480 bytes
+textures/tex_road_sandstone.webp: 9,518 -> 204 bytes
+textures/tex_roof_tiles.webp: 193,618 -> 730 bytes
+textures/tex_stone_bridge.webp: 37,835 -> 5,316 bytes
+textures/tex_stone_mossy.webp: 19,771 -> 1,830 bytes
+textures/tex_timber_sal.webp: 185,476 -> 14,548 bytes
+textures/tex_torana_crest.webp: 76,847 -> 25,142 bytes
+textures/tex_window_akijhya.webp: 175,527 -> 67,532 bytes
+textures/tex_window_sanjhya.webp: 125,306 -> 49,166 bytes
+Total: 4,550,411 -> 2,439,542 bytes (46% smaller), all pixel-identical

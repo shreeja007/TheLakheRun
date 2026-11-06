@@ -7,6 +7,7 @@ import {
   Texture,
   Vec2,
 } from 'playcanvas';
+import { batchArticulatedModel } from '../game/Batching';
 import { BiomeType, BiomeConfig } from '../types';
 
 export const BIOME_CONFIGS: Record<BiomeType, BiomeConfig> = {
@@ -71,7 +72,14 @@ export class RoadView {
 
   private tiles: RoadTileData[] = [];
   private readonly TILE_LENGTH = 30;
-  private readonly TILE_COUNT = 9; // 270 units total runway (60m behind start + 210m ahead)
+  // T038: 14 recycling tiles = 420 m = exactly one Durbar/River/Hill cycle (TOTAL_CYCLE_LENGTH).
+  // A recycled tile jumps 420 m ahead, so it keeps the same biome and gateway and nothing is enabled
+  // or disabled mid-run. Toggling batched scenery forces a full road re-batch (a frame hitch); with
+  // 9 tiles (270 m) almost every recycle did that. Tiles past the 160 m far clip are not drawn.
+  private readonly TILE_COUNT = 14;
+  // The two tiles behind the start line (z = 60 and 30) always show Durbar for the intro camera.
+  // They never recycle, so they never switch scenery either.
+  private readonly INTRO_TILE_COUNT = 2;
   private rootEntity: Entity;
   private backdropRoot!: Entity;
   private app: Application;
@@ -347,7 +355,7 @@ export class RoadView {
 
   private initBatching(): void {
     if (this.app.batcher) {
-      const group = this.app.batcher.addGroup('RoadBatchGroup', true, 400);
+      const group = this.app.batcher.addGroup('RoadBatchGroup', true, 1000); // > 420 m runway: one batch per material
       if (group) {
         this.batchGroupId = group.id;
         this.applyBatchGroup(this.rootEntity, group.id);
@@ -369,7 +377,7 @@ export class RoadView {
   private createRoadTiles(): void {
     const roadWidth = RoadView.LANE_WIDTH * 3 + 0.8; // 6.8 units wide
 
-    for (let i = 0; i < this.TILE_COUNT; i++) {
+    for (let i = 0; i < this.INTRO_TILE_COUNT + this.TILE_COUNT; i++) {
       const tile = new Entity(`RoadTile_${i}`);
       const zPos = (2 - i) * this.TILE_LENGTH;
       tile.setPosition(0, 0, zPos);
@@ -1455,7 +1463,8 @@ export class RoadView {
     this.animTime += dt;
 
     // Loop tiles infinitely ahead of the player
-    for (const tile of this.tiles) {
+    for (let tileIndex = 0; tileIndex < this.tiles.length; tileIndex++) {
+      const tile = this.tiles[tileIndex];
       const tileZ = tile.root.getPosition().z;
 
       // Spin bronze prayer wheels if within 35m of player
@@ -1472,7 +1481,7 @@ export class RoadView {
       }
 
       // If tile is more than two tile lengths behind the player, recycle it ahead
-      if (tileZ - playerZ > this.TILE_LENGTH * 2.2) {
+      if (tileIndex >= this.INTRO_TILE_COUNT && tileZ - playerZ > this.TILE_LENGTH * 2.2) {
         let frontZ = 0;
         for (const other of this.tiles) {
           const oz = other.root.getPosition().z;
@@ -1562,35 +1571,35 @@ export class RoadView {
 
     const targets: TexTarget[] = [
       // 1. Durbar Alley & Causeway Road Paving
-      { url: '/models/textures/tex_road_flagstone.png', mat: this.roadMat, repeat: new Vec2(1, 6) },
-      { url: '/models/textures/tex_road_sandstone.png', mat: this.roadMatSandstone, repeat: new Vec2(1, 6) },
-      { url: '/models/textures/tex_stone_mossy.png', mat: this.roadMatMoss, repeat: new Vec2(1, 6) },
-      { url: '/models/textures/tex_brick_dachi.png', mat: this.curbMat, repeat: new Vec2(1, 8) },
-      { url: '/models/textures/tex_brick_aged.png', mat: this.curbLipMat, repeat: new Vec2(1, 8) },
+      { url: '/models/textures/tex_road_flagstone.webp', mat: this.roadMat, repeat: new Vec2(1, 6) },
+      { url: '/models/textures/tex_road_sandstone.webp', mat: this.roadMatSandstone, repeat: new Vec2(1, 6) },
+      { url: '/models/textures/tex_stone_mossy.webp', mat: this.roadMatMoss, repeat: new Vec2(1, 6) },
+      { url: '/models/textures/tex_brick_dachi.webp', mat: this.curbMat, repeat: new Vec2(1, 8) },
+      { url: '/models/textures/tex_brick_aged.webp', mat: this.curbLipMat, repeat: new Vec2(1, 8) },
 
       // 2. Durbar Alley Architecture & Facades
-      { url: '/models/textures/tex_brick_dachi.png', mat: this.brickMat1, repeat: new Vec2(2, 4) },
-      { url: '/models/textures/tex_brick_aged.png', mat: this.brickMat2, repeat: new Vec2(2, 4) },
-      { url: '/models/textures/tex_timber_sal.png', mat: this.timberMat, repeat: new Vec2(1, 4) },
-      { url: '/models/textures/tex_window_sanjhya.png', mat: this.windowMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.85, 0.55, 0.15) },
-      { url: '/models/textures/tex_roof_tiles.png', mat: this.roofMat, repeat: new Vec2(3, 2) },
-      { url: '/models/textures/tex_lantern_amber.png', mat: this.lanternMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.95, 0.7, 0.2) },
+      { url: '/models/textures/tex_brick_dachi.webp', mat: this.brickMat1, repeat: new Vec2(2, 4) },
+      { url: '/models/textures/tex_brick_aged.webp', mat: this.brickMat2, repeat: new Vec2(2, 4) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: this.timberMat, repeat: new Vec2(1, 4) },
+      { url: '/models/textures/tex_window_sanjhya.webp', mat: this.windowMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.85, 0.55, 0.15) },
+      { url: '/models/textures/tex_roof_tiles.webp', mat: this.roofMat, repeat: new Vec2(3, 2) },
+      { url: '/models/textures/tex_lantern_amber.webp', mat: this.lanternMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.95, 0.7, 0.2) },
 
       // 3. River Causeway & Bridge
-      { url: '/models/textures/tex_stone_bridge.png', mat: this.stoneBalustradeMat, repeat: new Vec2(2, 6) },
-      { url: '/models/textures/tex_stone_bridge.png', mat: this.stoneLionMat, repeat: new Vec2(1, 1) },
-      { url: '/models/textures/tex_stone_bridge.png', mat: this.bridgePierMat, repeat: new Vec2(1, 4) },
+      { url: '/models/textures/tex_stone_bridge.webp', mat: this.stoneBalustradeMat, repeat: new Vec2(2, 6) },
+      { url: '/models/textures/tex_stone_bridge.webp', mat: this.stoneLionMat, repeat: new Vec2(1, 1) },
+      { url: '/models/textures/tex_stone_bridge.webp', mat: this.bridgePierMat, repeat: new Vec2(1, 4) },
 
       // 4. Temple Hill & Mountain Pass
-      { url: '/models/textures/tex_stone_mossy.png', mat: this.mossStoneMat, repeat: new Vec2(2, 6) },
-      { url: '/models/textures/tex_stone_mossy.png', mat: this.boulderMat, repeat: new Vec2(1, 1) },
-      { url: '/models/textures/tex_timber_sal.png', mat: this.pineTrunkMat, repeat: new Vec2(1, 3) },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: this.bronzeWheelMat, repeat: new Vec2(1, 1), metalness: 0.65, gloss: 0.7 },
-      { url: '/models/textures/tex_bronze_wheel.png', mat: this.goldGajurMat, repeat: new Vec2(1, 1), metalness: 0.75, gloss: 0.8 },
+      { url: '/models/textures/tex_stone_mossy.webp', mat: this.mossStoneMat, repeat: new Vec2(2, 6) },
+      { url: '/models/textures/tex_stone_mossy.webp', mat: this.boulderMat, repeat: new Vec2(1, 1) },
+      { url: '/models/textures/tex_timber_sal.webp', mat: this.pineTrunkMat, repeat: new Vec2(1, 3) },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: this.bronzeWheelMat, repeat: new Vec2(1, 1), metalness: 0.65, gloss: 0.7 },
+      { url: '/models/textures/tex_bronze_wheel.webp', mat: this.goldGajurMat, repeat: new Vec2(1, 1), metalness: 0.75, gloss: 0.8 },
 
       // 5. Gateway Arch & Torana Crest
-      { url: '/models/textures/tex_lantern_amber.png', mat: this.archLanternMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.95, 0.7, 0.2) },
-      { url: '/models/textures/tex_torana_crest.png', mat: this.archCrestMat, repeat: new Vec2(1, 1) },
+      { url: '/models/textures/tex_lantern_amber.webp', mat: this.archLanternMat, repeat: new Vec2(1, 1), emissive: true, emissiveColor: new Color(0.95, 0.7, 0.2) },
+      { url: '/models/textures/tex_torana_crest.webp', mat: this.archCrestMat, repeat: new Vec2(1, 1) },
     ];
 
     let pending = targets.length;
@@ -2132,6 +2141,9 @@ export class RoadView {
           modelEntity.name = `${name}_Mesh`;
           root.addChild(modelEntity);
           fallback.enabled = false;
+          // T038: batch the chariot's 23 parts by material. The chariots get their own group so they
+          // are still culled while off-screen; the group is rebuilt once per chariot load, never mid-run.
+          batchArticulatedModel(this.app, `${name}Batch`, modelEntity);
 
           // Collect all wheel nodes for realistic rolling kinematics
           modelEntity.forEach((node: GraphNode) => {

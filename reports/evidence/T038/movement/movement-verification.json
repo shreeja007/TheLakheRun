@@ -1,0 +1,169 @@
+{
+  "laneChange": {
+    "24": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    },
+    "30": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    },
+    "60": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    },
+    "120": {
+      "allFinite": true,
+      "overshoot": 0,
+      "xAt600ms": 2,
+      "xAt1500ms": 2
+    }
+  },
+  "poses": {
+    "slides": {
+      "0": {
+        "lowest": -0.097,
+        "lowestMid": 0.049
+      },
+      "1": {
+        "lowest": -0.125,
+        "lowestMid": 0.058
+      },
+      "2": {
+        "lowest": -0.175,
+        "lowestMid": -0.152
+      }
+    },
+    "jumps": {
+      "0": 0.003,
+      "1": -0.032,
+      "2": -0.074
+    },
+    "runningLowest": -0.017,
+    "midAirSlide": {
+      "yBefore": 2.091,
+      "hitboxTopImmediately": 0.38,
+      "maxDropPerFrame": 0.441,
+      "yAfter8Frames": 0.12
+    },
+    "slideCameraMaxStepPerFrame": 0.093,
+    "bufferedJumpCallbacks": 2
+  },
+  "edgeBump": {
+    "first": {
+      "state": "RUNNING",
+      "lane": 1,
+      "strike": true,
+      "guardianBefore": 4.2,
+      "guardianAfter": 2.31,
+      "feedback": "Blocked! Lakhey's closing in",
+      "feedbackKind": "warning"
+    },
+    "second": {
+      "stateImmediately": "CAUGHT",
+      "stateAfterSequence": "GAME_OVER",
+      "cause": "Bumped the road edge again in RIGHT (+1) while Lakhey was close. He scooped up the runner with friendly guardian pride!"
+    }
+  },
+  "edgeBumpRecovered": {
+    "strikeAfterFirst": true,
+    "recoveredAfterS": 5.3,
+    "stateAfterSecondBump": "RUNNING",
+    "strikeAgain": true
+  },
+  "heldKey": {
+    "targetLane": 1,
+    "strike": false
+  },
+  "lowFpsCollision": {
+    "withoutSubdivision": {
+      "state": "RUNNING",
+      "stepPerFrame": 1.52
+    },
+    "withSubdivision": {
+      "state": "CAUGHT",
+      "stepPerFrame": 1.52
+    }
+  },
+  "difficulty": {
+    "curve": [
+      {
+        "distance": 0,
+        "speed": 10.5,
+        "spacing": 23.99,
+        "secondsBetweenRows": 2.284
+      },
+      {
+        "distance": 200,
+        "speed": 12.9,
+        "spacing": 20.4,
+        "secondsBetweenRows": 1.581
+      },
+      {
+        "distance": 392,
+        "speed": 15.2,
+        "spacing": 17.5,
+        "secondsBetweenRows": 1.151
+      },
+      {
+        "distance": 800,
+        "speed": 16.83,
+        "spacing": 18.65,
+        "secondsBetweenRows": 1.108
+      },
+      {
+        "distance": 1200,
+        "speed": 18.43,
+        "spacing": 19.66,
+        "secondsBetweenRows": 1.066
+      },
+      {
+        "distance": 1842,
+        "speed": 21,
+        "spacing": 21,
+        "secondsBetweenRows": 1
+      },
+      {
+        "distance": 3000,
+        "speed": 21,
+        "spacing": 21,
+        "secondsBetweenRows": 1
+      }
+    ],
+    "rows": {
+      "100": {
+        "obstaclesPerRow": 1.33,
+        "pctRowsBlockingTwoPlusLanes": 33,
+        "pctSqueezeRows": 0,
+        "pctPuluKisi": 19
+      },
+      "600": {
+        "obstaclesPerRow": 1.42,
+        "pctRowsBlockingTwoPlusLanes": 38,
+        "pctSqueezeRows": 4,
+        "pctPuluKisi": 19
+      },
+      "1200": {
+        "obstaclesPerRow": 1.62,
+        "pctRowsBlockingTwoPlusLanes": 51,
+        "pctSqueezeRows": 12,
+        "pctPuluKisi": 18
+      },
+      "2000": {
+        "obstaclesPerRow": 1.82,
+        "pctRowsBlockingTwoPlusLanes": 63,
+        "pctSqueezeRows": 19,
+        "pctPuluKisi": 16
+      }
+    },
+    "unfair": [],
+    "unfairCount": 0
+  },
+  "pageErrors": []
+}

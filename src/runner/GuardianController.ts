@@ -5,6 +5,7 @@ import {
   StandardMaterial,
 } from 'playcanvas';
 import { GuardianState } from '../types';
+import { batchArticulatedModel } from '../game/Batching';
 
 export class GuardianController {
   public static readonly DEFAULT_FOLLOW_DISTANCE = 4.2; // Meters behind runner
@@ -167,12 +168,12 @@ export class GuardianController {
     app.assets.loadFromUrl(glbUrl, 'container', (err, asset) => {
       const targetAsset = (!err && asset && asset.resource) ? asset : null;
       if (targetAsset) {
-        this.initModelEntity(targetAsset, torso, mane, mask, belt, leftEye, rightEye);
+        this.initModelEntity(app, targetAsset, torso, mane, mask, belt, leftEye, rightEye);
       } else {
-        // Fallback to v01 if v02 not cached
+        // Fallback to v01 if v02 fails (network only: v01 is not in the offline snapshot)
         app.assets.loadFromUrl('/models/lakhey_blockout_v01.glb', 'container', (fallbackErr, fallbackAsset) => {
           if (!fallbackErr && fallbackAsset && fallbackAsset.resource) {
-            this.initModelEntity(fallbackAsset, torso, mane, mask, belt, leftEye, rightEye);
+            this.initModelEntity(app, fallbackAsset, torso, mane, mask, belt, leftEye, rightEye);
           }
         });
       }
@@ -196,6 +197,7 @@ export class GuardianController {
   }
 
   private initModelEntity(
+    app: Application,
     asset: any,
     torso: Entity,
     mane: Entity,
@@ -236,6 +238,8 @@ export class GuardianController {
     this.rightArmEntity.enabled = false;
     leftEye.enabled = false;
     rightEye.enabled = false;
+
+    batchArticulatedModel(app, 'LakheyBatch', modelEntity);
   }
 
   public triggerCatch(): void {

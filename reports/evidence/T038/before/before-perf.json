@@ -1,0 +1,262 @@
+{
+  "label": "before",
+  "origin": "http://127.0.0.1:4191",
+  "renderer": "ANGLE (Intel, Intel(R) Graphics (0x00007DD1) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "viewport": "390x844 @1x",
+  "samples": [
+    {
+      "distance": 20,
+      "drawCalls": 244,
+      "triangles": 155000,
+      "batchRebuildsSincePrevious": 1
+    },
+    {
+      "distance": 300,
+      "drawCalls": 217,
+      "triangles": 157840,
+      "batchRebuildsSincePrevious": 9
+    },
+    {
+      "distance": 700,
+      "drawCalls": 246,
+      "triangles": 161340,
+      "batchRebuildsSincePrevious": 14
+    },
+    {
+      "distance": 1500,
+      "drawCalls": 202,
+      "triangles": 158628,
+      "batchRebuildsSincePrevious": 26
+    }
+  ],
+  "frameCost": {
+    "frames": 5774,
+    "medianMs": 1.5,
+    "p95Ms": 3.7,
+    "p99Ms": 7.3,
+    "maxMs": 165,
+    "framesOver33ms": 8,
+    "framesOver16ms": 54,
+    "spikes": [
+      {
+        "distance": 0,
+        "ms": 18.9
+      },
+      {
+        "distance": 1.4,
+        "ms": 163.9
+      },
+      {
+        "distance": 1.5,
+        "ms": 165
+      },
+      {
+        "distance": 2.4,
+        "ms": 147.6
+      },
+      {
+        "distance": 6,
+        "ms": 18.6
+      },
+      {
+        "distance": 25.1,
+        "ms": 132.6
+      },
+      {
+        "distance": 36.1,
+        "ms": 25.5
+      },
+      {
+        "distance": 66.1,
+        "ms": 23.7
+      },
+      {
+        "distance": 96.2,
+        "ms": 22.7
+      },
+      {
+        "distance": 126.1,
+        "ms": 22.7
+      },
+      {
+        "distance": 156.1,
+        "ms": 19.8
+      },
+      {
+        "distance": 186,
+        "ms": 23.7
+      },
+      {
+        "distance": 216.1,
+        "ms": 20.3
+      },
+      {
+        "distance": 246.2,
+        "ms": 20.8
+      },
+      {
+        "distance": 276.2,
+        "ms": 43.1
+      },
+      {
+        "distance": 306.2,
+        "ms": 19.4
+      },
+      {
+        "distance": 336,
+        "ms": 24.5
+      },
+      {
+        "distance": 366.2,
+        "ms": 18.5
+      },
+      {
+        "distance": 396.1,
+        "ms": 18.9
+      },
+      {
+        "distance": 426.2,
+        "ms": 19.4
+      },
+      {
+        "distance": 456,
+        "ms": 19.6
+      },
+      {
+        "distance": 486,
+        "ms": 28.1
+      },
+      {
+        "distance": 516.2,
+        "ms": 19.7
+      },
+      {
+        "distance": 546.2,
+        "ms": 37.1
+      },
+      {
+        "distance": 576.2,
+        "ms": 20.4
+      },
+      {
+        "distance": 606,
+        "ms": 22.2
+      },
+      {
+        "distance": 636.1,
+        "ms": 22.1
+      },
+      {
+        "distance": 666.2,
+        "ms": 23.2
+      },
+      {
+        "distance": 696.1,
+        "ms": 35.4
+      },
+      {
+        "distance": 726.2,
+        "ms": 19.5
+      },
+      {
+        "distance": 786.1,
+        "ms": 18.3
+      },
+      {
+        "distance": 816.2,
+        "ms": 31.8
+      },
+      {
+        "distance": 846.2,
+        "ms": 32.8
+      },
+      {
+        "distance": 876.1,
+        "ms": 23.1
+      },
+      {
+        "distance": 906.2,
+        "ms": 21.5
+      },
+      {
+        "distance": 936.2,
+        "ms": 29.2
+      },
+      {
+        "distance": 966.2,
+        "ms": 28
+      },
+      {
+        "distance": 996.1,
+        "ms": 21.8
+      },
+      {
+        "distance": 1026.2,
+        "ms": 32
+      },
+      {
+        "distance": 1056.1,
+        "ms": 30
+      },
+      {
+        "distance": 1086.3,
+        "ms": 33.2
+      },
+      {
+        "distance": 1116,
+        "ms": 20.4
+      },
+      {
+        "distance": 1146.1,
+        "ms": 18.1
+      },
+      {
+        "distance": 1176.3,
+        "ms": 32.5
+      },
+      {
+        "distance": 1206,
+        "ms": 27.9
+      },
+      {
+        "distance": 1236.3,
+        "ms": 44
+      },
+      {
+        "distance": 1266.2,
+        "ms": 26.9
+      },
+      {
+        "distance": 1296.2,
+        "ms": 26.4
+      },
+      {
+        "distance": 1326.1,
+        "ms": 30.4
+      },
+      {
+        "distance": 1356.2,
+        "ms": 20.6
+      },
+      {
+        "distance": 1386.1,
+        "ms": 23.4
+      },
+      {
+        "distance": 1416.1,
+        "ms": 20.1
+      },
+      {
+        "distance": 1446.1,
+        "ms": 18.8
+      },
+      {
+        "distance": 1476.3,
+        "ms": 24.1
+      }
+    ],
+    "batchRebuilds": 50,
+    "batchRebuildMs": 840
+  },
+  "pageErrors": []
+}

@@ -19,6 +19,7 @@ import {
 } from '../types';
 import { RoadView } from '../world/RoadView';
 import { EARLY_TOP_SPEED, MAX_RUN_SPEED } from '../game/Difficulty';
+import { batchArticulatedModel } from '../game/Batching';
 
 export { JUMP_STYLE_NAMES, SLIDE_STYLE_NAMES, DODGE_STYLE_NAMES };
 
@@ -232,6 +233,8 @@ export class PlayerController {
           body.enabled = false;
           visor.enabled = false;
           scarf.enabled = false;
+
+          batchArticulatedModel(app, 'TukuBatch', modelEntity);
         }
       }
     });

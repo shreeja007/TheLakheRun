@@ -1,0 +1,79 @@
+{
+  "origin": "http://127.0.0.1:4190",
+  "channel": "chrome",
+  "browser": "156.0.8078.80",
+  "results": [
+    {
+      "name": "Focused mute button preserves T/E/P/Escape shortcuts and native Space/Enter activation",
+      "detail": "passed"
+    },
+    {
+      "name": "Friend tease button still works; lane movement cancels tease; dedicated Resume works",
+      "detail": "passed"
+    },
+    {
+      "name": "Default HUD, keyboard tutorial, no tutorial movement, pause/resume, replay, mute",
+      "detail": "passed"
+    },
+    {
+      "name": "Persistent tutorial completion, real collision/catch simulation, results and retry",
+      "detail": "{\"state\":\"GAME_OVER\",\"simulationSteps\":366,\"distance\":29.695075837502095}"
+    },
+    {
+      "name": "Explicit debug HUD and live FPS",
+      "detail": "passed"
+    },
+    {
+      "name": "Emulated touch swipes in tutorial and gameplay (left/right/jump/slide)",
+      "detail": "passed"
+    },
+    {
+      "name": "Secondary touches and cancelled gestures do not start a run",
+      "detail": "passed"
+    },
+    {
+      "name": "320px portrait through 844px landscape menu/dialog bounds",
+      "detail": "passed"
+    },
+    {
+      "name": "Production service-worker snapshot, controlled reload, offline launch and play",
+      "detail": "passed"
+    },
+    {
+      "name": "Manifest, icon dimensions, all precache URLs",
+      "detail": "31 files, 6898894 bytes"
+    },
+    {
+      "name": "Blocked storage: tutorial skip and session fallback",
+      "detail": "passed"
+    },
+    {
+      "name": "Synthetic install event: one-use prompt, dismissal, modal input isolation",
+      "detail": "passed"
+    },
+    {
+      "name": "iPhone UA emulation: manual installation guidance (not Safari verification)",
+      "detail": "passed"
+    },
+    {
+      "name": "Emulated standalone mode hides redundant installation menu",
+      "detail": "passed"
+    },
+    {
+      "name": "Service-worker registration failure leaves online play usable",
+      "detail": "passed"
+    },
+    {
+      "name": "Unavailable WebGL displays an actionable startup failure (intentional boot error)",
+      "detail": "passed"
+    },
+    {
+      "name": "Real worker update waits without reloading a paused run; tab close activates it and removes old game cache",
+      "detail": "passed"
+    },
+    {
+      "name": "No uncaught page errors in desktop, touch and denied-storage checks",
+      "detail": "passed"
+    }
+  ]
+}

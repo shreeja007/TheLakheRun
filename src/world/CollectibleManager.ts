@@ -1,10 +1,14 @@
 import {
   Application,
+  BUFFER_DYNAMIC,
   Color,
   Entity,
+  GraphNode,
+  MeshInstance,
   StandardMaterial,
-  Texture,
   Vec3,
+  VertexBuffer,
+  VertexFormat,
 } from 'playcanvas';
 import { LaneIndex } from '../types';
 import { RoadView } from './RoadView';
@@ -19,6 +23,10 @@ export interface ActiveCoin {
   baseY: number;
   entity: Entity;
   shadowEntity: Entity;
+  // Transform-only nodes; all coins are drawn with three instanced draw calls (see syncInstances).
+  rotator: Entity;
+  rimNode: GraphNode;
+  holeNode: GraphNode;
   active: boolean;
   isCollected: boolean;
   spinYaw: number;
@@ -38,8 +46,12 @@ export class CollectibleManager {
   private rootEntity: Entity;
 
   // Pre-allocated object pool of 36 coins
+  private static readonly POOL_SIZE = 36;
   private pool: ActiveCoin[] = [];
   private activeCoins: ActiveCoin[] = [];
+
+  // T038: one instanced draw each for every rim, centre hole and drop shadow (was 4 draws per coin)
+  private instanceLayers: { meshInstance: MeshInstance; buffer: VertexBuffer; data: Float32Array }[] = [];
 
   // Musical Combo Streak System
   private comboCount = 0;
@@ -65,24 +77,6 @@ export class CollectibleManager {
   }
 
   private createCoinPool(): void {
-    // 1. Shimmering Ceremonial Brass Material (Newar antique paisa)
-    const brassMat = new StandardMaterial();
-    brassMat.diffuse = new Color(0.96, 0.78, 0.22); // Warm rich brass
-    brassMat.emissive = new Color(0.55, 0.4, 0.1); // Warm self-illumination
-    brassMat.useMetalness = true;
-    brassMat.metalness = 0.88;
-    brassMat.gloss = 0.8;
-    brassMat.update();
-
-    this.app.assets.loadFromUrl('/models/textures/tex_bronze_wheel.png', 'texture', (err, asset) => {
-      if (!err && asset && asset.resource) {
-        brassMat.diffuseMap = asset.resource as Texture;
-        brassMat.emissiveMap = asset.resource as Texture;
-        brassMat.diffuse = new Color(1, 0.9, 0.45);
-        brassMat.update();
-      }
-    });
-
     const rimMat = new StandardMaterial();
     rimMat.diffuse = new Color(1.0, 0.9, 0.45); // Brilliant rim edge highlight
     rimMat.emissive = new Color(0.75, 0.55, 0.15);
@@ -91,43 +85,40 @@ export class CollectibleManager {
     rimMat.gloss = 0.9;
     rimMat.update();
 
-    // 2. Soft Pavement Drop Shadow Material
+    // Traditional square central hole (chha-paisa style)
+    const darkMat = new StandardMaterial();
+    darkMat.diffuse = new Color(0.08, 0.06, 0.03);
+    darkMat.update();
+
+    // Soft Pavement Drop Shadow Material
     const shadowMat = new StandardMaterial();
     shadowMat.diffuse = new Color(0.04, 0.03, 0.02);
     shadowMat.opacity = 0.45;
     shadowMat.blendType = 2; // pc.BLEND_NORMAL
     shadowMat.update();
 
-    for (let i = 0; i < 36; i++) {
+    // The coin used to also have a brass inner disc (0.42 x 0.06), but it sat entirely inside the
+    // rim cylinder (0.44 x 0.08) and was never visible, so it is no longer drawn.
+    this.instanceLayers = [
+      this.createInstanceLayer('CoinRimInstances', 'cylinder', rimMat),
+      this.createInstanceLayer('CoinHoleInstances', 'box', darkMat),
+      this.createInstanceLayer('CoinShadowInstances', 'plane', shadowMat),
+    ];
+
+    for (let i = 0; i < CollectibleManager.POOL_SIZE; i++) {
       const e = new Entity(`BrassCoin_${i}`);
 
       // Internal rotator node for high-speed continuous yaw rotation
       const rotator = new Entity('CoinRotator');
 
-      // Disc shape (outer coin disc)
-      const outerDisc = new Entity('OuterDisc');
-      outerDisc.addComponent('render', { type: 'cylinder' });
-      outerDisc.setLocalScale(0.42, 0.06, 0.42);
-      outerDisc.setLocalEulerAngles(90, 0, 0); // Stood upright facing camera
-      if (outerDisc.render) outerDisc.render.material = brassMat;
-      rotator.addChild(outerDisc);
-
-      // Raised outer rim ring
-      const rim = new Entity('CoinRim');
-      rim.addComponent('render', { type: 'cylinder' });
+      // Raised rim disc, stood upright facing the camera
+      const rim = new GraphNode('CoinRim');
       rim.setLocalScale(0.44, 0.08, 0.44);
       rim.setLocalEulerAngles(90, 0, 0);
-      if (rim.render) rim.render.material = rimMat;
       rotator.addChild(rim);
 
-      // Distinctive traditional square central hole (chha-paisa style)
-      const centerHole = new Entity('CenterCutout');
-      centerHole.addComponent('render', { type: 'box' });
+      const centerHole = new GraphNode('CenterCutout');
       centerHole.setLocalScale(0.12, 0.12, 0.09);
-      const darkMat = new StandardMaterial();
-      darkMat.diffuse = new Color(0.08, 0.06, 0.03);
-      darkMat.update();
-      if (centerHole.render) centerHole.render.material = darkMat;
       rotator.addChild(centerHole);
 
       e.addChild(rotator);
@@ -136,10 +127,8 @@ export class CollectibleManager {
 
       // Pre-allocated Ground Drop Shadow Disk (anchors coin depth perception)
       const shadowEntity = new Entity(`CoinShadow_${i}`);
-      shadowEntity.addComponent('render', { type: 'plane' });
       shadowEntity.setLocalScale(0.42, 1.0, 0.42);
       shadowEntity.setPosition(0, 0.015, 0);
-      if (shadowEntity.render) shadowEntity.render.material = shadowMat;
       shadowEntity.enabled = false;
       this.rootEntity.addChild(shadowEntity);
 
@@ -152,6 +141,9 @@ export class CollectibleManager {
         baseY: 0.55,
         entity: e,
         shadowEntity,
+        rotator,
+        rimNode: rim,
+        holeNode: centerHole,
         active: false,
         isCollected: false,
         spinYaw: (i * 25) % 360,
@@ -159,7 +151,47 @@ export class CollectibleManager {
         isBeingPulled: false,
       });
     }
+    this.syncInstances();
   }
+
+  private createInstanceLayer(name: string, type: 'cylinder' | 'box' | 'plane', material: StandardMaterial) {
+    const device = this.app.graphicsDevice;
+    const entity = new Entity(name);
+    entity.addComponent('render', { type, material });
+    this.rootEntity.addChild(entity);
+    const data = new Float32Array(CollectibleManager.POOL_SIZE * 16);
+    const buffer = new VertexBuffer(device, VertexFormat.getDefaultInstancingFormat(device),
+      CollectibleManager.POOL_SIZE, { usage: BUFFER_DYNAMIC, data });
+    const meshInstance = entity.render!.meshInstances[0];
+    meshInstance.setInstancing(buffer); // instances are not frustum-culled individually
+    meshInstance.instancingCount = 0;
+    return { meshInstance, buffer, data };
+  }
+
+  /** Copies every visible coin's world transforms into the instance buffers. */
+  private syncInstances(): void {
+    const [rims, holes, shadows] = this.instanceLayers;
+    let count = 0;
+    for (const coin of this.activeCoins) {
+      if (!coin.entity.enabled) continue;
+      const offset = count * 16;
+      rims.data.set(coin.rimNode.getWorldTransform().data, offset);
+      holes.data.set(coin.holeNode.getWorldTransform().data, offset);
+      shadows.data.set(coin.shadowEntity.getWorldTransform().data, offset);
+      count++;
+    }
+    // With no coins, still draw one instance parked far below the road. The instanced shaders then
+    // compile while the home screen is showing instead of stalling the first frame of the run.
+    const drawn = Math.max(1, count);
+    for (const layer of this.instanceLayers) {
+      if (count === 0) layer.data.set(CollectibleManager.PARKED_INSTANCE);
+      layer.buffer.setData(layer.data);
+      layer.meshInstance.instancingCount = drawn;
+    }
+  }
+
+  // Identity rotation, 1 % scale, 500 m below the road.
+  private static readonly PARKED_INSTANCE = [0.01, 0, 0, 0, 0, 0.01, 0, 0, 0, 0, 0.01, 0, 0, -500, 0, 1];
 
   // Mulberry32 deterministic PRNG
   private random(): number {
@@ -182,6 +214,7 @@ export class CollectibleManager {
     }
     this.activeCoins = [];
     this.nextSpawnZ = -22.0;
+    this.syncInstances();
   }
 
   public update(
@@ -251,10 +284,7 @@ export class CollectibleManager {
         // Dynamic tilt toward Tuku when caught in magnetic vacuum
         const tiltPitch = (dy * invDist) * 32.0;
         const tiltYaw = -(dx * invDist) * 32.0;
-        const rotator = coin.entity.findByName('CoinRotator');
-        if (rotator) {
-          rotator.setLocalEulerAngles(tiltPitch, coin.spinYaw + tiltYaw, 0);
-        }
+        coin.rotator.setLocalEulerAngles(tiltPitch, coin.spinYaw + tiltYaw, 0);
 
         // Check Collection Contact
         if (dist < CollectibleManager.COLLECTION_RADIUS || isInContactRange) {
@@ -295,10 +325,7 @@ export class CollectibleManager {
           coin.x += (targetLaneX - coin.x) * Math.min(1.0, dt * 10.0);
         }
 
-        const rotator = coin.entity.findByName('CoinRotator');
-        if (rotator) {
-          rotator.setLocalEulerAngles(0, coin.spinYaw, 0);
-        }
+        coin.rotator.setLocalEulerAngles(0, coin.spinYaw, 0);
       }
 
       // Apply transform to coin mesh
@@ -318,6 +345,8 @@ export class CollectibleManager {
       this.spawnCoinPattern(this.nextSpawnZ, activeObstacles);
       this.nextSpawnZ -= this.spawnSpacing;
     }
+
+    this.syncInstances();
 
     return {
       collectedCount,
