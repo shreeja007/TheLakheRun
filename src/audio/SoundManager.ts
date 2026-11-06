@@ -15,7 +15,15 @@ export class SoundManager {
   private ctx: AudioContext | null = null;
   private isMutedState = false;
   private masterGain: GainNode | null = null;
-  private distortionNode: WaveShaperNode | null = null;
+  // T039: music (drum loop + tension drone) and effects have separate volume buses into masterGain.
+  // The drum voices are shared, so they send to whichever bus is active (see routeToMusic).
+  private musicBus: GainNode | null = null;
+  private effectsBus: GainNode | null = null;
+  private musicShaper: WaveShaperNode | null = null;
+  private effectsShaper: WaveShaperNode | null = null;
+  private routeToMusic = false;
+  private musicVolume = 1;
+  private effectsVolume = 1;
 
   // Music loop state
   private isMusicPlaying = false;
@@ -45,12 +53,23 @@ export class SoundManager {
       this.masterGain = this.ctx.createGain();
       this.masterGain.gain.value = this.isMutedState ? 0 : 0.85;
       this.masterGain.connect(this.ctx.destination);
+      this.musicBus = this.ctx.createGain();
+      this.musicBus.gain.value = this.musicVolume;
+      this.musicBus.connect(this.masterGain);
+      this.effectsBus = this.ctx.createGain();
+      this.effectsBus.gain.value = this.effectsVolume;
+      this.effectsBus.connect(this.masterGain);
 
-      // Warm analog saturation waveshaper for thunderous drum presence
-      this.distortionNode = this.ctx.createWaveShaper();
-      this.distortionNode.curve = this.createDistortionCurve(18) as Float32Array<ArrayBuffer>;
-      this.distortionNode.oversample = '2x';
-      this.distortionNode.connect(this.masterGain);
+      // Warm analog saturation waveshaper for thunderous drum presence (one per bus)
+      const curve = this.createDistortionCurve(18) as Float32Array<ArrayBuffer>;
+      for (const bus of [this.musicBus, this.effectsBus]) {
+        const shaper = this.ctx.createWaveShaper();
+        shaper.curve = curve;
+        shaper.oversample = '2x';
+        shaper.connect(bus);
+        if (bus === this.musicBus) this.musicShaper = shaper;
+        else this.effectsShaper = shaper;
+      }
 
       // Start sub-bass proximity drone
       this.initTensionDrone();
@@ -89,7 +108,7 @@ export class SoundManager {
 
     this.droneOsc.connect(filter);
     filter.connect(this.droneGain);
-    this.droneGain.connect(this.masterGain);
+    this.droneGain.connect(this.musicBus ?? this.masterGain);
 
     this.droneOsc.start();
   }
@@ -114,6 +133,24 @@ export class SoundManager {
     return this.isMutedState;
   }
 
+  /** Music and effects volume, 0–1 each. 1 keeps the original mix. */
+  public setVolumes(music: number, effects: number): void {
+    this.musicVolume = Math.max(0, Math.min(1, music));
+    this.effectsVolume = Math.max(0, Math.min(1, effects));
+    if (!this.ctx) return;
+    this.musicBus?.gain.setTargetAtTime(this.musicVolume, this.ctx.currentTime, 0.02);
+    this.effectsBus?.gain.setTargetAtTime(this.effectsVolume, this.ctx.currentTime, 0.02);
+  }
+
+  /** The bus a new voice should feed: music while the drum loop is scheduling, effects otherwise. */
+  private get out(): GainNode {
+    return (this.routeToMusic ? this.musicBus : this.effectsBus) ?? this.masterGain!;
+  }
+
+  private get shaper(): WaveShaperNode {
+    return (this.routeToMusic ? this.musicShaper : this.effectsShaper)!;
+  }
+
   // --- Thunderous Newar Dhime Synthesis ---
 
   /**
@@ -135,7 +172,7 @@ export class SoundManager {
    * Heavy, chest-thumping Dhime Bass strike (Mankhah palm face)
    */
   public playDhimeBass(time: number, accent = 1.0): void {
-    if (!this.ctx || !this.masterGain || !this.distortionNode) return;
+    if (!this.ctx || !this.masterGain || !this.musicShaper) return;
 
     // 1. Sub-bass fundamental drop (92Hz down to 36Hz)
     const subOsc = this.ctx.createOscillator();
@@ -148,7 +185,7 @@ export class SoundManager {
     subGain.gain.exponentialRampToValueAtTime(0.001, time + 0.38);
 
     subOsc.connect(subGain);
-    subGain.connect(this.masterGain);
+    subGain.connect(this.out);
     subOsc.start(time);
     subOsc.stop(time + 0.4);
 
@@ -169,7 +206,7 @@ export class SoundManager {
 
     bodyOsc.connect(bodyFilter);
     bodyFilter.connect(bodyGain);
-    bodyGain.connect(this.distortionNode);
+    bodyGain.connect(this.shaper);
     bodyOsc.start(time);
     bodyOsc.stop(time + 0.26);
 
@@ -197,7 +234,7 @@ export class SoundManager {
     gain.gain.exponentialRampToValueAtTime(0.001, time + 0.07);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     osc.start(time);
     osc.stop(time + 0.08);
   }
@@ -238,7 +275,7 @@ export class SoundManager {
     noise.connect(highpass);
     highpass.connect(metalPeak);
     metalPeak.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     noise.start(time);
     noise.stop(time + duration + 0.05);
@@ -262,7 +299,7 @@ export class SoundManager {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     osc.start(now);
     osc.stop(now + 0.21);
 
@@ -315,7 +352,7 @@ export class SoundManager {
 
       noise.connect(filter);
       filter.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
       noise.start(now);
       return;
     }
@@ -345,7 +382,7 @@ export class SoundManager {
 
         src.connect(flt);
         flt.connect(g);
-        g.connect(this.masterGain);
+        g.connect(this.out);
         src.start(startTime);
       };
 
@@ -377,7 +414,7 @@ export class SoundManager {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     noise.start(now);
   }
@@ -405,7 +442,7 @@ export class SoundManager {
       pushGain.gain.exponentialRampToValueAtTime(0.001, now + 0.10);
 
       pushOsc.connect(pushGain);
-      pushGain.connect(this.masterGain);
+      pushGain.connect(this.out);
       pushOsc.start(now);
       pushOsc.stop(now + 0.11);
 
@@ -434,7 +471,7 @@ export class SoundManager {
 
       noise.connect(filter);
       filter.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
       noise.start(now);
 
       // 3. Aerodynamic rotational harmonic flutter (simulates spinning body displaced air)
@@ -450,7 +487,7 @@ export class SoundManager {
       spinGain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
 
       spinOsc.connect(spinGain);
-      spinGain.connect(this.masterGain);
+      spinGain.connect(this.out);
       spinOsc.start(now + 0.04);
       spinOsc.stop(now + 0.29);
       return;
@@ -467,7 +504,7 @@ export class SoundManager {
       pushGain.gain.setValueAtTime(0.42, now);
       pushGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
       pushOsc.connect(pushGain);
-      pushGain.connect(this.masterGain);
+      pushGain.connect(this.out);
       pushOsc.start(now);
       pushOsc.stop(now + 0.13);
 
@@ -493,7 +530,7 @@ export class SoundManager {
 
       noise.connect(filter);
       filter.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
       noise.start(now);
 
       // 3. Playful airborne harmonic twirl (Newar festival whistle harmonic chirp E6 -> G6)
@@ -514,7 +551,7 @@ export class SoundManager {
 
       chirpOsc.connect(chirpFilter);
       chirpFilter.connect(chirpGain);
-      chirpGain.connect(this.masterGain);
+      chirpGain.connect(this.out);
 
       chirpOsc.start(now + 0.08);
       chirpOsc.stop(now + 0.26);
@@ -533,7 +570,7 @@ export class SoundManager {
     pushGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
 
     pushOsc.connect(pushGain);
-    pushGain.connect(this.masterGain);
+    pushGain.connect(this.out);
     pushOsc.start(now);
     pushOsc.stop(now + 0.13);
 
@@ -559,7 +596,7 @@ export class SoundManager {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     noise.start(now);
   }
@@ -598,7 +635,7 @@ export class SoundManager {
 
       noiseHigh.connect(filterHigh);
       filterHigh.connect(gainHigh);
-      gainHigh.connect(this.masterGain);
+      gainHigh.connect(this.out);
       noiseHigh.start(now);
 
       // 2. Mid-register flagstone friction rasp
@@ -617,7 +654,7 @@ export class SoundManager {
 
       noiseMid.connect(filterMid);
       filterMid.connect(gainMid);
-      gainMid.connect(this.masterGain);
+      gainMid.connect(this.out);
       noiseMid.start(now);
 
       // 3. Resonant fabric-on-stone friction bite (double-knee drag against pavement)
@@ -639,7 +676,7 @@ export class SoundManager {
 
       dragOsc.connect(dragFilter);
       dragFilter.connect(dragGain);
-      dragGain.connect(this.masterGain);
+      dragGain.connect(this.out);
       dragOsc.start(now);
       dragOsc.stop(now + duration);
 
@@ -652,7 +689,7 @@ export class SoundManager {
       oscGain.gain.setValueAtTime(0.45, now);
       oscGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
       osc.connect(oscGain);
-      oscGain.connect(this.masterGain);
+      oscGain.connect(this.out);
       osc.start(now);
       osc.stop(now + duration + 0.02);
       return;
@@ -682,7 +719,7 @@ export class SoundManager {
 
       noise.connect(filter);
       filter.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
       noise.start(now);
 
       // 2. Sequential cushioned micro-impacts (forearms/shoulder touch, then back roll)
@@ -698,7 +735,7 @@ export class SoundManager {
         thumpGain.gain.exponentialRampToValueAtTime(0.001, time + 0.09);
 
         thumpOsc.connect(thumpGain);
-        thumpGain.connect(this.masterGain);
+        thumpGain.connect(this.out);
         thumpOsc.start(time);
         thumpOsc.stop(time + 0.10);
       };
@@ -731,7 +768,7 @@ export class SoundManager {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     noise.start(now);
 
     // 2. Low cobblestone friction rumble
@@ -743,7 +780,7 @@ export class SoundManager {
     oscGain.gain.setValueAtTime(0.38, now);
     oscGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
     osc.connect(oscGain);
-    oscGain.connect(this.masterGain);
+    oscGain.connect(this.out);
     osc.start(now);
     osc.stop(now + duration + 0.02);
   }
@@ -778,7 +815,7 @@ export class SoundManager {
 
     osc.connect(formant);
     formant.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     osc.start(now);
     osc.stop(now + duration + 0.05);
@@ -802,7 +839,7 @@ export class SoundManager {
     g1.gain.setValueAtTime(0.35, now);
     g1.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
     bell1.connect(g1);
-    g1.connect(this.masterGain);
+    g1.connect(this.out);
     bell1.start(now);
     bell1.stop(now + 0.42);
 
@@ -813,7 +850,7 @@ export class SoundManager {
     g2.gain.setValueAtTime(0.38, now + 0.1);
     g2.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
     bell2.connect(g2);
-    g2.connect(this.masterGain);
+    g2.connect(this.out);
     bell2.start(now + 0.1);
     bell2.stop(now + 0.58);
 
@@ -839,7 +876,7 @@ export class SoundManager {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     osc.start(now);
     osc.stop(now + 0.15);
 
@@ -873,7 +910,7 @@ export class SoundManager {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     osc.start(now + 0.28);
     osc.stop(now + 0.95);
   }
@@ -908,7 +945,7 @@ export class SoundManager {
     gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
 
     osc1.connect(gain1);
-    gain1.connect(this.masterGain);
+    gain1.connect(this.out);
     osc1.start(now);
     osc1.stop(now + 0.4);
 
@@ -921,7 +958,7 @@ export class SoundManager {
     gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
 
     osc2.connect(gain2);
-    gain2.connect(this.masterGain);
+    gain2.connect(this.out);
     osc2.start(now);
     osc2.stop(now + 0.3);
 
@@ -947,7 +984,7 @@ export class SoundManager {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
 
     osc.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     osc.start(now);
     osc.stop(now + 0.18);
 
@@ -999,7 +1036,7 @@ export class SoundManager {
     gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
 
     osc1.connect(gain1);
-    gain1.connect(this.masterGain);
+    gain1.connect(this.out);
     osc1.start(now);
     osc1.stop(now + 0.32);
   }
@@ -1033,7 +1070,7 @@ export class SoundManager {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     noise.start(now);
 
     // 2. Sharp high-tension metallic snap
@@ -1047,7 +1084,7 @@ export class SoundManager {
     snapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
 
     osc.connect(snapGain);
-    snapGain.connect(this.masterGain);
+    snapGain.connect(this.out);
     osc.start(now);
     osc.stop(now + 0.11);
   }
@@ -1078,7 +1115,7 @@ export class SoundManager {
 
     osc1.connect(gain);
     osc2.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     osc1.start(now);
     osc2.start(now);
@@ -1115,7 +1152,7 @@ export class SoundManager {
       gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.4);
 
       osc.connect(gain);
-      gain.connect(this.masterGain!);
+      gain.connect(this.out);
       osc.start(noteTime);
       osc.stop(noteTime + 0.42);
     });
@@ -1142,7 +1179,7 @@ export class SoundManager {
       gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.22);
 
       osc.connect(gain);
-      gain.connect(this.masterGain!);
+      gain.connect(this.out);
       osc.start(noteTime);
       osc.stop(noteTime + 0.24);
     });
@@ -1199,6 +1236,7 @@ export class SoundManager {
     const secondsPerBeat = 60.0 / this.currentTempoBpm;
     const sixteenth = secondsPerBeat / 4;
 
+    this.routeToMusic = true;
     while (this.nextNoteTime < this.ctx.currentTime + 0.22) {
       const step = this.currentBeat % 16;
 
@@ -1242,6 +1280,7 @@ export class SoundManager {
       this.nextNoteTime += sixteenth;
       this.currentBeat++;
     }
+    this.routeToMusic = false;
 
     this.timerId = window.setTimeout(() => this.scheduleNotes(), 40);
   }
@@ -1274,7 +1313,7 @@ export class SoundManager {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     noise.start(time);
     noise.stop(time + duration + 0.01);
@@ -1299,7 +1338,7 @@ export class SoundManager {
         g.gain.setValueAtTime(gains[idx], now);
         g.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
         osc.connect(g);
-        g.connect(this.masterGain!);
+        g.connect(this.out);
         osc.start(now);
         osc.stop(now + 1.25);
       });
@@ -1314,7 +1353,7 @@ export class SoundManager {
       sGain.gain.setValueAtTime(0.18, now);
       sGain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
       splash.connect(sGain);
-      sGain.connect(this.masterGain);
+      sGain.connect(this.out);
       splash.start(now);
       splash.stop(now + 0.5);
     } else if (biome === 'TEMPLE_HILL') {
@@ -1333,7 +1372,7 @@ export class SoundManager {
         g.gain.linearRampToValueAtTime(harmonicVols[idx], now + 0.15);
         g.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
         osc.connect(g);
-        g.connect(this.masterGain!);
+        g.connect(this.out);
         osc.start(now);
         osc.stop(now + 2.25);
       });
@@ -1359,7 +1398,7 @@ export class SoundManager {
     g.gain.setValueAtTime(0.25, now);
     g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
     osc.connect(g);
-    g.connect(this.masterGain);
+    g.connect(this.out);
     osc.start(now);
     osc.stop(now + 0.28);
   }
@@ -1384,7 +1423,7 @@ export class SoundManager {
     cGain.gain.setValueAtTime(0.28, now);
     cGain.gain.exponentialRampToValueAtTime(0.001, now + 0.42);
     cable.connect(cGain);
-    cGain.connect(this.masterGain);
+    cGain.connect(this.out);
     cable.start(now);
     cable.stop(now + 0.45);
   }
@@ -1420,7 +1459,7 @@ export class SoundManager {
 
     noise.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
     noise.start(now);
     noise.stop(now + 0.55);
 
@@ -1432,7 +1471,7 @@ export class SoundManager {
     fGain.gain.setValueAtTime(0.12, now);
     fGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
     flutter.connect(fGain);
-    fGain.connect(this.masterGain);
+    fGain.connect(this.out);
     flutter.start(now);
     flutter.stop(now + 0.38);
   }
@@ -1473,7 +1512,7 @@ export class SoundManager {
       gain.gain.exponentialRampToValueAtTime(0.001, now + mode.decay);
 
       osc.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
 
       osc.start(now);
       osc.stop(now + mode.decay + 0.1);
@@ -1519,7 +1558,7 @@ export class SoundManager {
       gain.gain.exponentialRampToValueAtTime(0.001, now + decays[i]);
 
       osc.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
 
       osc.start(now);
       osc.stop(now + decays[i] + 0.05);
@@ -1557,7 +1596,7 @@ export class SoundManager {
       gain.gain.exponentialRampToValueAtTime(0.001, stepTime + 0.09);
 
       osc.connect(gain);
-      gain.connect(this.masterGain);
+      gain.connect(this.out);
 
       osc.start(stepTime);
       osc.stop(stepTime + 0.1);
@@ -1600,7 +1639,7 @@ export class SoundManager {
 
     osc.connect(filter);
     filter.connect(gain);
-    gain.connect(this.masterGain);
+    gain.connect(this.out);
 
     osc.start(now);
     osc.stop(now + 0.6);

@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "icons": "node scripts/generate-app-icons.mjs",
     "test:ui": "node scripts/test-ui-mobile.mjs",
-    "test:movement": "node scripts/test-movement.mjs"
+    "test:movement": "node scripts/test-movement.mjs",
+    "test:settings": "node scripts/test-settings.mjs"
   },
   "dependencies": {
     "playcanvas": "^2.23.2"

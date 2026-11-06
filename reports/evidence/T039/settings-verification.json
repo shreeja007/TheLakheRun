@@ -1,0 +1,132 @@
+{
+  "dialog390x844": {
+    "open": true,
+    "top": 188.953125,
+    "bottom": 655.046875,
+    "left": 19,
+    "right": 371,
+    "scrollable": false,
+    "doneVisible": true
+  },
+  "dialog320x568": {
+    "open": true,
+    "top": 56.953125,
+    "bottom": 511.046875,
+    "left": 19,
+    "right": 301,
+    "scrollable": false,
+    "doneVisible": true
+  },
+  "dialog844x390": {
+    "open": true,
+    "top": 16,
+    "bottom": 374,
+    "left": 152,
+    "right": 692,
+    "scrollable": true,
+    "doneVisible": true
+  },
+  "settings": {
+    "defaults": {
+      "music": "100",
+      "effects": "100",
+      "shake": false,
+      "vibration": true,
+      "vibrationDisabled": false
+    },
+    "applied": {
+      "musicVolume": 0.4,
+      "effectsVolume": 0.65,
+      "shakeScale": 0,
+      "vibration": false,
+      "labels": [
+        "40%",
+        "65%"
+      ],
+      "status": "Saved on this device."
+    },
+    "stateWhileOpen": "READY",
+    "restored": {
+      "music": "40",
+      "effects": "65",
+      "shake": true,
+      "vibration": false,
+      "musicVolume": 0.4,
+      "shakeScale": 0
+    }
+  },
+  "audioBuses": {
+    "music": 0.4,
+    "effects": 0.65
+  },
+  "shake": {
+    "normalMagnitude": 0.3,
+    "reducedMagnitude": 0,
+    "defaultWithOsReducedMotion": true
+  },
+  "vibration": {
+    "on": {
+      "afterFirst": [
+        45
+      ],
+      "afterCatch": [
+        45,
+        [
+          70,
+          50,
+          140
+        ]
+      ],
+      "all": [
+        45,
+        [
+          70,
+          50,
+          140
+        ],
+        20
+      ],
+      "state": "CAUGHT"
+    },
+    "offCalls": 0
+  },
+  "noVibrationApi": {
+    "supported": false,
+    "disabled": true,
+    "noteVisible": true
+  },
+  "storageBlocked": {
+    "musicVolume": 0.2,
+    "status": "This browser is blocking storage, so these settings reset when the game closes."
+  },
+  "marker": {
+    "approach": {
+      "distance": 75,
+      "enabled": true,
+      "z": -150,
+      "labelVisible": true,
+      "label": "Best 150 m",
+      "lineY": 228,
+      "labelBottom": 206,
+      "labelCenterX": 193,
+      "lineX": 193
+    },
+    "near": {
+      "distance": 132,
+      "enabled": true,
+      "z": -150,
+      "labelVisible": true,
+      "label": "Best 150 m",
+      "lineY": 324,
+      "labelBottom": 258,
+      "labelCenterX": 196,
+      "lineX": 196
+    },
+    "passed": {
+      "distance": 190,
+      "enabled": false,
+      "labelVisible": false
+    }
+  },
+  "pageErrors": []
+}

@@ -219,7 +219,7 @@ try {
     await mobile.setViewportSize(viewport);
     await mobile.evaluate(() => window.__game.triggerAction('RESET', 'Test layout'));
     assert.equal(await mobile.locator('#run-feedback').isVisible(), false);
-    await insideViewport(mobile, ['.score-board', '#btn-audio-toggle', '#btn-help', '#btn-home-screen', '#btn-play', '#btn-toggle-run', '#btn-tease', '#btn-left', '#btn-slide']);
+    await insideViewport(mobile, ['.score-board', '#btn-audio-toggle', '#btn-settings', '#btn-help', '#btn-home-screen', '#btn-play', '#btn-toggle-run', '#btn-tease', '#btn-left', '#btn-slide']);
     await mobile.click('#btn-help');
     await insideViewport(mobile, ['#controls-tutorial', '#tutorial-next', '#tutorial-skip']);
     await mobile.click('#tutorial-skip');

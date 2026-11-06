@@ -16,6 +16,7 @@ import { BIOME_CONFIGS } from './world/RoadView';
 import { ControlsTutorial } from './ui/ControlsTutorial';
 import { HomeScreen } from './ui/HomeScreen';
 import { RunFeedback } from './ui/RunFeedback';
+import { SettingsPanel } from './ui/SettingsPanel';
 import './ui/mobile.css';
 
 const debugHud = new URLSearchParams(location.search).get('debug') === '1';
@@ -104,6 +105,7 @@ const game = new GameManager(app, camera, canvas);
 const tutorial = new ControlsTutorial(game);
 const homeScreen = new HomeScreen();
 const runFeedback = new RunFeedback();
+const settingsPanel = new SettingsPanel((settings) => game.applySettings(settings), game.isVibrationSupported());
 const pauseForInterruption = () => {
   if (game.getState() === 'RUNNING') game.triggerAction('PAUSE', 'Browser interruption');
 };
@@ -119,11 +121,12 @@ canvas.addEventListener('webglcontextrestored', () => {
   app.resizeCanvas();
   console.info('WebGL context restored; resume when ready.');
 });
-game.setActionGuard((action) => !homeScreen.isOpen() && tutorial.allowAction(action));
+game.setActionGuard((action) => !homeScreen.isOpen() && !settingsPanel.isOpen() && tutorial.allowAction(action));
 
 const pausePanel = document.getElementById('pause-panel');
 const helpButton = document.getElementById('btn-help');
 const homeScreenButton = document.getElementById('btn-home-screen');
+const settingsButton = document.getElementById('btn-settings');
 helpButton?.addEventListener('click', () => tutorial.open());
 homeScreenButton?.addEventListener('click', () => homeScreen.open());
 document.getElementById('btn-resume')?.addEventListener('click', () => game.triggerAction('START', 'Resume button'));
@@ -638,6 +641,7 @@ game.onStateChange((state: GameState) => {
   pausePanel?.classList.toggle('hidden', state !== 'PAUSED');
   helpButton?.classList.toggle('hidden', state === 'RUNNING' || state === 'CAUGHT');
   homeScreenButton?.classList.toggle('hidden', state === 'RUNNING' || state === 'CAUGHT');
+  settingsButton?.classList.toggle('hidden', state === 'RUNNING' || state === 'CAUGHT');
   document.querySelector('.dpad-bar')?.classList.toggle('hidden', state === 'GAME_OVER' || state === 'CAUGHT');
   if (readyBanner) {
     if (state === 'READY') {
@@ -732,7 +736,7 @@ app.on('update', (dt: number) => {
 // draw without frustum culling, and include every pooled obstacle and particle parked 500 m below the
 // road for that render only. Off-screen geometry is clipped, so nothing visible changes.
 let warmUpFrames = 2;
-const warmUpPools = ['ObstaclesRoot', 'ParticleFxRoot']
+const warmUpPools = ['ObstaclesRoot', 'ParticleFxRoot', 'BestMarkerRoot']
   .map((name) => app.root.findByName(name) as Entity | null)
   .filter((root): root is Entity => root !== null);
 const warmedEntities: { entity: Entity; position: Vec3 }[] = [];

@@ -859,10 +859,15 @@
 
       <!-- Top Right Audio Controls -->
       <div class="top-right-bar">
-        <button id="btn-audio-toggle" class="audio-btn" type="button" aria-label="Mute sound" aria-pressed="false">
-          <span id="audio-icon">🔊</span>
-          <span id="audio-label">Sound on</span>
-        </button>
+        <div class="top-right-row">
+          <button id="btn-settings" class="audio-btn icon-btn" type="button" aria-label="Settings" title="Settings">
+            <span aria-hidden="true">⚙</span>
+          </button>
+          <button id="btn-audio-toggle" class="audio-btn" type="button" aria-label="Mute sound" aria-pressed="false">
+            <span id="audio-icon">🔊</span>
+            <span id="audio-label">Sound on</span>
+          </button>
+        </div>
         <div class="menu-tools">
           <button id="btn-help" class="audio-btn" type="button">How to play</button>
           <button id="btn-home-screen" class="audio-btn" type="button">Home screen</button>
@@ -967,6 +972,27 @@
     <div class="dialog-actions">
       <button id="tutorial-skip" class="sub-btn" type="button">Skip tutorial</button>
       <button id="tutorial-next" class="retry-btn" type="button">Next</button>
+    </div>
+  </dialog>
+  <dialog id="settings-dialog" class="mobile-dialog" aria-labelledby="settings-title">
+    <p class="menu-eyebrow">YOUR GAME, YOUR WAY</p>
+    <h2 id="settings-title">Settings</h2>
+    <div class="setting-row">
+      <label for="setting-music">Music volume</label>
+      <output id="setting-music-value" for="setting-music">100%</output>
+      <input id="setting-music" type="range" min="0" max="100" step="5" value="100">
+    </div>
+    <div class="setting-row">
+      <label for="setting-effects">Sound effects volume</label>
+      <output id="setting-effects-value" for="setting-effects">100%</output>
+      <input id="setting-effects" type="range" min="0" max="100" step="5" value="100">
+    </div>
+    <label class="setting-toggle"><input id="setting-shake" type="checkbox"> Reduce screen shake</label>
+    <label class="setting-toggle"><input id="setting-vibration" type="checkbox"> Vibration</label>
+    <p id="setting-vibration-note" class="support-text" hidden>This browser can’t vibrate (iPhone and iPad browsers don’t support it). Sound and screen feedback still work.</p>
+    <p id="settings-status" class="support-text" role="status" aria-live="polite">Saved on this device.</p>
+    <div class="dialog-actions">
+      <button id="settings-done" class="retry-btn" type="button">Done</button>
     </div>
   </dialog>
   <dialog id="home-screen-dialog" class="mobile-dialog" aria-labelledby="home-screen-title">

@@ -32,6 +32,7 @@
 | [T036](T036_TUKU_MOVEMENT_FIXES_AND_EDGE_BUMP.md) | Fix Tuku movement defects M1–M7/M9 and add edge-bump rule | Direct owner instruction on 2026-11-03 | REVIEW; build, 18 UI/PWA checks, 6 polish cases and new movement checks passed; device acceptance pending |
 | [T037](T037_DIFFICULTY_RAMP.md) | Keep speed, row frequency and row density rising for ~2 minutes | Direct owner instruction on 2026-11-03 | REVIEW; curve/fairness checks, 18 UI/PWA checks and 6 polish cases passed; playtest tuning pending |
 | [T038](T038_DOWNLOAD_SIZE_AND_FRAME_PACING.md) | Smaller download (lossless WebP, no backup model) and no mid-run stutter (batching, instancing, shader warm-up) | Direct owner instruction on 2026-11-03 (#1 + #10) | REVIEW; 11.4 → 6.9 MB, draw calls ~230 → ~110, 54 → 0 dropped frames per scripted run; all suites passed; phone check pending |
+| [T039](T039_SETTINGS_VIBRATION_BEST_MARKER.md) | Settings (music/effects volume, reduce shake, vibration), Android vibration cues, best-distance marker | Direct owner instruction on 2026-11-03 (#2–#4) | REVIEW; new settings suite, 18 UI/PWA checks, movement and polish suites passed; phone vibration check pending |
 
 ## How to assign the first task
 

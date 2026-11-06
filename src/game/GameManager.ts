@@ -10,6 +10,9 @@ import { GuardianController } from '../runner/GuardianController';
 import { SoundManager } from '../audio/SoundManager';
 import { ParticleFxManager } from '../fx/ParticleFxManager';
 import { runSpeedAt, rowSpacingAt } from './Difficulty';
+import { Haptics } from './Haptics';
+import { GameSettings } from './Settings';
+import { BestMarker } from '../world/BestMarker';
 
 export interface GameTelemetryPayload {
   runId: number;
@@ -52,6 +55,8 @@ export class GameManager {
   private input: InputManager;
   private sound: SoundManager;
   private fx: ParticleFxManager;
+  private haptics = new Haptics();
+  private bestMarker: BestMarker;
 
   private activeSkillCallout?: SkillCalloutEvent;
   private isRecordBrokenInRun = false;
@@ -86,6 +91,7 @@ export class GameManager {
     this.input = new InputManager(canvas);
     this.sound = new SoundManager();
     this.fx = new ParticleFxManager(app);
+    this.bestMarker = new BestMarker(app, camera, document.getElementById('overlay'));
 
     // Hook athletic player footsteps, landings, jumps, slides, and dodge skids
     this.player.onFootstep(() => {
@@ -341,6 +347,7 @@ export class GameManager {
 
     // Cinematic Caught Sequence Choreography (Lakhey scoops runner aloft & twirls before challenge again modal)
     if (isCaught) {
+      this.bestMarker.update(0, 0, false);
       this.caughtSequenceTimer -= effectiveDt;
       const progress = Math.min(1.0, 1.0 - Math.max(0, this.caughtSequenceTimer / GameManager.CAUGHT_DURATION));
 
@@ -363,6 +370,8 @@ export class GameManager {
     const previousPlayerZ = this.player.getZ();
     this.player.update(effectiveDt, isRunning, guardianDist);
     this.road.update(this.player.getZ(), effectiveDt);
+    this.bestMarker.update(this.scoreManager.getBest(), this.player.getTelemetry().distance,
+      this.state === 'READY' || this.state === 'RUNNING');
 
     // Guardian tracking & stride
     this.guardian.update(effectiveDt, this.player.getTelemetry().x, this.player.getZ(), isRunning);
@@ -462,6 +471,7 @@ export class GameManager {
           subtitle = '+35 Near Miss';
           pts = 35;
           this.sound.playNearMissCallout();
+          this.haptics.nearMiss();
           this.triggerHitstop(0.075, 0.32);
           this.player.triggerCameraShake(0.048, 0.14);
           this.fx.emitNearMissFriction(this.player.getX(), this.player.getY(), this.player.getZ(), skill.lateralDir);
@@ -658,6 +668,7 @@ export class GameManager {
   private catchRunner(currentDist: number, cause: GameOverData['obstacleType'], lane?: LaneIndex): void {
     this.guardian.triggerCatch();
     this.player.triggerCaughtSequence();
+    this.haptics.catch();
     this.sound.playCatchFlourish();
     this.sound.playGuardianRoarExertion();
     this.fx.emitCaughtCelebration(this.player.getX(), 1.2, this.player.getZ());
@@ -703,6 +714,7 @@ export class GameManager {
     }
 
     this.edgeBumpStrike = true;
+    this.haptics.bump();
     this.guardian.surgeCloser(GameManager.EDGE_BUMP_SURGE_DISTANCE);
     this.sound.playLandingSound();
     this.sound.playGuardianRoarExertion();
@@ -834,6 +846,17 @@ export class GameManager {
 
   public isAudioMuted(): boolean {
     return this.sound.isMuted();
+  }
+
+  /** T039: apply player settings (volumes, camera shake, vibration). */
+  public applySettings(settings: GameSettings): void {
+    this.sound.setVolumes(settings.musicVolume, settings.effectsVolume);
+    this.player.setShakeScale(settings.reduceShake ? 0 : 1);
+    this.haptics.enabled = settings.vibration;
+  }
+
+  public isVibrationSupported(): boolean {
+    return this.haptics.supported;
   }
 
   public unlockAudio(): void {

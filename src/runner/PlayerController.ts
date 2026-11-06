@@ -141,6 +141,7 @@ export class PlayerController {
   private cameraShakeTime = 0;
   private cameraShakeMagnitude = 0;
   private cameraShakeDuration = 0.25;
+  private shakeScale = 1; // T039 setting: 0 turns camera shake off
 
   constructor(app: Application, camera: Entity) {
     this.cameraEntity = camera;
@@ -471,8 +472,12 @@ export class PlayerController {
     this.entity.setPosition(this.currentX, this.currentY, this.currentZ);
   }
 
+  public setShakeScale(scale: number): void {
+    this.shakeScale = scale;
+  }
+
   public triggerCameraShake(magnitude = 0.22, duration = 0.25): void {
-    this.cameraShakeMagnitude = magnitude;
+    this.cameraShakeMagnitude = magnitude * this.shakeScale;
     this.cameraShakeTime = duration;
     this.cameraShakeDuration = Math.max(0.001, duration);
   }
