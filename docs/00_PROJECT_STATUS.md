@@ -2,8 +2,8 @@
 
 **As of:** 2026-11-07  
 **Phase:** Playable browser-3D runner built and **accepted by the Game Director** (D-016) after personal playtesting on Windows desktop (Chrome/Edge) and a physical Android phone (Chrome).  
-**Latest:** T035–T039 are merged and pushed to `master`. The owner hosted the game at <https://thelakherun.vercel.app/> and reported on 2026-11-07 that it tested flawless. Formal acceptance of T035–T039 is not yet logged in `10_DECISIONS.md`.  
-**Near-term aim:** cultural/rights review, iPhone/Safari check, release QA (T015), and any art tickets the owner authorizes.
+**Latest:** T035–T039 are merged and pushed to `master`. The owner hosted the game at <https://thelakherun.vercel.app/> and reported on 2026-11-07 that it tested flawless. Formal acceptance of T035–T039 is not yet logged in `10_DECISIONS.md`. T040 (street art on the Durbar street) is built on branch `feat/t040-street-art`, awaiting review and not yet on the live site.  
+**Near-term aim:** cultural/rights review, iPhone/Safari check, release QA (T015), and owner review of T040.
 
 > *Earlier header (2026-10-09): "Concept / game design / planning; implementation not started" — superseded by the built and accepted game above. The sections below are preserved as originally recorded.*
 
@@ -46,7 +46,7 @@ See `docs/13_OPEN_QUESTIONS.md`. Top priorities: mobile orientation; input/camer
 
 ## Next authorized action
 
-**No new ticket is authorized.** Remaining work: owner decision on whether the Vercel deployment replaces T014 (server staging), T015 final QA/release review (needs cultural/rights sign-off), T028 income-research decisions, cultural reviewer contact, owner decisions on engine (D-009), orientation, "Tuku" name and total-score meaning, and which unused art to bring into the game.
+**No new ticket is authorized.** Remaining work: owner decision on whether the Vercel deployment replaces T014 (server staging), T015 final QA/release review (needs cultural/rights sign-off), T028 income-research decisions, cultural reviewer contact, and owner decisions on engine (D-009), orientation, "Tuku" name and total-score meaning.
 
 *Earlier (2026-10-09): proposed first assignment was T001 feasibility; superseded — T001 is implemented and accepted.*
 

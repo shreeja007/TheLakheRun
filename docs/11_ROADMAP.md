@@ -25,7 +25,7 @@
 ## Current prioritized queue
 
 1. Director records acceptance of T035–T039, or requests changes.
-2. Director chooses which unused art (buildings, gateway, lights, cart, spectators) to bring into the game; each becomes one authorized ticket.
+2. Director reviews T040 (buildings, gateway, lights, cart and spectators in the game).
 3. Cultural reviewer identified; rights/provenance table filled.
 4. T015 release review once those are done.
 

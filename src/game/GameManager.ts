@@ -365,6 +365,8 @@ export class GameManager {
       return;
     }
 
+    if (!isRunning) this.road.attachStreetArt();
+
     // Player & road progression
     const guardianDist = this.guardian.getFollowDistance();
     const previousPlayerZ = this.player.getZ();

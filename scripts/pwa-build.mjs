@@ -13,7 +13,7 @@ export function gamePwaPlugin() {
     generateBundle(_options, bundle) { builtChunks = bundle; },
     closeBundle() {
       const files = ['index.html', 'manifest.webmanifest',
-        'models/tuku_blockout_v02.glb', 'models/lakhey_blockout_v02.glb',
+        'models/tuku_blockout_v02.glb', 'models/lakhey_blockout_v02.glb', 'models/street_kit.glb',
         'models/pulu_kisi.glb', 'models/kumari_rath.glb', 'models/bhairab_rath.glb', 'models/ganesh_rath.glb'];
       function addDirectory(directory) {
         for (const entry of readdirSync(resolve(output, directory), { withFileTypes: true })) {

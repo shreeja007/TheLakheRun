@@ -8,6 +8,7 @@ import {
   Vec2,
 } from 'playcanvas';
 import { batchArticulatedModel } from '../game/Batching';
+import { StreetArt } from './StreetArt';
 import { BiomeType, BiomeConfig } from '../types';
 
 export const BIOME_CONFIGS: Record<BiomeType, BiomeConfig> = {
@@ -80,6 +81,8 @@ export class RoadView {
   // The two tiles behind the start line (z = 60 and 30) always show Durbar for the intro camera.
   // They never recycle, so they never switch scenery either.
   private readonly INTRO_TILE_COUNT = 2;
+  private streetArt!: StreetArt;
+  private promenadeFigures: Entity[] = [];
   private rootEntity: Entity;
   private backdropRoot!: Entity;
   private app: Application;
@@ -151,6 +154,13 @@ export class RoadView {
     this.buildDurbarBackdrop();
     this.buildProcessionBoulevard();
     this.initBatching();
+
+    // T040–T044: everyday street models on the recycling Durbar tiles (never the fixed intro tiles,
+    // whose look the home screen depends on).
+    const durbarTiles = this.tiles
+      .map((tile, index) => ({ index, durbarRoot: tile.durbarRoot }))
+      .filter(({ index, durbarRoot }) => index >= this.INTRO_TILE_COUNT && durbarRoot.enabled);
+    this.streetArt = new StreetArt(app, durbarTiles, this.promenadeFigures);
   }
 
   private initMaterials(): void {
@@ -1459,8 +1469,14 @@ export class RoadView {
     }
   }
 
+  /** Swap in the street models once loaded. Rebuilds the road batch, so call outside a run only. */
+  public attachStreetArt(): void {
+    this.streetArt.attach();
+  }
+
   public update(playerZ: number, dt = 0.016): void {
     this.animTime += dt;
+    this.streetArt.update(this.animTime);
 
     // Loop tiles infinitely ahead of the player
     for (let tileIndex = 0; tileIndex < this.tiles.length; tileIndex++) {
@@ -2395,6 +2411,7 @@ export class RoadView {
       }
 
       this.processionRoot.addChild(devotee);
+      this.promenadeFigures.push(devotee);
     }
   }
 }

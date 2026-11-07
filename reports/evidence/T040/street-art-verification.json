@@ -1,0 +1,40 @@
+{
+  "placement": {
+    "tiles": [
+      "StreetArt_2",
+      "StreetArt_3",
+      "StreetArt_4",
+      "StreetArt_5",
+      "StreetArt_6"
+    ],
+    "meshes": 171,
+    "violations": [],
+    "introFacadeEnabled": true,
+    "replacedFacadeEnabled": false,
+    "keptLanternEnabled": true
+  },
+  "rebuilds": {
+    "distance": 900,
+    "duringRun": 0,
+    "state": "GAME_OVER",
+    "afterRetry": 0,
+    "stateAfterRetry": "RUNNING"
+  },
+  "kitFailure": {
+    "art": false,
+    "facade": true,
+    "state": "RUNNING",
+    "distance": 44
+  },
+  "lateKit": {
+    "duringRun": false,
+    "stateDuringRun": "RUNNING",
+    "stateAfter": "GAME_OVER",
+    "afterRun": true
+  },
+  "reducedMotion": {
+    "figures": 3,
+    "maxY": 0
+  },
+  "pageErrors": []
+}

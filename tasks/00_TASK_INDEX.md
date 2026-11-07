@@ -1,6 +1,6 @@
 # Codex task queue
 
-**As of 2026-11-07:** Tickets marked ACCEPTED below were accepted by the Game Director (`docs/10_DECISIONS.md` D-016). T035–T039 are merged; the owner reported them flawless on the Vercel build, and formal acceptance is not yet logged. Remaining: T015 (planned), T014 decision, T028 research decisions, cultural/rights review, and the unused art listed below. Codex must not start the next ticket automatically.
+**As of 2026-11-07:** Tickets marked ACCEPTED below were accepted by the Game Director (`docs/10_DECISIONS.md` D-016). T035–T039 are merged; the owner reported them flawless on the Vercel build, and formal acceptance is not yet logged. T040 (street art) is built and awaiting review. Remaining: T015 (planned), T014 decision, T028 research decisions, cultural/rights review. Codex must not start the next ticket automatically.
 
 | Ticket | Outcome | Depends on | State |
 |---|---|---|---|
@@ -33,6 +33,7 @@
 | [T037](T037_DIFFICULTY_RAMP.md) | Keep speed, row frequency and row density rising for ~2 minutes | Direct owner instruction on 2026-11-03 | REVIEW; curve/fairness checks, 18 UI/PWA checks and 6 polish cases passed; playtest tuning pending |
 | [T038](T038_DOWNLOAD_SIZE_AND_FRAME_PACING.md) | Smaller download (lossless WebP, no backup model) and no mid-run stutter (batching, instancing, shader warm-up) | Direct owner instruction on 2026-11-03 (#1 + #10) | REVIEW; 11.4 → 6.9 MB, draw calls ~230 → ~110, 54 → 0 dropped frames per scripted run; all suites passed; phone check pending |
 | [T039](T039_SETTINGS_VIBRATION_BEST_MARKER.md) | Settings (music/effects volume, reduce shake, vibration), Android vibration cues, best-distance marker | Direct owner instruction on 2026-11-03 (#2–#4) | REVIEW; new settings suite, 18 UI/PWA checks, movement and polish suites passed; phone vibration check pending |
+| [T040](T040_STREET_ART_AUDIT_AND_INTEGRATION.md) | Audit, optimize and integrate buildings, gateway, lights, cart and spectators on the Durbar street | Direct owner instruction on 2026-11-07 | REVIEW; +0.42 MB, draw calls up to ~130, no rebuilds; all suites passed; phone check pending |
 
 ## Archived UI and art tickets
 
@@ -45,10 +46,10 @@ These tickets came from the sibling workspace. Their task and result files stay 
 | T019 | Pulu Kisi and three rath concept sheets | Raths and a different Pulu Kisi model are in the game |
 | T020, T021 | Kumari, Bhairab and Ganesh rath models | Yes, as the background procession |
 | T022 | Static cloth-shell Pulu Kisi model | No, the game uses a separate animated model |
-| T023 | Three spectator and one market-cart concept sheets | No, concepts only (no 3D model) |
-| T024 | Two building, gateway and hanging-light concept sheets | No, concepts only (buildings and gateway modeled in T025–T027) |
-| T025, T026 | Building 01 residence and Building 02 shopfront models | No, unused in `public/models/` |
-| T027 | Everyday gateway model | No, unused in `public/models/` |
+| T023 | Three spectator and one market-cart concept sheets | Yes, modeled and placed by T040 (review pending) |
+| T024 | Two building, gateway and hanging-light concept sheets | Yes; lights built by T040, buildings and gateway modeled in T025–T027 |
+| T025, T026 | Building 01 residence and Building 02 shopfront models | Yes, optimized and placed by T040 (review pending) |
+| T027 | Everyday gateway model | Yes, as a side-alley entrance, by T040 (review pending) |
 
 ## After Codex returns a result
 
