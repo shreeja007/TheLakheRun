@@ -1,6 +1,6 @@
 # Production roadmap — small milestones, explicit gates
 
-**Current:** Planning, no implementation ticket yet authorized. **All timings are intentionally omitted**; the work will be paced by actual build/test results.
+**Current (2026-11-07):** M0–M5 are built and accepted for gameplay (D-016); M6 performance work continued in T038; the owner hosts a build on Vercel; M7 release gate is open. **All timings are intentionally omitted**; the work will be paced by actual build/test results.
 
 | Stage | Deliverable | Director gate | Codex tickets |
 |---|---|---|---|
@@ -24,10 +24,9 @@
 
 ## Current prioritized queue
 
-1. Director reviews this pack and approves or amends the M0 assumptions.
-2. Authorize **T001** only, with the limited feasibility definition.
-3. Codex submits build/reports and measured evidence.
-4. Director selects engine, mobile orientation/device approach.
-5. Authorize **T002**, then subsequent tasks one at a time.
+1. Director records acceptance of T035–T039, or requests changes.
+2. Director chooses which unused art (buildings, gateway, lights, cart, spectators) to bring into the game; each becomes one authorized ticket.
+3. Cultural reviewer identified; rights/provenance table filled.
+4. T015 release review once those are done.
 
 See `tasks/00_TASK_INDEX.md` for live ticket states and links.

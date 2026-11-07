@@ -1,6 +1,6 @@
 # Codex task queue
 
-**As of 2026-11-02:** All built tickets were **ACCEPTED** by the Game Director after desktop and Android playtesting (see `docs/10_DECISIONS.md` D-016). Remaining: T014 (blocked on host details), T015 (planned), T028 research decisions, cultural/rights review. Codex must not start the next ticket automatically.
+**As of 2026-11-07:** Tickets marked ACCEPTED below were accepted by the Game Director (`docs/10_DECISIONS.md` D-016). T035–T039 are merged; the owner reported them flawless on the Vercel build, and formal acceptance is not yet logged. Remaining: T015 (planned), T014 decision, T028 research decisions, cultural/rights review, and the unused art listed below. Codex must not start the next ticket automatically.
 
 | Ticket | Outcome | Depends on | State |
 |---|---|---|---|
@@ -17,7 +17,7 @@
 | [T011](T011_BASIC_CHARACTER_ANIMATION.md) | Basic runner/guardian approved motions | T007 + T010 | ACCEPTED 2026-11-02 (D-016) |
 | [T012](T012_AUDIO_HUD_AND_GAME_FEEL.md) | UI, sound and feedback polish | T005 + approved assets and audio rights | ACCEPTED 2026-11-02 (D-016) |
 | [T013](T013_MOBILE_PERFORMANCE_PASS.md) | Device profiling and targeted optimization | Usable alpha build | ACCEPTED 2026-11-02 (D-016) |
-| [T014](T014_STATIC_STAGING_HOSTING.md) | HTTPS staging on the owner server | Build stable + server details + permission | BLOCKED: HOST DETAILS |
+| [T014](T014_STATIC_STAGING_HOSTING.md) | HTTPS staging on the owner server | Build stable + server details + permission | BLOCKED: HOST DETAILS. Owner hosts on Vercel since 2026-11-07 (outside this ticket); owner to decide whether server staging is still needed |
 | [T015](T015_FINAL_QA_AND_RELEASE_REVIEW.md) | QA evidence + release recommendation | T013, T014, cultural/rights sign-off | PLANNED |
 | [T017](T017_TUKU_MULTISTYLE_MOVEMENT.md) | Tuku multi-style jump, slide, dodge variations | T002, T011 | ACCEPTED 2026-11-02 (D-016) |
 | [T018](T018_MULTISTYLE_AUDIO_WHOOSHES.md) | Movement audio whooshes & stone skids | T012, T017 | ACCEPTED 2026-11-02 (D-016) |
@@ -28,17 +28,27 @@
 | [T032](T032_OPTION_C_INTEGRATION.md) | Migration phase 2: Option C in current original game and combined verification | Same direct phased-migration authorization; T031 complete | ACCEPTED 2026-11-02 (D-016) |
 | [T033](T033_FOCUSED_SHORTCUTS_AND_MERGE.md) | Fix focused-button shortcuts, verify and merge migration locally | Direct owner instruction on 2026-10-13 | ACCEPTED 2026-11-02 (D-016) |
 | [T034](T034_EXISTING_GAME_AUDIT_AND_POLISH.md) | Deep audit and existing-game polish, prioritizing mobile overlay visibility | Direct owner instruction on 2026-10-14 | ACCEPTED 2026-11-02 (D-016) |
-| [T035](T035_TUKU_MOVEMENT_PHYSICS_AUDIT.md) | Audit Tuku movement/physics; prioritized fixes | Direct owner instruction on 2026-11-03 | REVIEW; audit only, 6 confirmed defects (1 critical: lane spring unstable ≤30 fps); fixes await authorization |
+| [T035](T035_TUKU_MOVEMENT_PHYSICS_AUDIT.md) | Audit Tuku movement/physics; prioritized fixes | Direct owner instruction on 2026-11-03 | REVIEW; audit only. Fixes delivered in T036, except M8 (swipe chaining) and M10 (running bounce), which remain open |
 | [T036](T036_TUKU_MOVEMENT_FIXES_AND_EDGE_BUMP.md) | Fix Tuku movement defects M1–M7/M9 and add edge-bump rule | Direct owner instruction on 2026-11-03 | REVIEW; build, 18 UI/PWA checks, 6 polish cases and new movement checks passed; device acceptance pending |
 | [T037](T037_DIFFICULTY_RAMP.md) | Keep speed, row frequency and row density rising for ~2 minutes | Direct owner instruction on 2026-11-03 | REVIEW; curve/fairness checks, 18 UI/PWA checks and 6 polish cases passed; playtest tuning pending |
 | [T038](T038_DOWNLOAD_SIZE_AND_FRAME_PACING.md) | Smaller download (lossless WebP, no backup model) and no mid-run stutter (batching, instancing, shader warm-up) | Direct owner instruction on 2026-11-03 (#1 + #10) | REVIEW; 11.4 → 6.9 MB, draw calls ~230 → ~110, 54 → 0 dropped frames per scripted run; all suites passed; phone check pending |
 | [T039](T039_SETTINGS_VIBRATION_BEST_MARKER.md) | Settings (music/effects volume, reduce shake, vibration), Android vibration cues, best-distance marker | Direct owner instruction on 2026-11-03 (#2–#4) | REVIEW; new settings suite, 18 UI/PWA checks, movement and polish suites passed; phone vibration check pending |
 
-## How to assign the first task
+## Archived UI and art tickets
 
-When the director explicitly authorizes T001, paste this message to Codex in VS Code:
+These tickets came from the sibling workspace. Their task and result files stay in `docs/bob_branch_archive/` (IDs T017–T020 there are **different tickets** from the active T017–T020 above). All still await director acceptance unless noted.
 
-> Read `AGENTS.md`, `README.md`, `docs/00_PROJECT_STATUS.md`, `docs/10_DECISIONS.md`, and `tasks/T001_WEB_3D_FEASIBILITY.md`. I authorize **only T001**, a small PlayCanvas TypeScript WebGL feasibility spike. Stay inside the task's in-scope work; do not implement the runner, characters, obstacles, festival art or hosting. At the end, provide a run/build report, browser/device test instructions, evidence, limitations, and questions requiring my approval. Do not begin T002.
+| Ticket | Delivered | In the game? |
+|---|---|---|
+| T016 | Production HUD, controls rehearsal, home-screen support | Yes, integrated by T032 (accepted, D-016) |
+| T017, T018 | Tuku refined turnaround and separate reference views | No, reference images only |
+| T019 | Pulu Kisi and three rath concept sheets | Raths and a different Pulu Kisi model are in the game |
+| T020, T021 | Kumari, Bhairab and Ganesh rath models | Yes, as the background procession |
+| T022 | Static cloth-shell Pulu Kisi model | No, the game uses a separate animated model |
+| T023 | Three spectator and one market-cart concept sheets | No, concepts only (no 3D model) |
+| T024 | Two building, gateway and hanging-light concept sheets | No, concepts only (buildings and gateway modeled in T025–T027) |
+| T025, T026 | Building 01 residence and Building 02 shopfront models | No, unused in `public/models/` |
+| T027 | Everyday gateway model | No, unused in `public/models/` |
 
 ## After Codex returns a result
 

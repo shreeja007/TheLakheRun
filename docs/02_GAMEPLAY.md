@@ -2,6 +2,11 @@
 
 **Status:** The simple endless-runner loop is confirmed; exact rules below remain proposed pending director approval and gameplay testing.
 
+## Rules added since this proposal (built, T036–T037)
+
+- **Edge bump:** moving toward a side Tuku can't go gives a bump, and Lakhey surges closer. Bumping again before he has dropped back to his normal distance ends the run.
+- **Difficulty:** speed rises from 10.5 to 21 m/s and rows get closer and denser until about 1,840 m (about 2 minutes), then holds. At least 1.0 s between rows; no row walls off all three lanes. Tuning values are in `src/game/Difficulty.ts`.
+
 ## Core loop
 
 `Start → automatic forward run → dodge / jump → earn distance → obstacle or guardian catch → score + personal best → retry`

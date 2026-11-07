@@ -2,6 +2,12 @@
 
 **Status:** Direction proposed; no purchased/recorded audio, finished UI or exact HUD layout approved.
 
+## Built since this proposal (T039)
+
+- **Settings dialog:** music volume, sound-effects volume, reduce screen shake and vibration, saved on the device. Reduce screen shake starts ticked when the device asks for reduced motion.
+- **Vibration cues** on browsers that support it (Android): first edge bump, close call, catch. iPhone/iPad browsers show the switch disabled.
+- **Best-distance marker:** a gold line and "Best" label on the road at the previous best.
+
 ## Audio experience
 
 - Festival ambience should establish place; rhythm should communicate momentum, especially Lakhey proximity.

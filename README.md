@@ -1,7 +1,7 @@
 # Lakhey Run — production planning repository
 
-**Updated:** 2026-10-09  
-**State:** Design / preproduction; no game implementation included in this package.  
+**Updated:** 2026-11-07  
+**State:** Playable game built. Owner-hosted build: <https://thelakherun.vercel.app/> (T035–T039 reported working by the owner; formal acceptance and cultural/rights review still open).  
 **Owner:** Game Director / Product Owner  
 **Planning:** ChatGPT management conversation  
 **Implementation:** Codex in VS Code, ticket by ticket
@@ -17,7 +17,7 @@ A small, replayable, **stylized 3D browser game** for desktop and mobile inspire
 1. **Everyone:** read [`docs/00_PROJECT_STATUS.md`](docs/00_PROJECT_STATUS.md) for what's accepted, proposed and blocked.
 2. **Game Director:** use [`docs/11_ROADMAP.md`](docs/11_ROADMAP.md), [`docs/10_DECISIONS.md`](docs/10_DECISIONS.md) and [`docs/13_OPEN_QUESTIONS.md`](docs/13_OPEN_QUESTIONS.md).
 3. **Codex:** read [`AGENTS.md`](AGENTS.md), then the **one authorized ticket** in [`tasks/00_TASK_INDEX.md`](tasks/00_TASK_INDEX.md) and only the related docs.
-4. **First possible implementation ticket:** [`tasks/T001_WEB_3D_FEASIBILITY.md`](tasks/T001_WEB_3D_FEASIBILITY.md). This is a technical experiment, **not** authority to build the full game.
+4. **Current ticket states:** [`tasks/00_TASK_INDEX.md`](tasks/00_TASK_INDEX.md).
 5. **After each build:** owner reviews on real devices, then updates decisions and authorizes a follow-up ticket.
 
 ## Where information belongs
@@ -59,10 +59,6 @@ If something conflicts, **stop and report the conflict** rather than quietly gue
 
 Codex may work on a ticket **only after the Game Director authorizes it**. Technical tests do not automatically approve gameplay feel, character art or culturally sensitive representations.
 
-## How to use in VS Code
-
-Copy/unzip this folder into the intended project repository. Open the repository in VS Code with Codex. Start with the root `AGENTS.md` and assign **only T001** when you're ready. Codex can create source code and asset folders while implementing approved tasks; this package deliberately contains planning files only.
-
 ## Running locally
 
 ```bash
@@ -72,7 +68,7 @@ npm run build      # Compile TypeScript and bundle production assets
 npm run preview    # Preview production bundle with network access
 ```
 
-## Existing-game audit and polish (T034, pending acceptance)
+## Existing-game audit and polish (T034, accepted, D-016)
 
 The [current audit](audit.md) records confirmed defects, corrections and remaining review items. During a run, location/skill/record feedback shares one short line beside the score. Compact screens omit decorative screen-wide confetti/flashes/flying digits; short landscape uses one row of existing controls. Gameplay, models and scoring rules are preserved. Pause freezes the simulation, background/context loss pauses the run, and unmuting while paused keeps music stopped.
 
@@ -85,7 +81,7 @@ npm run test:ui
 node scripts/test-polish.mjs
 ```
 
-Use `npm run preview -- --host 127.0.0.1 --port 4190 --strictPort` for that preview. The [T034 report](reports/T034_RESULT.md) contains fresh evidence and real-device limitations. Director acceptance remains pending; this work does not authorize deployment.
+Use `npm run preview -- --host 127.0.0.1 --port 4190 --strictPort` for that preview. The [T034 report](reports/T034_RESULT.md) contains fresh evidence and real-device limitations.
 
 ## Income research handoff (T031, pending review)
 
@@ -93,7 +89,7 @@ The [income and growth proposal](reports/evidence/T028/INCOME_AND_GROWTH_PROPOSA
 
 See the [original research result](reports/T028_RESULT.md) and [migration verification](reports/T031_RESULT.md). Earlier sibling UI/PWA evidence is preserved in [the archived T016 report](docs/bob_branch_archive/reports/T016_RESULT.md); fresh original-project integration evidence belongs to T032.
 
-## Active workspace and Option C (T032, pending acceptance)
+## Active workspace and Option C (T032, accepted, D-016)
 
 Use `lakhey-run-planning_antigravity_original` for subsequent authorized work; preserve the sibling workspace as reference. See [migration/coordination notes and physical-device checklist](docs/MIGRATION_WORKSPACE.md).
 
@@ -113,7 +109,7 @@ npm run test:ui
 
 The Home screen menu explains installation and offline-saving status. The production snapshot includes current Tuku/Lakhey, Pulu Kisi and rath models. Wait for Game saved, reload to get worker control, then test offline. A saved update waits until all game tabs close. Development mode does not register the worker. Phone installation/offline behavior needs HTTPS and a supporting browser; localhost supports desktop checks. Absolute model URLs and worker/manifest scope currently require origin-root hosting. No deployment was performed.
 
-Fresh results are in [T032](reports/T032_RESULT.md), pending director/device acceptance. `npm run icons` regenerates the existing original placeholder icons; it does not create final character branding.
+Results are in [T032](reports/T032_RESULT.md). `npm run icons` regenerates the existing original placeholder icons; it does not create final character branding.
 
 ## What is explicitly NOT in V1
 
